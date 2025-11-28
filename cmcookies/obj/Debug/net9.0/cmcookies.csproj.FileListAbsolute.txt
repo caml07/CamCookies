@@ -178,7 +178,6 @@ C:\Users\eduar\OneDrive - ITEDU\.CLASSES\C# Programming\FINAL PROJECT\cmcookies\
 C:\Users\eduar\OneDrive - ITEDU\.CLASSES\C# Programming\FINAL PROJECT\cmcookies\cmcookies\obj\Debug\net9.0\staticwebassets.build.json.cache
 C:\Users\eduar\OneDrive - ITEDU\.CLASSES\C# Programming\FINAL PROJECT\cmcookies\cmcookies\obj\Debug\net9.0\staticwebassets.development.json
 C:\Users\eduar\OneDrive - ITEDU\.CLASSES\C# Programming\FINAL PROJECT\cmcookies\cmcookies\obj\Debug\net9.0\staticwebassets.build.endpoints.json
-C:\Users\eduar\OneDrive - ITEDU\.CLASSES\C# Programming\FINAL PROJECT\cmcookies\cmcookies\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\eduar\OneDrive - ITEDU\.CLASSES\C# Programming\FINAL PROJECT\cmcookies\cmcookies\obj\Debug\net9.0\cmcookies.csproj.Up2Date
 C:\Users\eduar\OneDrive - ITEDU\.CLASSES\C# Programming\FINAL PROJECT\cmcookies\cmcookies\obj\Debug\net9.0\cmcookies.dll
 C:\Users\eduar\OneDrive - ITEDU\.CLASSES\C# Programming\FINAL PROJECT\cmcookies\cmcookies\obj\Debug\net9.0\refint\cmcookies.dll
