@@ -42,6 +42,8 @@ public partial class CmcDBContext : DbContext
 
     public virtual DbSet<Shipping> Shippings { get; set; }
 
+    public virtual DbSet<Transaction> Transactions { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     public virtual DbSet<UserRole> UserRoles { get; set; }
@@ -202,6 +204,25 @@ public partial class CmcDBContext : DbContext
             entity.HasKey(e => e.ShippingId).HasName("PRIMARY");
 
             entity.Property(e => e.ShippingType).HasDefaultValueSql("'on campus'");
+        });
+
+        modelBuilder.Entity<Transaction>(entity =>
+        {
+            entity.HasKey(e => e.TransactionId).HasName("PRIMARY");
+
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+            entity.HasOne(d => d.Batch).WithMany(p => p.Transactions)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("fk_transactions_batch");
+
+            entity.HasOne(d => d.Material).WithMany(p => p.Transactions)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("fk_transactions_material");
+
+            entity.HasOne(d => d.Order).WithMany(p => p.Transactions)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("fk_transactions_order");
         });
 
         modelBuilder.Entity<User>(entity =>

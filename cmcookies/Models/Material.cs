@@ -37,4 +37,7 @@ public partial class Material
 
     [InverseProperty("Material")]
     public virtual ICollection<CookieMaterial> CookieMaterials { get; set; } = new List<CookieMaterial>();
+
+    [InverseProperty("Material")]
+    public virtual ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
 }

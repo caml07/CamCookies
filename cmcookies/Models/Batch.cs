@@ -30,4 +30,7 @@ public partial class Batch
     [ForeignKey("CookieCode")]
     [InverseProperty("Batches")]
     public virtual Cookie CookieCodeNavigation { get; set; } = null!;
+
+    [InverseProperty("Batch")]
+    public virtual ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
 }
