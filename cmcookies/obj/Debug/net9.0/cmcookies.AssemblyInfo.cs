@@ -10,11 +10,12 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.AspNetCore.Identity.UI.UIFrameworkAttribute("Bootstrap5")]
 [assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("f06b58bf-d46b-44d3-b4f6-f5dd53f021f8")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("cmcookies")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3f8b6796844bf9257411f96fb2fb002c06a16f41")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3f12b9e3f2807843ad773299530d4ba2613512e7")]
 [assembly: System.Reflection.AssemblyProductAttribute("cmcookies")]
 [assembly: System.Reflection.AssemblyTitleAttribute("cmcookies")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
