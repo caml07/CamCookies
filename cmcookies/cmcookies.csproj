@@ -33,4 +33,9 @@
         <_ContentIncludedByDefault Remove="Views\User\Index.cshtml"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <Folder Include="wwwroot\images\backgrounds\"/>
+        <Folder Include="wwwroot\images\cookies\"/>
+    </ItemGroup>
+
 </Project>

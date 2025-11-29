@@ -1,0 +1,68 @@
+<!--PARA QUE SIRVE ESTA MONDAAA' RAAAAAAHHHHHH??
+Pues mira chele, sencillo, Si un customer que esta loggeado intenta acceder a Admin/Dashboard (que ofc no deberia por seguridad) \
+ASP.NET verifica que no sea admin, y lo redirigia a esta vista de aca
+-->
+
+@{
+    ViewData["Title"] = "Access Denied";
+    Layout = null; // Sin navbar ni footer - página independiente
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Cam Cookies</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/auth.css" />
+</head>
+<body>
+    <div class="auth-wrapper">
+        <div class="auth-container">
+            <!-- HEADER -->
+            <div class="auth-header">
+                <img src="~/images/logo.png" alt="Cam Cookies Logo" />
+                <h2>Access Denied</h2>
+                <p>You don't have permission to access this page</p>
+            </div>
+
+            <!-- BODY con mensaje de error -->
+            <div class="auth-body">
+                <div class="access-denied-container">
+                    <!-- Ícono de advertencia (usando emoji por simplicidad) -->
+                    <div class="access-denied-icon">
+                        🚫
+                    </div>
+                    
+                    <h3>Oopsiis! Access Restricted</h3>
+                    
+                    <p>
+                        You attempted to access a page that requires special permissions.
+                        This area is restricted to authorized users only.
+                    </p>
+
+                    <div style="margin-top: var(--spacing-xl);">
+                        <!-- Botón para volver al inicio -->
+                        <a asp-controller="Home" asp-action="Index" class="btn btn-primary">
+                            Go to Homepage
+                        </a>
+                        
+                        <!-- Botón para login (si no está autenticado) -->
+                        <a asp-controller="Account" asp-action="Login" class="btn btn-outline" style="margin-left: var(--spacing-sm);">
+                            Sign In
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOOTER con información adicional -->
+            <div class="auth-footer">
+                <p style="font-size: 0.875rem; color: var(--gray-600);">
+                    If you believe this is a mistake, please contact Cam...
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

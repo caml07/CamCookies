@@ -1,0 +1,96 @@
+@model cmcookies.Models.ViewModels.Account.RegisterViewModel 
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = null; // No usar el layout principal, desde que usaremos un diseño personalizado y asi podemos omitir el nav bar, footer, etc.
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>@ViewData["Title"] - Cam Cookies</title>
+    <link rel="stylesheet" href="~/css/site.css"/>
+    <link rel="stylesheet" href="~/css/auth.css"/>
+</head>
+<body>
+<div class="auth-wrapper">
+    <div class="auth-container">
+        <!-- HEADER -->
+        <div class="auth-header">
+            <img src="~/images/logo.png" alt="Cam Cookies Logo"/>
+            <h2>Create Account</h2>
+            <p>Join Cam Cookies and start ordering delicious cookies!</p>
+        </div>
+
+        <!-- BODY -->
+        <div class="auth-body">
+            <!-- Mostrar errores de validación generales -->
+            <div asp-validation-summary="All" class="validation-summary-errors"></div>
+
+            <form asp-action="Register" method="post"> <!--lo bueno de esto es que si se cambia la ruta del controller no se necesita actualizar la vista-->
+                <!-- First Name -->
+                <div class="form-group">
+                    <label asp-for="FirstName" class="form-label">First Name</label> <!-- para Generar automaticamente name y id del First Name, se envia el form y ASP.NET se encarga de llenarlo automaticamente el model.FirstName-->
+                    <input asp-for="FirstName" class="form-control" placeholder="Enter your first name"/>
+                    <span asp-validation-for="FirstName" class="invalid-feedback"></span> <!--Validaciones automaticas que se dan con ASP.NET, y muestra errores de validacion automatica, lee las anotaciones del ViewModel.-->
+                </div>
+
+                <!-- Last Name -->
+                <div class="form-group">
+                    <label asp-for="LastName" class="form-label">Last Name</label> <!---Para lo que sige en adelante la misma logica que First Name-->
+                    <input asp-for="LastName" class="form-control" placeholder="Enter your last name"/>
+                    <span asp-validation-for="LastName" class="invalid-feedback"></span>
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label asp-for="Email" class="form-label">Email Address</label>
+                    <input asp-for="Email" class="form-control" placeholder="your@email.com"/>
+                    <span asp-validation-for="Email" class="invalid-feedback"></span>
+                </div>
+
+                <!-- Phone Number -->
+                <div class="form-group">
+                    <label asp-for="PhoneNumber" class="form-label">Phone Number</label>
+                    <input asp-for="PhoneNumber" class="form-control" placeholder="+505 8888 8888"/>
+                    <span asp-validation-for="PhoneNumber" class="invalid-feedback"></span>
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label asp-for="Password" class="form-label">Password</label>
+                    <input asp-for="Password" class="form-control" placeholder="Min. 8 characters"/>
+                    <span asp-validation-for="Password" class="invalid-feedback"></span>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="form-group">
+                    <label asp-for="ConfirmPassword" class="form-label">Confirm Password</label>
+                    <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm your password"/>
+                    <span asp-validation-for="ConfirmPassword" class="invalid-feedback"></span>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary btn-auth">Create Account</button>
+            </form>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="auth-footer">
+            <p>Already have an account? <a asp-action="Login" class="auth-link">Sign In</a></p>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts de validación -->
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>
+
+<!--Lo que hacen en resumen es:
+jquery es una libreria de JavaScript base, el que le sigue valida los forms antes de ser enviados, el unbound... lee las anotaciones de HTML5 y data anotations automaticamente y sin ellos habria un flujo mas lento, lo que proporciona una mejor experiencia de usuario
+-->

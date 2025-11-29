@@ -59,10 +59,7 @@ public class AccountController : Controller
   public async Task<IActionResult> Register(RegisterViewModel model)
   {
     //Validar que el modelo tenga datos correctos
-    if (!ModelState.IsValid)
-    {
-        return View(model); // Si hay errores, vuelve a mostrar el formulario
-    }
+    if (!ModelState.IsValid) return View(model); // Si hay errores, vuelve a mostrar el formulario
 
     //Crear el objeto User con los datos del formulario
     var user = new User
@@ -107,17 +104,14 @@ public class AccountController : Controller
       // Iniciar sesión automáticamente
       // isPersistent: false → Cookie expira al cerrar navegador
       // isPersistent: true → Cookie dura 14 días (Remember Me)
-      await _signInManager.SignInAsync(user, isPersistent: false);
+      await _signInManager.SignInAsync(user, false);
 
       //Redirigir al inicio
       return RedirectToAction("Index", "Home");
     }
 
     //Si hubo errores, mostrarlos en el formulario, como contraseñas o algun correo mal introducido
-    foreach (var error in result.Errors)
-    {
-        ModelState.AddModelError(string.Empty, error.Description);
-    }
+    foreach (var error in result.Errors) ModelState.AddModelError(string.Empty, error.Description);
 
     return View(model);
   }
@@ -131,7 +125,8 @@ public class AccountController : Controller
   /// Muestra el formulario de inicio de sesión.
   /// </summary>
   [HttpGet]
-  public IActionResult Login(string returnUrl = null) //Si un usuario no loggeado intenta acceder desde el navegado a Admin/Dashboard por ejemplo, ASP.NET lo redirige a que se logge, y si este es admin, si puede pasar a la Dashboard, pero sin esto, va a la pag que seguiria despues del Logg
+  public IActionResult
+    Login(string returnUrl = null) //Si un usuario no loggeado intenta acceder desde el navegado a Admin/Dashboard por ejemplo, ASP.NET lo redirige a que se logge, y si este es admin, si puede pasar a la Dashboard, pero sin esto, va a la pag que seguiria despues del Logg
   {
     // Guardar la URL a la que debe volver después del login
     ViewData["ReturnUrl"] = returnUrl;
@@ -150,10 +145,7 @@ public class AccountController : Controller
     ViewData["ReturnUrl"] = returnUrl;
 
     // PASO 1: Validar el modelo
-    if (!ModelState.IsValid)
-    {
-        return View(model);
-    }
+    if (!ModelState.IsValid) return View(model);
 
     // Intentar iniciar sesión
     // Parámetros:
@@ -165,7 +157,7 @@ public class AccountController : Controller
       model.Email, // Identity usa UserName para login y desde que queremos que se logueen con el email por eso esta de esa manera
       model.Password, //Contraseña en texto planito
       model.RememberMe, //La cookie aun existe??
-      lockoutOnFailure: true //Bloqueamos la cuenta tras fallos??
+      true //Bloqueamos la cuenta tras fallos??
     );
 
     if (result.Succeeded)
@@ -173,10 +165,8 @@ public class AccountController : Controller
       // Login exitoso
 
       // A)Si había una URL guardada (ej: intentó acceder a /Admin sin login)
-      if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
-      {
-          return Redirect(returnUrl); // Volver a donde intentaba ir
-      }
+      if (!string.IsNullOrEmpty(returnUrl) &&
+          Url.IsLocalUrl(returnUrl)) return Redirect(returnUrl); // Volver a donde intentaba ir
 
       // Si no había URL guardada, ir al inicio
       return RedirectToAction("Index", "Home");
@@ -208,7 +198,7 @@ public class AccountController : Controller
   public async Task<IActionResult> Logout()
   {
     // Cerrar sesión (borra la cookie de autenticación)
-    await _signInManager.SignOutAsync(); 
+    await _signInManager.SignOutAsync();
 
     // Redirigir al inicio
     return RedirectToAction("Index", "Home");
