@@ -23,7 +23,9 @@ public static class DbSeeder
     {
         Console.WriteLine("🧹 LIMPIEZA TOTAL: Borrando toda la base de datos...");
 
-        // PASO 1: Borrar todos los datos (en orden correcto por foreign keys)
+        // PASO 1: Borrar todos los datos de las tablas.
+        // El orden es importante para evitar errores de claves foráneas (foreign keys).
+        // Se empieza por las tablas que no tienen dependencias o cuyas dependencias ya se eliminaron.
         context.Transactions.RemoveRange(context.Transactions);
         context.CustomerShippings.RemoveRange(context.CustomerShippings);
         context.CustomerBillings.RemoveRange(context.CustomerBillings);
@@ -39,24 +41,26 @@ public static class DbSeeder
         context.Phones.RemoveRange(context.Phones);
         context.UserRoles.RemoveRange(context.UserRoles);
         
-        // Borrar usuarios usando UserManager
+        // Borrar usuarios de forma segura a través del UserManager de Identity.
         var users = await userManager.Users.ToListAsync();
         foreach (var user in users)
         {
             await userManager.DeleteAsync(user);
         }
         
-        // Borrar roles usando RoleManager
+        // Borrar roles de forma segura a través del RoleManager de Identity.
         var roles = await roleManager.Roles.ToListAsync();
         foreach (var role in roles)
         {
             await roleManager.DeleteAsync(role);
         }
 
+        // Guarda todos los cambios de borrado en la base de datos.
         await context.SaveChangesAsync();
         Console.WriteLine("✅ Todos los datos borrados");
 
-        // PASO 2: Resetear AUTO_INCREMENT de todas las tablas a 1
+        // PASO 2: Resetear el contador AUTO_INCREMENT de cada tabla a 1.
+        // Esto asegura que los nuevos registros empiecen con ID 1, como en una BD nueva.
         Console.WriteLine("🔄 Reseteando AUTO_INCREMENT a 1...");
         
         await context.Database.ExecuteSqlRawAsync("ALTER TABLE users AUTO_INCREMENT = 1");
@@ -78,36 +82,38 @@ public static class DbSeeder
         
         Console.WriteLine("✅ AUTO_INCREMENT reseteado");
 
-        // PASO 3: Crear SOLO el admin (sin customer, sin galletas, sin nada más)
+        // PASO 3: Crear los datos mínimos para que el sistema funcione.
         Console.WriteLine("👤 Creando ÚNICAMENTE usuario admin...");
         
-        // Crear roles primero (necesarios para Identity)
+        // Crear roles "Admin" y "Customer", necesarios para la asignación de usuarios.
         var adminRole = new Role { Name = "Admin" };
         var customerRole = new Role { Name = "Customer" };
         await roleManager.CreateAsync(adminRole);
         await roleManager.CreateAsync(customerRole);
         
-        // Crear admin
+        // Crear el usuario administrador principal.
         var adminUser = new User
         {
             UserName = "admin@camcookies.com",
             Email = "admin@camcookies.com",
             FirstName = "Eduardo",
             LastName = "Quant",
-            EmailConfirmed = true,
+            EmailConfirmed = true, // Se crea como confirmado para no requerir validación por email.
             IsActive = true,
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now
         };
 
+        // Usa UserManager para crear el usuario con su contraseña hasheada.
         var result = await userManager.CreateAsync(adminUser, "Admin@123");
         
         if (result.Succeeded)
         {
+            // Asignar los roles de "Admin" y "Customer" al nuevo usuario.
             await userManager.AddToRoleAsync(adminUser, "Admin");
             await userManager.AddToRoleAsync(adminUser, "Customer");
             
-            // Crear teléfono
+            // Crear una entrada de teléfono para el admin.
             var adminPhone = new Phone
             {
                 Phone1 = "+505 58899827",
@@ -116,7 +122,7 @@ public static class DbSeeder
             context.Phones.Add(adminPhone);
             await context.SaveChangesAsync();
             
-            // Crear customer
+            // Crear la entidad 'Customer' asociada al usuario admin.
             var adminCustomer = new Customer
             {
                 UserId = adminUser.Id,
@@ -130,6 +136,7 @@ public static class DbSeeder
         }
         else
         {
+            // Si la creación del usuario falla, muestra los errores en la consola.
             Console.WriteLine("❌ Error al crear admin:");
             foreach (var error in result.Errors)
             {
@@ -399,16 +406,16 @@ public static class DbSeeder
             
             var initialCapital = new Transaction
             {
-                TransactionType = "material_purchase",
-                Amount = -2000.00m,
-                Description = "Capital inicial para compra de materiales",
+                TransactionType = "initial_capital",
+                Amount = 2000.00m,
+                Description = "Inyección de capital inicial",
                 CreatedAt = DateTime.Now
             };
 
             context.Transactions.Add(initialCapital);
             await context.SaveChangesAsync();
             
-            Console.WriteLine("✅ Capital inicial: C$2,000");
+            Console.WriteLine("✅ Capital inicial de C$2,000.00 creado.");
         }
 
         Console.WriteLine("🎉 ¡Seed completo exitoso!");

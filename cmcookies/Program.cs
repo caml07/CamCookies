@@ -1,6 +1,7 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity; //para hecer uso de Identity y poder configurar lo de las cookies de secion, el hashing, etc.
-using cmcookies.Models; // Importar el DbContext
+using cmcookies.Models; //para la coneccion con la database
+using cmcookies.Data; //para que pueda modificar data dentro de la database
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,16 +60,46 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication(); //lee la cookie de secion para verificar qué usuario es el que se inicia sesión
 app.UseAuthorization();
 
-app.MapStaticAssets();
-
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
+// ============================================================================
+// 🌱 SEEDER - CONTROL MANUAL
+// ============================================================================
+// Descomentar SOLO la opción que necesites:
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<CmcDBContext>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<Role>>();
+    
+    // ┌───────────────────────────────────┐
+    // │ OPCIÓN 1: SEED COMPLETO (admin + customer + galletas)  │
+    // │ Descomentar para poblar con datos completos             │
+    // └───────────────────────────────────┘
+    // await DbSeeder.SeedAsync(context, userManager, roleManager);
+    
+    // ┌───────────────────────────────────┐
+    // │ OPCIÓN 2: LIMPIEZA TOTAL borra tod o y deja solo admin│
+    // │ ⚠️ ADVERTENCIA: Esto BORRA todos los datos              │
+    // └───────────────────────────────────┘
+    // await DbSeeder.CleanAndSeedAsync(context, userManager, roleManager);
+    
+    // ┌───────────────────────────────┐
+    // │ OPCIÓN 3: SEED AUTOMÁTICO (solo si BD está vacía)│
+    // │ Útil para producción - no borra datos existentes │
+    // └───────────────────────────────┘
+    if (!await userManager.Users.AnyAsync())
+    {
+        await DbSeeder.SeedAsync(context, userManager, roleManager);
+    }
+}
 
 app.Run();
