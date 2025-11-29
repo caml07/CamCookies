@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\eduar\\OneDrive - ITEDU\\.CLASSES\\C# Programming\\FINAL PROJECT\\cmcookies\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\eduar\\OneDrive - ITEDU\\.CLASSES\\C# Programming\\FINAL PROJECT\\cmcookies\\cmcookies\\Models\\CmcDBContext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:cmcookies\\Models\\CmcDBContext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D94897BD-3F1C-4B20-B05A-BFDF278707E4}|cmcookies\\cmcookies.csproj|c:\\users\\eduar\\onedrive - itedu\\.classes\\c# programming\\final project\\cmcookies\\cmcookies\\models\\cmcdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D94897BD-3F1C-4B20-B05A-BFDF278707E4}|cmcookies\\cmcookies.csproj|solutionrelative:cmcookies\\models\\cmcdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -24,7 +24,7 @@
               "RelativeDocumentMoniker": "cmcookies\\Models\\CmcDBContext.cs",
               "ToolTip": "C:\\Users\\eduar\\OneDrive - ITEDU\\.CLASSES\\C# Programming\\FINAL PROJECT\\cmcookies\\cmcookies\\Models\\CmcDBContext.cs",
               "RelativeToolTip": "cmcookies\\Models\\CmcDBContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-28T05:46:17.492Z",
               "EditorCaption": ""

@@ -7,54 +7,53 @@ using Microsoft.EntityFrameworkCore;
 
 namespace cmcookies.Models;
 
+// Mapea esta clase a la tabla "users" de la base de datos.
 [Table("users")]
+// Hereda de Identity para la funcionalidad de login. Usa 'int' como tipo de ID.
 public partial class User : IdentityUser<int>
 {
-  // Identity ya provee:
-  // - Id (lo mapeamos a user_id)
-  // - UserName
-  // - Email
-  // - PasswordHash (aparentemente utiliza PBKDF2-SHA256)
-  // - etc.
+    // Identity ya provee campos como UserName, Email, PasswordHash, etc.
 
-  // Mapeamos el Id de Identity a user_id
-  [Key]
-  [Column("user_id")]
-  public override int Id { get; set; }
+    // Mapea el ID de Identity a 'user_id' y la define como llave primaria.
+    [Key]
+    [Column("user_id")]
+    public override int Id { get; set; }
 
-  // Mapeamos UserName de Identity a username
-  [Column("first_name")]
-  [StringLength(50)]
-  public string FirstName { get; set; } = null!;
+    // Campos personalizados que no existen en la clase IdentityUser.
+    [Column("first_name")]
+    [StringLength(50)]
+    public string FirstName { get; set; } = null!;
 
-  [Column("last_name")]
-  [StringLength(50)]
-  public string LastName { get; set; } = null!;
+    [Column("last_name")]
+    [StringLength(50)]
+    public string LastName { get; set; } = null!;
 
-  // Email ya existe en IdentityUser, solo lo mapeamos a la columna email :D
-  [Column("email")]
-  [StringLength(100)]
-  public override string? Email { get; set; }
+    // Mapea la propiedad Email de Identity a nuestra columna 'email'.
+    [Column("email")]
+    [StringLength(100)]
+    public override string Email { get; set; } = null!;
 
-  // PasswordHash ya existe en IdentityUser, lo mapeamos
-  [Column("password_hash")]
-  [StringLength(255)] // Cambiado a 255 porque Identity usa hashes más largos con lo de las salts y toda onda yk mr felix i dunno at the moment
-  public override string? PasswordHash { get; set; }
+    // Mapea el PasswordHash de Identity a nuestra columna 'password_hash'.
+    [Column("password_hash")]
+    [StringLength(255)] // Largo extendido para los hashes de Identity.
+    public override string PasswordHash { get; set; } = null!;
 
-  [Column("is_active")] //Puede ser util para cosas como mantener el historial de pedidos pero deshabilitar el login
-  public bool? IsActive { get; set; }
+    [Column("is_active")]
+    public bool? IsActive { get; set; }
 
-  [Column("created_at", TypeName = "datetime")]
-  public DateTime? CreatedAt { get; set; }
+    [Column("created_at", TypeName = "datetime")]
+    public DateTime? CreatedAt { get; set; }
 
-  [Column("updated_at", TypeName = "datetime")]
-  public DateTime? UpdatedAt { get; set; }
+    [Column("updated_at", TypeName = "datetime")]
+    public DateTime? UpdatedAt { get; set; }
 
-  // Relaciones (se mantienen igual) 
-  [InverseProperty("User")] 
-  public virtual ICollection<Customer> Customers { get; set; } = new List<Customer>();
-  //un user puede tener multiples roles como un admin ser customer para que tambien pueda comprar y vender (caso real, el tortillazo en mi caso)  
+    // --- Relaciones con otras tablas ---
 
-  [InverseProperty("User")]
-  public virtual ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
+    // Define la relación uno-a-muchos con la tabla de Clientes.
+    [InverseProperty("User")] // Conecta con la propiedad 'User' en la clase Customer.
+    public virtual ICollection<Customer> Customers { get; set; } = new List<Customer>();
+
+    // Define la relación uno-a-muchos con la tabla de Roles.
+    [InverseProperty("User")] // Conecta con la propiedad 'User' en la clase UserRole.
+    public virtual ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
 }
