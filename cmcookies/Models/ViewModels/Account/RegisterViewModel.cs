@@ -26,10 +26,12 @@ public class RegisterViewModel
     public string PhoneNumber { get; set; } //No exite dentro de User.cs y esto de aca lo guarda dentro de la tabla de phones que esta separada
 
     [Required(ErrorMessage = "The password is required")]
-    [StringLength(100, ErrorMessage = "The password must be at least {2} characters long", MinimumLength = 6)]
+    [StringLength(100, ErrorMessage = "The password must be at least {2} characters long", MinimumLength = 8)]
     [DataType(DataType.Password)]
     [Display(Name = "Password")]
-    public string Password { get; set; } //Temporalmente en memoria contiene la contraseña en texto plano, no se guarda en la db asi y Identity se encarga de hashearla antes de guardarla
+    [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$", 
+        ErrorMessage = "Password must have at least one uppercase, one lowercase, one digit and one special character")]
+    public string Password { get; set; }//Temporalmente en memoria contiene la contraseña en texto plano, no se guarda en la db asi y Identity se encarga de hashearla antes de guardarla
 
     [Required(ErrorMessage = "You must confirm the password")]
     [DataType(DataType.Password)]
