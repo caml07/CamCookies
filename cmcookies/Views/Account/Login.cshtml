@@ -17,17 +17,22 @@
 <body>
     <div class="auth-wrapper">
         <div class="auth-container">
-            <!-- HEADER -->
+            <!-- LADO IZQUIERDO - HEADER CON GRADIENTE NARANJA -->
             <div class="auth-header">
-                <img src="~/images/logo.png" alt="Cam Cookies Logo" />
-                <h2>Welcome Back!</h2>
-                <p>Sign in to continue to Cam Cookies🍪 :D</p>
+                <div class="auth-header-content">
+                    <img src="~/images/logo.png" alt="Cam Cookies Logo" />
+                    <h2>Welcome Back!</h2>
+                    <p>Sign in to continue to Cam Cookies 🍪 :D</p>
+                </div>
             </div>
 
-            <!-- BODY -->
+            <!-- LADO DERECHO - FORMULARIO -->
             <div class="auth-body">
                 <!-- Mostrar errores de validación generales -->
-                <div asp-validation-summary="All" class="validation-summary-errors"></div>
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div asp-validation-summary="All" class="validation-summary-errors"></div>
+                }
 
                 <form asp-action="Login" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post"> <!--Si un usuario no loggeado intenta ir a /Admin/Dashboard por ejemplo, ASP.NET lo redirige a Loggin y el GET de loggin guarda que quiso ir hacia Dashboard. Este se loggea, y el POST lee el returnURL y lo redirige-->
                     <!-- Email -->
@@ -53,18 +58,18 @@
                     <div class="form-check">
                         <input asp-for="RememberMe" class="form-check-input" />
                         <label asp-for="RememberMe" class="form-check-label">
-                            Keep me signed in for 14 days
+                            Remember me
                         </label>
                     </div>
 
                     <!-- Submit Button -->
                     <button type="submit" class="btn btn-primary btn-auth">Sign In</button>
+                    
+                    <!-- FOOTER dentro del formulario -->
+                    <div class="auth-footer">
+                        <p>Don't have an account? <a asp-action="Register" class="auth-link">Create Account</a></p>
+                    </div>
                 </form>
-            </div>
-
-            <!-- FOOTER -->
-            <div class="auth-footer">
-                <p>Don't have an account? <a asp-action="Register" class="auth-link">Create Account</a></p>
             </div>
         </div>
     </div>

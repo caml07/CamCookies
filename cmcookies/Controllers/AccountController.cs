@@ -87,7 +87,7 @@ public class AccountController : Controller
       var phone = new Phone
       {
         Phone1 = model.PhoneNumber,
-        Phone2 = null
+        Phone2 = model.PhoneNumber2
       };
       _context.Phones.Add(phone);
       await _context.SaveChangesAsync(); //Gracias a esto phone.PhoneId tiene ahora un valor

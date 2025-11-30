@@ -17,23 +17,28 @@
 <body>
 <div class="auth-wrapper">
     <div class="auth-container">
-        <!-- HEADER -->
+        <!-- LADO IZQUIERDO - HEADER CON GRADIENTE NARANJA -->
         <div class="auth-header">
-            <img src="~/images/logo.png" alt="Cam Cookies Logo"/>
-            <h2>Create Account</h2>
-            <p>Join Cam Cookies and start ordering delicious cookies!</p>
+            <div class="auth-header-content">
+                <img src="~/images/logo.png" alt="Cam Cookies Logo"/>
+                <h2>Create Account</h2>
+                <p>Join Cam Cookies and start ordering delicious cookies! 🍪</p>
+            </div>
         </div>
 
-        <!-- BODY -->
+        <!-- LADO DERECHO - FORMULARIO -->
         <div class="auth-body">
             <!-- Mostrar errores de validación generales -->
-            <div asp-validation-summary="All" class="validation-summary-errors"></div>
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div asp-validation-summary="All" class="validation-summary-errors"></div>
+            }
 
             <form asp-action="Register" method="post"> <!--lo bueno de esto es que si se cambia la ruta del controller no se necesita actualizar la vista-->
                 <!-- First Name -->
                 <div class="form-group">
                     <label asp-for="FirstName" class="form-label">First Name</label> <!-- para Generar automaticamente name y id del First Name, se envia el form y ASP.NET se encarga de llenarlo automaticamente el model.FirstName-->
-                    <input asp-for="FirstName" class="form-control" placeholder="Enter your first name"/>
+                    <input asp-for="FirstName" class="form-control" placeholder="Enter your first name" autofocus/>
                     <span asp-validation-for="FirstName" class="invalid-feedback"></span> <!--Validaciones automaticas que se dan con ASP.NET, y muestra errores de validacion automatica, lee las anotaciones del ViewModel.-->
                 </div>
 
@@ -51,11 +56,18 @@
                     <span asp-validation-for="Email" class="invalid-feedback"></span>
                 </div>
 
-                <!-- Phone Number -->
+                <!-- Phone Number 1 -->
                 <div class="form-group">
                     <label asp-for="PhoneNumber" class="form-label">Phone Number</label>
                     <input asp-for="PhoneNumber" class="form-control" placeholder="+505 8888 8888"/>
                     <span asp-validation-for="PhoneNumber" class="invalid-feedback"></span>
+                </div>
+                
+                <!--Phone Number 2 (Optional)-->
+                <div class="form-group">
+                    <label asp-for="PhoneNumber2" class="form-label">Second Phone (Optional)</label>
+                    <input asp-for="PhoneNumber2" class="form-control" placeholder="+505 7777 7767 (optional)"/>
+                    <span asp-validation-for="PhoneNumber2" class="invalid-feedback"></span>
                 </div>
 
                 <!-- Password -->
@@ -74,12 +86,12 @@
 
                 <!-- Submit Button -->
                 <button type="submit" class="btn btn-primary btn-auth">Create Account</button>
+                
+                <!-- FOOTER dentro del formulario -->
+                <div class="auth-footer">
+                    <p>Already have an account? <a asp-action="Login" class="auth-link">Sign In</a></p>
+                </div>
             </form>
-        </div>
-
-        <!-- FOOTER -->
-        <div class="auth-footer">
-            <p>Already have an account? <a asp-action="Login" class="auth-link">Sign In</a></p>
         </div>
     </div>
 </div>
