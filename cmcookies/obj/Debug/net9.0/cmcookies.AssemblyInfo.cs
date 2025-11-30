@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("cmcookies")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6ac494dce187692aa9e22118234598a31f47ade6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0ed659674d6b252a7ac0afc98aec9a8b27259437")]
 [assembly: System.Reflection.AssemblyProductAttribute("cmcookies")]
 [assembly: System.Reflection.AssemblyTitleAttribute("cmcookies")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

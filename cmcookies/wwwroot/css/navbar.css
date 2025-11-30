@@ -1,0 +1,96 @@
+/* ============================================================================
+   CMCOOKIES NAVBAR & FOOTER OVERRIDE
+   ============================================================================ */
+
+/* ========== NAVBAR ========== */
+header .navbar,
+.navbar {
+  background-color: #f29f05 !important;
+  border-bottom: 3px solid #f28705 !important;
+  padding: 1rem 1.5rem !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+header .navbar-brand,
+.navbar-brand {
+  color: #592c1c !important;
+  font-weight: 700 !important;
+  font-size: 1.8rem !important;
+}
+
+header .navbar-brand:hover,
+.navbar-brand:hover {
+  color: #8c4820 !important;
+  text-decoration: none !important;
+}
+
+header .navbar-nav .nav-link,
+.navbar-nav .nav-link {
+  color: #592c1c !important;
+  font-weight: 600 !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 8px !important;
+  transition: all 0.3s ease !important;
+}
+
+header .navbar-nav .nav-link:hover,
+.navbar-nav .nav-link:hover {
+  color: #ffffff !important;
+  background-color: #f28705 !important;
+  text-decoration: none !important;
+}
+
+header .navbar-nav .btn-link,
+.navbar-nav .btn-link {
+  color: #592c1c !important;
+  font-weight: 600 !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 8px !important;
+  text-decoration: none !important;
+}
+
+header .navbar-nav .btn-link:hover,
+.navbar-nav .btn-link:hover {
+  color: #ffffff !important;
+  background-color: #f28705 !important;
+}
+
+header .navbar-nav .user-greeting,
+.navbar-nav .user-greeting {
+  color: #8c4820 !important;
+  font-weight: 700 !important;
+}
+
+header .navbar-toggler,
+.navbar-toggler {
+  border-color: #592c1c !important;
+  border-width: 2px !important;
+}
+
+header .navbar-toggler-icon,
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(89, 44, 28, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+/* ========== FOOTER ========== */
+.footer {
+  background-color: #f29f05 !important;
+  color: #ffffff !important;
+  padding: 1.5rem 0 !important;
+  margin-top: auto;
+  border-top: 3px solid #f28705 !important;
+}
+
+.footer a {
+  color: #ffffff !important;
+  text-decoration: none !important;
+  transition: color 0.3s ease;
+  font-weight: 500 !important;
+}
+
+.footer a:hover {
+  color: #592c1c !important;
+  text-decoration: underline !important;
+}
