@@ -36,7 +36,7 @@ public class RegisterViewModel
   [StringLength(100, ErrorMessage = "The password must be at least {2} characters long", MinimumLength = 8)]
   [DataType(DataType.Password)]
   [Display(Name = "Password")]
-  [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$",
+  [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$", 
     ErrorMessage = "Password must have at least one uppercase, one lowercase, one digit and one special character")]
   public string
     Password

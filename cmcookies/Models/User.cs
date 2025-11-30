@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -49,6 +49,6 @@ public partial class User : IdentityUser<int>
   public virtual ICollection<Customer> Customers { get; set; } = new List<Customer>();
 
   // Define la relación uno-a-muchos con la tabla de Roles.
-  [InverseProperty("User")] // Conecta con la propiedad 'User' en la clase UserRole.
-  public virtual ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
+  // Identity maneja esto automáticamente, NO necesitamos [InverseProperty]
+  public virtual ICollection<IdentityUserRole<int>> UserRoles { get; set; } = new List<IdentityUserRole<int>>();
 }

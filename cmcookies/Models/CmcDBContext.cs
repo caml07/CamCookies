@@ -43,10 +43,6 @@ public partial class
   public virtual DbSet<Shipping> Shippings { get; set; }
   public virtual DbSet<CustomerShipping> CustomerShippings { get; set; }
 
-  //Pivota de roles y usuarios
-  public virtual DbSet<UserRole> UserRoles { get; set; }
-
-
   //Esto se ejecuta UNA VEZ cuando la webpage inicia y lo que hace es que configura las relaciones entre las tablas, define las PK y FK establece valores por defecto y mapea nombres de tablas/columnas.
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
@@ -75,14 +71,69 @@ public partial class
       entity.ToTable("roles");
       entity.HasKey(e => e.Id).HasName("PRIMARY");
     });
+    
+// Mapear la tabla pivote de Identity a nuestra tabla user_roles
+    modelBuilder.Entity<IdentityUserRole<int>>(entity =>
+    {
+      entity.ToTable("user_roles");
+      entity.HasKey(ur => new { ur.UserId, ur.RoleId });
+    
+      // Mapear las propiedades a las columnas de la BD
+      entity.Property(ur => ur.UserId).HasColumnName("user_id");
+      entity.Property(ur => ur.RoleId).HasColumnName("role_id");
+    
+      // Configurar las relaciones
+      entity.HasOne<User>()
+        .WithMany(u => u.UserRoles)
+        .HasForeignKey(ur => ur.UserId)
+        .IsRequired();
+        
+      entity.HasOne<Role>()
+        .WithMany(r => r.UserRoles)
+        .HasForeignKey(ur => ur.RoleId)
+        .IsRequired();
+    });
 
-    // Ignorar tablas de Identity que no usamos
-    //esto pasa por que Identity crea varias tablas por defecto que no usaremos y por eso le decimos que las ignore
-    modelBuilder.Ignore<IdentityUserLogin<int>>();
-    modelBuilder.Ignore<IdentityUserToken<int>>();
-    modelBuilder.Ignore<IdentityUserClaim<int>>();
-    modelBuilder.Ignore<IdentityRoleClaim<int>>();
-    modelBuilder.Ignore<IdentityUserRole<int>>();
+// Mapear tablas de Identity que necesitamos (aunque estén vacías)
+    modelBuilder.Entity<IdentityUserClaim<int>>(entity =>
+    {
+      entity.ToTable("user_claims");
+      entity.HasKey(uc => uc.Id);
+      entity.Property(uc => uc.Id).HasColumnName("id");
+      entity.Property(uc => uc.UserId).HasColumnName("user_id");
+      entity.Property(uc => uc.ClaimType).HasColumnName("claim_type");
+      entity.Property(uc => uc.ClaimValue).HasColumnName("claim_value");
+    });
+
+    modelBuilder.Entity<IdentityRoleClaim<int>>(entity =>
+    {
+      entity.ToTable("role_claims");
+      entity.HasKey(rc => rc.Id);
+      entity.Property(rc => rc.Id).HasColumnName("id");
+      entity.Property(rc => rc.RoleId).HasColumnName("role_id");
+      entity.Property(rc => rc.ClaimType).HasColumnName("claim_type");
+      entity.Property(rc => rc.ClaimValue).HasColumnName("claim_value");
+    });
+
+    modelBuilder.Entity<IdentityUserLogin<int>>(entity =>
+    {
+      entity.ToTable("user_logins");
+      entity.HasKey(ul => new { ul.LoginProvider, ul.ProviderKey });
+      entity.Property(ul => ul.LoginProvider).HasColumnName("login_provider");
+      entity.Property(ul => ul.ProviderKey).HasColumnName("provider_key");
+      entity.Property(ul => ul.ProviderDisplayName).HasColumnName("provider_display_name");
+      entity.Property(ul => ul.UserId).HasColumnName("user_id");
+    });
+
+    modelBuilder.Entity<IdentityUserToken<int>>(entity =>
+    {
+      entity.ToTable("user_tokens");
+      entity.HasKey(ut => new { ut.UserId, ut.LoginProvider, ut.Name });
+      entity.Property(ut => ut.UserId).HasColumnName("user_id");
+      entity.Property(ut => ut.LoginProvider).HasColumnName("login_provider");
+      entity.Property(ut => ut.Name).HasColumnName("name");
+      entity.Property(ut => ut.Value).HasColumnName("value");
+    });
 
     //Configuracion de Batches
     modelBuilder.Entity<Batch>(entity =>
@@ -234,26 +285,6 @@ public partial class
         .WithMany(p => p.Transactions)
         .OnDelete(DeleteBehavior.SetNull)
         .HasConstraintName("fk_transactions_order");
-    });
-
-    //Configuracion de UserRole (una tabla pivota entre user y role)
-    modelBuilder.Entity<UserRole>(entity =>
-    {
-      entity.HasKey(e => e.UserRoleId).HasName("PRIMARY");
-      entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
-      entity.Property(e => e.UpdatedAt)
-        .ValueGeneratedOnAddOrUpdate()
-        .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-      //Relacion de UserRole y Role
-      entity.HasOne(d => d.Role).WithMany(p => p.UserRoles)
-        .OnDelete(DeleteBehavior.ClientSetNull)
-        .HasConstraintName("fk_user_roles_role");
-
-      //Relacion de UserRole y User
-      entity.HasOne(d => d.User).WithMany(p => p.UserRoles)
-        .OnDelete(DeleteBehavior.ClientSetNull)
-        .HasConstraintName("fk_user_roles_user");
     });
 
     OnModelCreatingPartial(modelBuilder); //Nos permite extensibilidad futura

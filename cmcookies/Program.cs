@@ -90,13 +90,13 @@ using (var scope = app.Services.CreateScope())
   // │ OPCIÓN 2: LIMPIEZA TOTAL borra tod o y deja solo admin│
   // │ ⚠️ ADVERTENCIA: Esto BORRA todos los datos              │
   // └───────────────────────────────────┘
-  // await DbSeeder.CleanAndSeedAsync(context, userManager, roleManager);
+  await DbSeeder.CleanAndSeedAsync(context, userManager, roleManager);
 
   // ┌───────────────────────────────┐
   // │ OPCIÓN 3: SEED AUTOMÁTICO (solo si BD está vacía)│
   // │ Útil para producción - no borra datos existentes │
   // └───────────────────────────────┘
-  if (!await userManager.Users.AnyAsync()) await DbSeeder.SeedAsync(context, userManager, roleManager);
+  // if (!await userManager.Users.AnyAsync()) await DbSeeder.SeedAsync(context, userManager, roleManager);
 }
 
 app.Run();

@@ -68,9 +68,9 @@ public static class DbSeeder
     await context.Database.ExecuteSqlRawAsync("ALTER TABLE batches AUTO_INCREMENT = 1");
     await context.Database.ExecuteSqlRawAsync("ALTER TABLE orders AUTO_INCREMENT = 1");
     await context.Database.ExecuteSqlRawAsync("ALTER TABLE order_details AUTO_INCREMENT = 1");
-    await context.Database.ExecuteSqlRawAsync("ALTER TABLE billings AUTO_INCREMENT = 1");
+    await context.Database.ExecuteSqlRawAsync("ALTER TABLE billing AUTO_INCREMENT = 1");
     await context.Database.ExecuteSqlRawAsync("ALTER TABLE customer_billings AUTO_INCREMENT = 1");
-    await context.Database.ExecuteSqlRawAsync("ALTER TABLE shippings AUTO_INCREMENT = 1");
+    await context.Database.ExecuteSqlRawAsync("ALTER TABLE shipping AUTO_INCREMENT = 1");
     await context.Database.ExecuteSqlRawAsync("ALTER TABLE customer_shippings AUTO_INCREMENT = 1");
     await context.Database.ExecuteSqlRawAsync("ALTER TABLE transactions AUTO_INCREMENT = 1");
 
@@ -419,9 +419,9 @@ public static class DbSeeder
 
       var initialCapital = new Transaction
       {
-        TransactionType = "initial_capital",
-        Amount = 2000.00m,
-        Description = "Inyección de capital inicial",
+        TransactionType = "material_purchase",
+        Amount = -2000.00m,
+        Description = "Capital inicial - Inversion de materialesl",
         CreatedAt = DateTime.Now
       };
 

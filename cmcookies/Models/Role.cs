@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -30,10 +30,11 @@ public partial class Role : IdentityRole<int>
 
   /*
    * nos permite navegar desde un role que tiene todos los usuarios a otro role que solo ciertos usuarios tendran, como lo de admins que pueden ser customers
+   * NOTA: Ya NO necesitamos [InverseProperty] porque Identity maneja esto automáticamente
    */
 
-  // Relaciones (se mantienen igual)
-  [InverseProperty("Role")] public virtual ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
+  // Relaciones - Identity maneja esto internamente, solo lo dejamos para queries si es necesario
+  public virtual ICollection<IdentityUserRole<int>> UserRoles { get; set; } = new List<IdentityUserRole<int>>();
 }
 /*
  * ===================================================================
