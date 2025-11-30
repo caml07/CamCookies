@@ -84,13 +84,13 @@ using (var scope = app.Services.CreateScope())
   // │ OPCIÓN 1: SEED COMPLETO (admin + customer + galletas)  │
   // │ Descomentar para poblar con datos completos             │
   // └───────────────────────────────────┘
-  // await DbSeeder.SeedAsync(context, userManager, roleManager);
+  await DbSeeder.SeedAsync(context, userManager, roleManager);
 
   // ┌───────────────────────────────────┐
   // │ OPCIÓN 2: LIMPIEZA TOTAL borra tod o y deja solo admin│
   // │ ⚠️ ADVERTENCIA: Esto BORRA todos los datos              │
   // └───────────────────────────────────┘
-  await DbSeeder.CleanAndSeedAsync(context, userManager, roleManager);
+  // await DbSeeder.CleanAndSeedAsync(context, userManager, roleManager);
 
   // ┌───────────────────────────────┐
   // │ OPCIÓN 3: SEED AUTOMÁTICO (solo si BD está vacía)│

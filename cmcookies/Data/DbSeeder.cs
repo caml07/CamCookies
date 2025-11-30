@@ -167,11 +167,13 @@ public static class DbSeeder
     // ============================================================================
     // 2. CREAR USUARIOS (Admin + Customer)
     // ============================================================================
-    if (!await userManager.Users.AnyAsync())
-    {
-      Console.WriteLine("👤 Creando usuarios...");
+    Console.WriteLine("👤 Verificando usuarios...");
 
-      // --- ADMIN ---
+    // --- ADMIN ---
+    var adminExists = await userManager.FindByEmailAsync("admin@camcookies.com");
+    if (adminExists == null)
+    {
+      Console.WriteLine("   Creando admin...");
       var adminUser = new User
       {
         UserName = "admin@camcookies.com",
@@ -207,10 +209,19 @@ public static class DbSeeder
         context.Customers.Add(adminCustomer);
         await context.SaveChangesAsync();
 
-        Console.WriteLine("✅ Admin creado: admin@camcookies.com / Admin@123");
+        Console.WriteLine("   ✅ Admin creado: admin@camcookies.com / Admin@123");
       }
+    }
+    else
+    {
+      Console.WriteLine("   ⏭️ Admin ya existe, omitiendo...");
+    }
 
-      // --- CUSTOMER ---
+    // --- CUSTOMER ---
+    var customerExists = await userManager.FindByEmailAsync("customer@test.com");
+    if (customerExists == null)
+    {
+      Console.WriteLine("   Creando customer...");
       var customerUser = new User
       {
         UserName = "customer@test.com",
@@ -245,8 +256,17 @@ public static class DbSeeder
         context.Customers.Add(customer);
         await context.SaveChangesAsync();
 
-        Console.WriteLine("✅ Customer creado: customer@test.com / Customer@123");
+        Console.WriteLine("   ✅ Customer creado: customer@test.com / Customer@123");
       }
+      else
+      {
+        Console.WriteLine("   ❌ Error al crear customer:");
+        foreach (var error in customerResult.Errors) Console.WriteLine($"      - {error.Description}");
+      }
+    }
+    else
+    {
+      Console.WriteLine("   ⏭️ Customer ya existe, omitiendo...");
     }
 
     // ============================================================================

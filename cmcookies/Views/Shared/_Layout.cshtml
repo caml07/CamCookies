@@ -22,11 +22,45 @@
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </li>
+        
+                    @* Mostrar link de Admin solo si el usuario es Admin *@
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Admin" asp-action="Dashboard">Admin Dashboard</a>
+                        </li>
+                    }
+                </ul>
+    
+                @* Sección de autenticación - derecha del navbar *@
+                <ul class="navbar-nav">
+                    @if (User.Identity.IsAuthenticated) //devuelve true si hay usuario loggeado, si no devuelve false, y ASP.NET lo maneja automaticamente con cookies
+                    {
+                        @* Usuario está logueado *@
+                        <li class="nav-item">
+                            <span class="nav-link text-dark">HIIIIII, @User.Identity.Name</span>
+                        </li>
+                        <li class="nav-item">
+                            <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-link nav-link text-dark">Logout</button> <!--un form con un metodo POST, protege de ataques CSRF-->
+                            </form>
+                        </li>
+                    }
+                    else
+                    {
+                        @* Usuario NO está logueado *@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Account" asp-action="Login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Account" asp-action="Register">Register</a>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
