@@ -23,11 +23,10 @@ public partial class Role : IdentityRole<int>
   // Mapeamos el Id de Identity a role_id
   [Key] [Column("role_id")] public override int Id { get; set; }
 
-  // Mapeamos Name de Identity a role_type
-  [Column("role_type")]
-  [StringLength(50)]
+  // Name se mapea automáticamente a la columna "Name"
+  [Column("Name")]
+  [StringLength(256)]
   public override string? Name { get; set; }
-
   /*
    * nos permite navegar desde un role que tiene todos los usuarios a otro role que solo ciertos usuarios tendran, como lo de admins que pueden ser customers
    * NOTA: Ya NO necesitamos [InverseProperty] porque Identity maneja esto automáticamente

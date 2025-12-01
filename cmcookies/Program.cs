@@ -20,22 +20,24 @@ builder.Services.AddDbContext<CmcDBContext>(options =>
 builder.Services.AddIdentity<User, Role>(options =>
   {
     // Configuración de contraseñas
-    options.Password.RequireDigit = true; //Requiere números
-    options.Password.RequireLowercase = true; //Requiere minúsculas
-    options.Password.RequireUppercase = true; //Requiere mayúsculas
-    options.Password.RequireNonAlphanumeric = true; //Requiere caracteres especiales
-    options.Password.RequiredLength = 8; // Mínimo 8 caracteres
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequiredLength = 8;
 
     // Configuración de usuario
-    options.User.RequireUniqueEmail = true; // Email debe ser único
+    options.User.RequireUniqueEmail = true;
 
-    // Configuración de bloqueo de cuenta (lockout)
-    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5); // Bloqueo por 5 minutos
-    options.Lockout.MaxFailedAccessAttempts = 5; // Máximo 5 intentos fallidos
-    options.Lockout.AllowedForNewUsers = true; // Habilitar bloqueo para nuevos usuarios
+    // Configuración de bloqueo de cuenta
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    options.Lockout.AllowedForNewUsers = true;
   })
-  .AddEntityFrameworkStores<CmcDBContext>() // Usar nuestro DbContext
-  .AddDefaultTokenProviders(); // Para reset de contraseñas, confirmación de email, etc.
+  .AddEntityFrameworkStores<CmcDBContext>()
+  .AddDefaultTokenProviders()
+  .AddRoleManager<RoleManager<Role>>()  // ← AGREGAR ESTA LÍNEA
+  .AddUserManager<UserManager<User>>();  // ← AGREGAR ESTA LÍNEA
 
 // Configurar cookies de autenticación
 builder.Services.ConfigureApplicationCookie(options =>
@@ -84,7 +86,7 @@ using (var scope = app.Services.CreateScope())
   // │ OPCIÓN 1: SEED COMPLETO (admin + customer + galletas)  │
   // │ Descomentar para poblar con datos completos             │
   // └───────────────────────────────────┘
-  await DbSeeder.SeedAsync(context, userManager, roleManager);
+  // await DbSeeder.SeedAsync(context, userManager, roleManager);
 
   // ┌───────────────────────────────────┐
   // │ OPCIÓN 2: LIMPIEZA TOTAL borra tod o y deja solo admin│
@@ -96,7 +98,7 @@ using (var scope = app.Services.CreateScope())
   // │ OPCIÓN 3: SEED AUTOMÁTICO (solo si BD está vacía)│
   // │ Útil para producción - no borra datos existentes │
   // └───────────────────────────────┘
-  // if (!await userManager.Users.AnyAsync()) await DbSeeder.SeedAsync(context, userManager, roleManager);
+  if (!await userManager.Users.AnyAsync()) await DbSeeder.SeedAsync(context, userManager, roleManager);
 }
 
 app.Run();

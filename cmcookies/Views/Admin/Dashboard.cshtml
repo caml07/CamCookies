@@ -1,0 +1,346 @@
+@model cmcookies.Models.ViewModels.Admin.DashboardViewModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<!-- Custom CSS para el Dashboard -->
+<style>
+    .dashboard-container {
+        padding: 2rem 0;
+    }
+
+    /* Tarjetas de estadísticas */
+    .stat-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s, box-shadow 0.2s;
+        border-left: 4px solid #f29f05;
+        margin-bottom: 1.5rem;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .stat-card h3 {
+        color: #592c1c;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+        letter-spacing: 0.5px;
+    }
+
+    .stat-card .value {
+        color: #f28705;
+        font-size: 2.5rem;
+        font-weight: 700;
+        line-height: 1;
+    }
+
+    .stat-card .label {
+        color: #8c4820;
+        font-size: 0.85rem;
+        margin-top: 0.5rem;
+    }
+
+    /* Tarjeta de ganancia */
+    .profit-positive {
+        border-left-color: #28a745;
+    }
+
+    .profit-negative {
+        border-left-color: #dc3545;
+    }
+
+    .profit-positive .value {
+        color: #28a745;
+    }
+
+    .profit-negative .value {
+        color: #dc3545;
+    }
+
+    /* Secciones */
+    .section-title {
+        color: #592c1c;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 2rem 0 1rem 0;
+        padding-bottom: 0.5rem;
+        border-bottom: 3px solid #f29f05;
+    }
+
+    /* Tablas */
+    .custom-table {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .custom-table thead {
+        background: #f29f05;
+        color: #592c1c;
+    }
+
+    .custom-table thead th {
+        font-weight: 700;
+        padding: 1rem;
+        border: none;
+    }
+
+    .custom-table tbody tr {
+        border-bottom: 1px solid #f0f0f0;
+        transition: background-color 0.2s;
+    }
+
+    .custom-table tbody tr:hover {
+        background-color: #fff8e6;
+    }
+
+    .custom-table tbody td {
+        padding: 1rem;
+        vertical-align: middle;
+    }
+
+    /* Badges de estado */
+    .badge-pending {
+        background-color: #ffc107;
+        color: #000;
+    }
+
+    .badge-delivered {
+        background-color: #28a745;
+        color: #fff;
+    }
+
+    .badge-cancelled {
+        background-color: #dc3545;
+        color: #fff;
+    }
+
+    .badge-on_preparation {
+        background-color: #17a2b8;
+        color: #fff;
+    }
+
+    /* Alertas de stock */
+    .alert-custom {
+        border-left: 4px solid #dc3545;
+        background: #fff5f5;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 8px;
+    }
+
+    .alert-custom strong {
+        color: #dc3545;
+    }
+</style>
+
+<div class="dashboard-container">
+    <div class="container">
+        <!-- Header -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <h1 style="color: #592c1c; font-weight: 700;">
+                    <i class="bi bi-speedometer2"></i> Admin Dashboard
+                </h1>
+                <p style="color: #8c4820;">Bienvenido al panel de administración de Cam Cookies</p>
+            </div>
+        </div>
+
+        <!-- ESTADÍSTICAS FINANCIERAS -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <h3>Total Revenue</h3>
+                    <div class="value">C$@Model.TotalRevenue.ToString("N2")</div>
+                    <div class="label">Ingresos totales</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <h3>Total Costs</h3>
+                    <div class="value">C$@Model.TotalCosts.ToString("N2")</div>
+                    <div class="label">Costos de producción</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card @(Model.NetProfit >= 0 ? "profit-positive" : "profit-negative")">
+                    <h3>Net Profit</h3>
+                    <div class="value">C$@Model.NetProfit.ToString("N2")</div>
+                    <div class="label">Ganancia neta</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTADORES DE PEDIDOS Y GALLETAS -->
+        <div class="row">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <h3>Total Orders</h3>
+                    <div class="value">@Model.TotalOrders</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <h3>Pending</h3>
+                    <div class="value">@Model.PendingOrders</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <h3>Completed</h3>
+                    <div class="value">@Model.CompletedOrders</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <h3>Total Cookies</h3>
+                    <div class="value">@Model.TotalCookies</div>
+                    @if (Model.LowStockCookies > 0)
+                    {
+                        <div class="label" style="color: #dc3545;">⚠️ @Model.LowStockCookies low stock</div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- GALLETA MÁS VENDIDA -->
+        <h2 class="section-title">🍪 Best-Selling Cookie</h2>
+        @if (Model.TopSellingCookies.Any())
+        {
+            var topCookie = Model.TopSellingCookies.First();
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="stat-card" style="border-left-width: 6px;">
+                        <div class="row align-items-center">
+                            <div class="col-md-4">
+                                <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">👑 #1 BEST SELLER</h3>
+                                <div class="value" style="font-size: 2rem;">@topCookie.CookieName</div>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <h3>Units Sold</h3>
+                                <div class="value">@topCookie.TotalSold</div>
+                                <div class="label">total cookies</div>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <h3>Total Revenue</h3>
+                                <div class="value" style="color: #28a745;">C$@topCookie.TotalRevenue.ToString("N2")</div>
+                                <div class="label">from this cookie</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                No sales data available yet.
+            </div>
+        }
+
+        <!-- TOP 5 CLIENTES -->
+        <h2 class="section-title">👥 Top 5 Customers</h2>
+        @if (Model.TopCustomers.Any())
+        {
+            <div class="table-responsive">
+                <table class="table custom-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Customer Name</th>
+                            <th>Email</th>
+                            <th>Total Orders</th>
+                            <th>Total Spent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.TopCustomers.Count; i++)
+                        {
+                            var customer = Model.TopCustomers[i];
+                            <tr>
+                                <td><strong>@(i + 1)</strong></td>
+                                <td>@customer.CustomerName</td>
+                                <td>@customer.Email</td>
+                                <td>@customer.TotalOrders</td>
+                                <td style="color: #28a745; font-weight: 600;">C$@customer.TotalSpent.ToString("N2")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                No customer data available yet.
+            </div>
+        }
+
+        <!-- ÚLTIMOS 10 PEDIDOS -->
+        <h2 class="section-title">📦 Recent Orders</h2>
+        @if (Model.RecentOrders.Any())
+        {
+            <div class="table-responsive">
+                <table class="table custom-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Total Amount</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var order in Model.RecentOrders)
+                        {
+                            <tr>
+                                <td><strong>#@order.OrderId</strong></td>
+                                <td>@order.CustomerName</td>
+                                <td style="font-weight: 600;">C$@order.TotalAmount.ToString("N2")</td>
+                                <td>
+                                    <span class="badge badge-@order.Status">
+                                        @order.Status.ToUpper()
+                                    </span>
+                                </td>
+                                <td>@order.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                No orders yet.
+            </div>
+        }
+
+        <!-- ALERTAS DE STOCK BAJO -->
+        @if (Model.LowStockAlerts.Any())
+        {
+            <h2 class="section-title">⚠️ Low Stock Alerts</h2>
+            <div class="row">
+                @foreach (var alert in Model.LowStockAlerts)
+                {
+                    <div class="col-md-6">
+                        <div class="alert-custom">
+                            <strong>@alert.ItemType:</strong> @alert.ItemName
+                            <br>
+                            <small>Current stock: @alert.CurrentStock @alert.Unit</small>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>

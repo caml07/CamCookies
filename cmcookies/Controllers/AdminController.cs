@@ -58,7 +58,7 @@ public class AdminController : Controller
                     TotalSold = g.Sum(x => x.Qty),
                     TotalRevenue = g.Sum(x => x.UnitPrice * x.Qty)
                 }
-            ).Take(5).ToListAsync(),
+            ).Take(1).ToListAsync(),
 
             // ===== TOP CUSTOMERS (Top 5) =====
             TopCustomers = await _context.Orders

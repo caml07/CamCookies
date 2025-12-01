@@ -9,14 +9,14 @@
    ============================================================================ */
 :root {
   /* Paleta de colores principal */
-  --primary: #f29f05; /* Naranja principal */
-  --secondary: #f28705; /* Naranja oscuro */
-  --accent: #bf5b04; /* Marrón naranja */
-  --dark: #8c4820; /* Marrón */
-  --darker: #592c1c; /* Marrón oscuro */
+  --primary: #f29f05;       /* Naranja principal */
+  --secondary: #f28705;     /* Naranja oscuro */
+  --accent: #bf5b04;        /* Marrón naranja */
+  --dark: #8c4820;          /* Marrón */
+  --darker: #592c1c;        /* Marrón oscuro */
 
   /* Colores complementarios */
-  --light: #fef5e7; /* Crema claro */
+  --light: #fef5e7;         /* Crema claro */
   --white: #ffffff;
   --gray-100: #f8f9fa;
   --gray-200: #e9ecef;
@@ -43,13 +43,13 @@
   --font-weight-bold: 700;
 
   /* Espaciado */
-  --spacing-xs: 0.25rem; /* 4px */
-  --spacing-sm: 0.5rem; /* 8px */
-  --spacing-md: 1rem; /* 16px */
-  --spacing-lg: 1.5rem; /* 24px */
-  --spacing-xl: 2rem; /* 32px */
-  --spacing-2xl: 3rem; /* 48px */
-  --spacing-3xl: 4rem; /* 64px */
+  --spacing-xs: 0.25rem;    /* 4px */
+  --spacing-sm: 0.5rem;     /* 8px */
+  --spacing-md: 1rem;       /* 16px */
+  --spacing-lg: 1.5rem;     /* 24px */
+  --spacing-xl: 2rem;       /* 32px */
+  --spacing-2xl: 3rem;      /* 48px */
+  --spacing-3xl: 4rem;      /* 64px */
 
   /* Border radius */
   --radius-sm: 4px;
@@ -71,7 +71,7 @@
 }
 
 /* ============================================================================
-   RESET Y BASE
+   RESET Y BASE - STICKY FOOTER (MÉTODO INFALIBLE)
    ============================================================================ */
 * {
   margin: 0;
@@ -83,6 +83,7 @@ html {
   font-size: var(--font-size-base);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100%;
 }
 
 body {
@@ -90,6 +91,14 @@ body {
   color: var(--gray-900);
   background-color: var(--gray-100);
   line-height: 1.6;
+  /* STICKY FOOTER - Métod o Position (compatible con Bootstrap) */
+  position: relative;
+  min-height: 100vh;
+  padding-bottom: 80px; /* Altura del footer */
+}
+
+.content-wrapper {
+  min-height: calc(100vh - 80px); /* 100vh menos altura del footer */
 }
 
 /* ============================================================================
@@ -102,30 +111,12 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--darker);
 }
 
-h1 {
-  font-size: 2.5rem;
-  margin-bottom: var(--spacing-lg);
-}
-
-h2 {
-  font-size: 2rem;
-}
-
-h3 {
-  font-size: 1.75rem;
-}
-
-h4 {
-  font-size: 1.5rem;
-}
-
-h5 {
-  font-size: 1.25rem;
-}
-
-h6 {
-  font-size: 1rem;
-}
+h1 { font-size: 2.5rem; margin-bottom: var(--spacing-lg); }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
 
 p {
   margin-bottom: var(--spacing-md);
@@ -218,66 +209,97 @@ a:hover {
 }
 
 /* ============================================================================
-   NAVBAR
+   NAVBAR - ESTILO NARANJA CONSISTENTE
    ============================================================================ */
+header .navbar,
 .navbar {
-  background-color: var(--white);
-  box-shadow: var(--shadow-sm);
-  padding: var(--spacing-md) 0;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+  background-color: var(--primary) !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 1rem 1.5rem !important;
+  border-bottom: 3px solid var(--secondary);
 }
 
-.navbar-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--spacing-lg);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+header .navbar-brand,
+.navbar .navbar-brand {
+  color: var(--darker) !important;
+  font-weight: 700 !important;
+  font-size: 1.8rem !important;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-.navbar-brand {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  font-size: 1.5rem;
-  font-weight: var(--font-weight-bold);
-  color: var(--darker);
-  text-decoration: none;
+header .navbar-brand:hover,
+.navbar .navbar-brand:hover {
+  color: var(--dark) !important;
+  transform: scale(1.05);
+  text-decoration: none !important;
 }
 
-.navbar-brand img {
-  height: 40px;
-  width: auto;
+header .navbar-nav .nav-link,
+.navbar .navbar-nav .nav-link {
+  color: var(--darker) !important;
+  font-weight: 600 !important;
+  padding: 0.5rem 1rem !important;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  margin: 0 0.25rem;
 }
 
-.navbar-brand:hover {
-  color: var(--primary);
-  text-decoration: none;
+header .navbar-nav .nav-link:hover,
+.navbar .navbar-nav .nav-link:hover {
+  color: var(--white) !important;
+  background-color: var(--secondary) !important;
+  transform: translateY(-2px);
+  text-decoration: none !important;
 }
 
-.navbar-nav {
-  display: flex;
-  list-style: none;
-  gap: var(--spacing-lg);
-  align-items: center;
+/* Botón de logout con estilo de link */
+header .navbar-nav .btn-link,
+.navbar .navbar-nav .btn-link {
+  color: var(--darker) !important;
+  text-decoration: none !important;
+  font-weight: 600 !important;
+  padding: 0.5rem 1rem !important;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  border: none !important;
+  margin: 0 0.25rem;
+  background: transparent !important;
 }
 
-.nav-link {
-  color: var(--gray-700);
-  font-weight: var(--font-weight-medium);
-  transition: color var(--transition-fast);
+header .navbar-nav .btn-link:hover,
+.navbar .navbar-nav .btn-link:hover {
+  color: var(--white) !important;
+  background-color: var(--secondary) !important;
+  transform: translateY(-2px);
+  text-decoration: none !important;
 }
 
-.nav-link:hover {
-  color: var(--primary);
-  text-decoration: none;
+/* Saludo del usuario */
+header .navbar-nav .user-greeting,
+.navbar .navbar-nav .user-greeting {
+  color: var(--dark) !important;
+  font-weight: 700 !important;
+  cursor: default;
+  padding: 0.5rem 1rem !important;
 }
 
-.nav-link.active {
-  color: var(--primary);
+/* Navbar toggler para móvil */
+header .navbar-toggler,
+.navbar .navbar-toggler {
+  border-color: var(--darker) !important;
+  border-width: 2px !important;
+}
+
+header .navbar-toggler-icon,
+.navbar .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(89, 44, 28, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+header .navbar-toggler:focus,
+.navbar .navbar-toggler:focus {
+  box-shadow: 0 0 0 0.25rem rgba(242, 159, 5, 0.5) !important;
 }
 
 /* ============================================================================
@@ -346,25 +368,10 @@ a:hover {
   margin-bottom: var(--spacing-lg);
 }
 
-.col-12 {
-  flex: 0 0 100%;
-  max-width: 100%;
-}
-
-.col-6 {
-  flex: 0 0 50%;
-  max-width: 50%;
-}
-
-.col-4 {
-  flex: 0 0 33.333333%;
-  max-width: 33.333333%;
-}
-
-.col-3 {
-  flex: 0 0 25%;
-  max-width: 25%;
-}
+.col-12 { flex: 0 0 100%; max-width: 100%; }
+.col-6 { flex: 0 0 50%; max-width: 50%; }
+.col-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
+.col-3 { flex: 0 0 25%; max-width: 25%; }
 
 @media (max-width: 768px) {
   .col-sm-12 {
@@ -376,110 +383,74 @@ a:hover {
 /* ============================================================================
    UTILIDADES
    ============================================================================ */
-.text-center {
-  text-align: center;
-}
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-left { text-align: left; }
 
-.text-right {
-  text-align: right;
-}
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: var(--spacing-xs); }
+.mt-2 { margin-top: var(--spacing-sm); }
+.mt-3 { margin-top: var(--spacing-md); }
+.mt-4 { margin-top: var(--spacing-lg); }
+.mt-5 { margin-top: var(--spacing-xl); }
 
-.text-left {
-  text-align: left;
-}
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: var(--spacing-xs); }
+.mb-2 { margin-bottom: var(--spacing-sm); }
+.mb-3 { margin-bottom: var(--spacing-md); }
+.mb-4 { margin-bottom: var(--spacing-lg); }
+.mb-5 { margin-bottom: var(--spacing-xl); }
 
-.mt-0 {
-  margin-top: 0;
-}
+.pt-3 { padding-top: var(--spacing-md); }
+.pt-4 { padding-top: var(--spacing-lg); }
+.pt-5 { padding-top: var(--spacing-xl); }
 
-.mt-1 {
-  margin-top: var(--spacing-xs);
-}
-
-.mt-2 {
-  margin-top: var(--spacing-sm);
-}
-
-.mt-3 {
-  margin-top: var(--spacing-md);
-}
-
-.mt-4 {
-  margin-top: var(--spacing-lg);
-}
-
-.mt-5 {
-  margin-top: var(--spacing-xl);
-}
-
-.mb-0 {
-  margin-bottom: 0;
-}
-
-.mb-1 {
-  margin-bottom: var(--spacing-xs);
-}
-
-.mb-2 {
-  margin-bottom: var(--spacing-sm);
-}
-
-.mb-3 {
-  margin-bottom: var(--spacing-md);
-}
-
-.mb-4 {
-  margin-bottom: var(--spacing-lg);
-}
-
-.mb-5 {
-  margin-bottom: var(--spacing-xl);
-}
-
-.pt-3 {
-  padding-top: var(--spacing-md);
-}
-
-.pt-4 {
-  padding-top: var(--spacing-lg);
-}
-
-.pt-5 {
-  padding-top: var(--spacing-xl);
-}
-
-.pb-3 {
-  padding-bottom: var(--spacing-md);
-}
-
-.pb-4 {
-  padding-bottom: var(--spacing-lg);
-}
-
-.pb-5 {
-  padding-bottom: var(--spacing-xl);
-}
+.pb-3 { padding-bottom: var(--spacing-md); }
+.pb-4 { padding-bottom: var(--spacing-lg); }
+.pb-5 { padding-bottom: var(--spacing-xl); }
 
 /* ============================================================================
-   FOOTER STYLES
+   FOOTER - STICKY BOTTOM CON DISEÑO NARANJA
    ============================================================================ */
-
 .footer {
-  background-color: #2b2b2b;
-  color: #f29f05;
+  /* STICKY FOOTER - Position absolute */
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 80px; /* IMPORTANTE: Esta altura debe coincidir con padding-bottom del body */
+
+  background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+  color: var(--light);
   padding: 1.5rem 0;
-  margin-top: auto;
-  border-top: 3px solid #f28705;
+  border-top: 4px solid var(--primary);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  align-items: center; /* Centra verticalmente el contenido */
+}
+
+.footer .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.95rem;
 }
 
 .footer a {
-  color: #f29f05;
+  color: var(--primary);
   text-decoration: none;
-  transition: color 0.3s ease;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
 }
 
 .footer a:hover {
-  color: #ffffff;
+  color: var(--white);
+  background-color: rgba(242, 159, 5, 0.2);
+  text-decoration: none;
 }
 
 /* ============================================================================
@@ -497,109 +468,10 @@ a:hover {
   .container {
     padding: 0 var(--spacing-md);
   }
-}
 
-/* ============================================================================
-   NAVBAR STYLES - Consistente con Auth pages
-   ============================================================================ */
-
-/* Navbar principal - mismo estilo que auth pages */
-header .navbar,
-.navbar {
-  background-color: #f29f05 !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 1rem 1.5rem !important;
-  border-bottom: 3px solid #f28705;
-  position: relative;
-}
-
-/* Brand (logo/nombre) */
-header .navbar-brand,
-.navbar .navbar-brand {
-  color: #592c1c !important;
-  font-weight: 700 !important;
-  font-size: 1.8rem !important;
-  letter-spacing: 1px;
-  transition: all 0.3s ease;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-header .navbar-brand:hover,
-.navbar .navbar-brand:hover {
-  color: #8c4820 !important;
-  transform: scale(1.05);
-  text-decoration: none !important;
-}
-
-/* Links del navbar */
-header .navbar-nav .nav-link,
-.navbar .navbar-nav .nav-link {
-  color: #592c1c !important;
-  font-weight: 600 !important;
-  padding: 0.5rem 1rem !important;
-  transition: all 0.3s ease;
-  border-radius: 8px;
-  margin: 0 0.25rem;
-}
-
-header .navbar-nav .nav-link:hover,
-.navbar .navbar-nav .nav-link:hover {
-  color: #ffffff !important;
-  background-color: #f28705 !important;
-  transform: translateY(-2px);
-  text-decoration: none !important;
-}
-
-/* Botón de logout con estilo de link */
-header .navbar-nav .btn-link,
-.navbar .navbar-nav .btn-link {
-  color: #592c1c !important;
-  text-decoration: none !important;
-  font-weight: 600 !important;
-  padding: 0.5rem 1rem !important;
-  transition: all 0.3s ease;
-  border-radius: 8px;
-  border: none !important;
-  margin: 0 0.25rem;
-  background: transparent !important;
-}
-
-header .navbar-nav .btn-link:hover,
-.navbar .navbar-nav .btn-link:hover {
-  color: #ffffff !important;
-  background-color: #f28705 !important;
-  transform: translateY(-2px);
-  text-decoration: none !important;
-}
-
-/* Saludo del usuario */
-header .navbar-nav .user-greeting,
-.navbar .navbar-nav .user-greeting {
-  color: #8c4820 !important;
-  font-weight: 700 !important;
-  cursor: default;
-  padding: 0.5rem 1rem !important;
-}
-
-header .navbar-nav .user-greeting:hover,
-.navbar .navbar-nav .user-greeting:hover {
-  background-color: transparent !important;
-  transform: none !important;
-}
-
-/* Navbar toggler para móvil */
-header .navbar-toggler,
-.navbar .navbar-toggler {
-  border-color: #592c1c !important;
-  border-width: 2px !important;
-}
-
-header .navbar-toggler-icon,
-.navbar .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(89, 44, 28, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
-}
-
-header .navbar-toggler:focus,
-.navbar .navbar-toggler:focus {
-  box-shadow: 0 0 0 0.25rem rgba(242, 159, 5, 0.5) !important;
+  .footer .container {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
 }

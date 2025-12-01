@@ -72,7 +72,7 @@ public partial class
       entity.HasKey(e => e.Id).HasName("PRIMARY");
     });
     
-// Mapear la tabla pivote de Identity a nuestra tabla user_roles
+    // Mapear la tabla pivote de Identity a nuestra tabla user_roles
     modelBuilder.Entity<IdentityUserRole<int>>(entity =>
     {
       entity.ToTable("user_roles");
@@ -94,7 +94,7 @@ public partial class
         .IsRequired();
     });
 
-// Mapear tablas de Identity que necesitamos (aunque estén vacías)
+    // Mapear tablas de Identity que necesitamos (aunque estén vacías)
     modelBuilder.Entity<IdentityUserClaim<int>>(entity =>
     {
       entity.ToTable("user_claims");
