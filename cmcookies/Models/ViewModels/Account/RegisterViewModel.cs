@@ -25,8 +25,13 @@ public class RegisterViewModel
   [Phone(ErrorMessage = "The phone number is not a valid phone number")]
   [StringLength(20, ErrorMessage = "The phone number cannot be longer than 20 characters")]
   [Display(Name = "Phone Number")]
-  public string PhoneNumber{get;set; } //No exite dentro de User.cs y esto de aca lo guarda dentro de la tabla de phones que esta separada
-  
+  public string
+    PhoneNumber
+  {
+    get;
+    set;
+  } //No exite dentro de User.cs y esto de aca lo guarda dentro de la tabla de phones que esta separada
+
   [Phone(ErrorMessage = "The second phone number is not valid")]
   [StringLength(20, ErrorMessage = "The second phone number cannot be longer than 20 characters")]
   [Display(Name = "Second Phone Number (Optional)")]
@@ -36,7 +41,7 @@ public class RegisterViewModel
   [StringLength(100, ErrorMessage = "The password must be at least {2} characters long", MinimumLength = 8)]
   [DataType(DataType.Password)]
   [Display(Name = "Password")]
-  [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$", 
+  [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$",
     ErrorMessage = "Password must have at least one uppercase, one lowercase, one digit and one special character")]
   public string
     Password

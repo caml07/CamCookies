@@ -1,4 +1,4 @@
-@model cmcookies.Models.ViewModels.Admin.DashboardViewModel 
+@model cmcookies.Models.ViewModels.Admin.DashboardViewModel
 @{
     ViewData["Title"] = "Admin Dashboard";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -231,7 +231,8 @@
                             </div>
                             <div class="col-md-4 text-center">
                                 <h3>Total Revenue</h3>
-                                <div class="value" style="color: #28a745;">C$@topCookie.TotalRevenue.ToString("N2")</div>
+                                <div class="value" style="color: #28a745;">
+                                    C$@topCookie.TotalRevenue.ToString("N2")</div>
                                 <div class="label">from this cookie</div>
                             </div>
                         </div>
@@ -253,26 +254,26 @@
             <div class="table-responsive">
                 <table class="table custom-table">
                     <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Customer Name</th>
-                            <th>Email</th>
-                            <th>Total Orders</th>
-                            <th>Total Spent</th>
-                        </tr>
+                    <tr>
+                        <th>#</th>
+                        <th>Customer Name</th>
+                        <th>Email</th>
+                        <th>Total Orders</th>
+                        <th>Total Spent</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        @for (int i = 0; i < Model.TopCustomers.Count; i++)
-                        {
-                            var customer = Model.TopCustomers[i];
-                            <tr>
-                                <td><strong>@(i + 1)</strong></td>
-                                <td>@customer.CustomerName</td>
-                                <td>@customer.Email</td>
-                                <td>@customer.TotalOrders</td>
-                                <td style="color: #28a745; font-weight: 600;">C$@customer.TotalSpent.ToString("N2")</td>
-                            </tr>
-                        }
+                    @for (var i = 0; i < Model.TopCustomers.Count; i++)
+                    {
+                        var customer = Model.TopCustomers[i];
+                        <tr>
+                            <td><strong>@(i + 1)</strong></td>
+                            <td>@customer.CustomerName</td>
+                            <td>@customer.Email</td>
+                            <td>@customer.TotalOrders</td>
+                            <td style="color: #28a745; font-weight: 600;">C$@customer.TotalSpent.ToString("N2")</td>
+                        </tr>
+                    }
                     </tbody>
                 </table>
             </div>
@@ -291,29 +292,29 @@
             <div class="table-responsive">
                 <table class="table custom-table">
                     <thead>
-                        <tr>
-                            <th>Order ID</th>
-                            <th>Customer</th>
-                            <th>Total Amount</th>
-                            <th>Status</th>
-                            <th>Date</th>
-                        </tr>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Total Amount</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        @foreach (var order in Model.RecentOrders)
-                        {
-                            <tr>
-                                <td><strong>#@order.OrderId</strong></td>
-                                <td>@order.CustomerName</td>
-                                <td style="font-weight: 600;">C$@order.TotalAmount.ToString("N2")</td>
-                                <td>
+                    @foreach (var order in Model.RecentOrders)
+                    {
+                        <tr>
+                            <td><strong>#@order.OrderId</strong></td>
+                            <td>@order.CustomerName</td>
+                            <td style="font-weight: 600;">C$@order.TotalAmount.ToString("N2")</td>
+                            <td>
                                     <span class="badge badge-@order.Status">
                                         @order.Status.ToUpper()
                                     </span>
-                                </td>
-                                <td>@order.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
-                            </tr>
-                        }
+                            </td>
+                            <td>@order.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                        </tr>
+                    }
                     </tbody>
                 </table>
             </div>

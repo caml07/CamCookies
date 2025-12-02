@@ -71,23 +71,23 @@ public partial class
       entity.ToTable("roles");
       entity.HasKey(e => e.Id).HasName("PRIMARY");
     });
-    
+
     // Mapear la tabla pivote de Identity a nuestra tabla user_roles
     modelBuilder.Entity<IdentityUserRole<int>>(entity =>
     {
       entity.ToTable("user_roles");
       entity.HasKey(ur => new { ur.UserId, ur.RoleId });
-    
+
       // Mapear las propiedades a las columnas de la BD
       entity.Property(ur => ur.UserId).HasColumnName("user_id");
       entity.Property(ur => ur.RoleId).HasColumnName("role_id");
-    
+
       // Configurar las relaciones
       entity.HasOne<User>()
         .WithMany(u => u.UserRoles)
         .HasForeignKey(ur => ur.UserId)
         .IsRequired();
-        
+
       entity.HasOne<Role>()
         .WithMany(r => r.UserRoles)
         .HasForeignKey(ur => ur.RoleId)

@@ -9,14 +9,14 @@
    ============================================================================ */
 :root {
   /* Paleta de colores principal */
-  --primary: #f29f05;       /* Naranja principal */
-  --secondary: #f28705;     /* Naranja oscuro */
-  --accent: #bf5b04;        /* Marrón naranja */
-  --dark: #8c4820;          /* Marrón */
-  --darker: #592c1c;        /* Marrón oscuro */
+  --primary: #f29f05; /* Naranja principal */
+  --secondary: #f28705; /* Naranja oscuro */
+  --accent: #bf5b04; /* Marrón naranja */
+  --dark: #8c4820; /* Marrón */
+  --darker: #592c1c; /* Marrón oscuro */
 
   /* Colores complementarios */
-  --light: #fef5e7;         /* Crema claro */
+  --light: #fef5e7; /* Crema claro */
   --white: #ffffff;
   --gray-100: #f8f9fa;
   --gray-200: #e9ecef;
@@ -43,13 +43,13 @@
   --font-weight-bold: 700;
 
   /* Espaciado */
-  --spacing-xs: 0.25rem;    /* 4px */
-  --spacing-sm: 0.5rem;     /* 8px */
-  --spacing-md: 1rem;       /* 16px */
-  --spacing-lg: 1.5rem;     /* 24px */
-  --spacing-xl: 2rem;       /* 32px */
-  --spacing-2xl: 3rem;      /* 48px */
-  --spacing-3xl: 4rem;      /* 64px */
+  --spacing-xs: 0.25rem; /* 4px */
+  --spacing-sm: 0.5rem; /* 8px */
+  --spacing-md: 1rem; /* 16px */
+  --spacing-lg: 1.5rem; /* 24px */
+  --spacing-xl: 2rem; /* 32px */
+  --spacing-2xl: 3rem; /* 48px */
+  --spacing-3xl: 4rem; /* 64px */
 
   /* Border radius */
   --radius-sm: 4px;
@@ -111,12 +111,30 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--darker);
 }
 
-h1 { font-size: 2.5rem; margin-bottom: var(--spacing-lg); }
-h2 { font-size: 2rem; }
-h3 { font-size: 1.75rem; }
-h4 { font-size: 1.5rem; }
-h5 { font-size: 1.25rem; }
-h6 { font-size: 1rem; }
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-lg);
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.75rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+h5 {
+  font-size: 1.25rem;
+}
+
+h6 {
+  font-size: 1rem;
+}
 
 p {
   margin-bottom: var(--spacing-md);
@@ -368,10 +386,25 @@ header .navbar-toggler:focus,
   margin-bottom: var(--spacing-lg);
 }
 
-.col-12 { flex: 0 0 100%; max-width: 100%; }
-.col-6 { flex: 0 0 50%; max-width: 50%; }
-.col-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
-.col-3 { flex: 0 0 25%; max-width: 25%; }
+.col-12 {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+.col-6 {
+  flex: 0 0 50%;
+  max-width: 50%;
+}
+
+.col-4 {
+  flex: 0 0 33.333333%;
+  max-width: 33.333333%;
+}
+
+.col-3 {
+  flex: 0 0 25%;
+  max-width: 25%;
+}
 
 @media (max-width: 768px) {
   .col-sm-12 {
@@ -383,31 +416,89 @@ header .navbar-toggler:focus,
 /* ============================================================================
    UTILIDADES
    ============================================================================ */
-.text-center { text-align: center; }
-.text-right { text-align: right; }
-.text-left { text-align: left; }
+.text-center {
+  text-align: center;
+}
 
-.mt-0 { margin-top: 0; }
-.mt-1 { margin-top: var(--spacing-xs); }
-.mt-2 { margin-top: var(--spacing-sm); }
-.mt-3 { margin-top: var(--spacing-md); }
-.mt-4 { margin-top: var(--spacing-lg); }
-.mt-5 { margin-top: var(--spacing-xl); }
+.text-right {
+  text-align: right;
+}
 
-.mb-0 { margin-bottom: 0; }
-.mb-1 { margin-bottom: var(--spacing-xs); }
-.mb-2 { margin-bottom: var(--spacing-sm); }
-.mb-3 { margin-bottom: var(--spacing-md); }
-.mb-4 { margin-bottom: var(--spacing-lg); }
-.mb-5 { margin-bottom: var(--spacing-xl); }
+.text-left {
+  text-align: left;
+}
 
-.pt-3 { padding-top: var(--spacing-md); }
-.pt-4 { padding-top: var(--spacing-lg); }
-.pt-5 { padding-top: var(--spacing-xl); }
+.mt-0 {
+  margin-top: 0;
+}
 
-.pb-3 { padding-bottom: var(--spacing-md); }
-.pb-4 { padding-bottom: var(--spacing-lg); }
-.pb-5 { padding-bottom: var(--spacing-xl); }
+.mt-1 {
+  margin-top: var(--spacing-xs);
+}
+
+.mt-2 {
+  margin-top: var(--spacing-sm);
+}
+
+.mt-3 {
+  margin-top: var(--spacing-md);
+}
+
+.mt-4 {
+  margin-top: var(--spacing-lg);
+}
+
+.mt-5 {
+  margin-top: var(--spacing-xl);
+}
+
+.mb-0 {
+  margin-bottom: 0;
+}
+
+.mb-1 {
+  margin-bottom: var(--spacing-xs);
+}
+
+.mb-2 {
+  margin-bottom: var(--spacing-sm);
+}
+
+.mb-3 {
+  margin-bottom: var(--spacing-md);
+}
+
+.mb-4 {
+  margin-bottom: var(--spacing-lg);
+}
+
+.mb-5 {
+  margin-bottom: var(--spacing-xl);
+}
+
+.pt-3 {
+  padding-top: var(--spacing-md);
+}
+
+.pt-4 {
+  padding-top: var(--spacing-lg);
+}
+
+.pt-5 {
+  padding-top: var(--spacing-xl);
+}
+
+.pb-3 {
+  padding-bottom: var(--spacing-md);
+}
+
+.pb-4 {
+  padding-bottom: var(--spacing-lg);
+}
+
+.pb-5 {
+  padding-bottom: var(--spacing-xl);
+}
 
 /* ============================================================================
    FOOTER - STICKY BOTTOM CON DISEÑO NARANJA

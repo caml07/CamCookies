@@ -154,8 +154,10 @@ namespace cmcookies.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("BatchId"));
 
-                    b.Property<int>("CookieCode")
-                        .HasColumnType("int")
+                    b.Property<string>("CookieCode")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)")
                         .HasColumnName("cookie_code");
 
                     b.Property<DateTime?>("ProducedAt")
@@ -206,12 +208,10 @@ namespace cmcookies.Migrations
 
             modelBuilder.Entity("cmcookies.Models.Cookie", b =>
                 {
-                    b.Property<int>("CookieCode")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                    b.Property<string>("CookieCode")
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)")
                         .HasColumnName("cookie_code");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("CookieCode"));
 
                     b.Property<string>("Category")
                         .ValueGeneratedOnAdd()
@@ -286,8 +286,10 @@ namespace cmcookies.Migrations
                         .HasColumnType("decimal(10,2)")
                         .HasColumnName("consumption_per_batch");
 
-                    b.Property<int>("CookieCode")
-                        .HasColumnType("int")
+                    b.Property<string>("CookieCode")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)")
                         .HasColumnName("cookie_code");
 
                     b.Property<int>("MaterialId")
@@ -513,8 +515,10 @@ namespace cmcookies.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("OrderDetailId"));
 
-                    b.Property<int>("CookieCode")
-                        .HasColumnType("int")
+                    b.Property<string>("CookieCode")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)")
                         .HasColumnName("cookie_code");
 
                     b.Property<int>("OrderId")
@@ -588,7 +592,7 @@ namespace cmcookies.Migrations
                     b.Property<string>("Name")
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)")
-                        .HasColumnName("role_type");
+                        .HasColumnName("Name");
 
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256)

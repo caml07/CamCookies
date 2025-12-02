@@ -62,7 +62,6 @@ public static class DbSeeder
     await context.Database.ExecuteSqlRawAsync("ALTER TABLE user_roles AUTO_INCREMENT = 1");
     await context.Database.ExecuteSqlRawAsync("ALTER TABLE phones AUTO_INCREMENT = 1");
     await context.Database.ExecuteSqlRawAsync("ALTER TABLE customers AUTO_INCREMENT = 1");
-    await context.Database.ExecuteSqlRawAsync("ALTER TABLE cookies AUTO_INCREMENT = 1");
     await context.Database.ExecuteSqlRawAsync("ALTER TABLE materials AUTO_INCREMENT = 1");
     await context.Database.ExecuteSqlRawAsync("ALTER TABLE cookie_materials AUTO_INCREMENT = 1");
     await context.Database.ExecuteSqlRawAsync("ALTER TABLE batches AUTO_INCREMENT = 1");
@@ -332,6 +331,7 @@ public static class DbSeeder
       {
         new()
         {
+          CookieCode = "SMORES",
           CookieName = "S'mores",
           Description = "Deliciosa galleta con malvaviscos y chocolate, inspirada en el clásico de campamento",
           Price = 431.05m,
@@ -342,6 +342,7 @@ public static class DbSeeder
         },
         new()
         {
+          CookieCode = "OREO",
           CookieName = "Oreo",
           Description = "Irresistible galleta con trozos de Oreo y Nutella",
           Price = 389.20m,
@@ -365,63 +366,38 @@ public static class DbSeeder
     {
       Console.WriteLine("📝 Creando recetas (cookie-materials)...");
 
-      var smores = await context.Cookies.FirstAsync(c => c.CookieName == "S'mores");
-      var oreo = await context.Cookies.FirstAsync(c => c.CookieName == "Oreo");
-
       var getMaterialId = new Func<string, int>(name =>
         context.Materials.First(m => m.Name == name).MaterialId);
 
       var cookieMaterials = new List<CookieMaterial>
       {
         // ===== RECETA S'MORES =====
-        new()
-        {
-          CookieCode = smores.CookieCode, MaterialId = getMaterialId("Mantequilla La Perfecta"),
-          ConsumptionPerBatch = 230
-        },
-        new() { CookieCode = smores.CookieCode, MaterialId = getMaterialId("Azúcar morena"), ConsumptionPerBatch = 90 },
-        new() { CookieCode = smores.CookieCode, MaterialId = getMaterialId("Azúcar blanca"), ConsumptionPerBatch = 90 },
-        new() { CookieCode = smores.CookieCode, MaterialId = getMaterialId("Harina"), ConsumptionPerBatch = 500 },
-        new()
-        {
-          CookieCode = smores.CookieCode, MaterialId = getMaterialId("Chispas chocolate"), ConsumptionPerBatch = 100
-        },
-        new() { CookieCode = smores.CookieCode, MaterialId = getMaterialId("Huevo"), ConsumptionPerBatch = 3 },
-        new() { CookieCode = smores.CookieCode, MaterialId = getMaterialId("Esencia"), ConsumptionPerBatch = 5 },
-        new() { CookieCode = smores.CookieCode, MaterialId = getMaterialId("Marshmallow"), ConsumptionPerBatch = 120 },
-        new()
-        {
-          CookieCode = smores.CookieCode, MaterialId = getMaterialId("Mini chocolate"), ConsumptionPerBatch = 20
-        },
-        new() { CookieCode = smores.CookieCode, MaterialId = getMaterialId("Sal"), ConsumptionPerBatch = 2 },
-        new()
-        {
-          CookieCode = smores.CookieCode, MaterialId = getMaterialId("Vasito cupcake"), ConsumptionPerBatch = 20
-        },
-        new() { CookieCode = smores.CookieCode, MaterialId = getMaterialId("Bolsa celofán"), ConsumptionPerBatch = 20 },
+        new() { CookieCode = "SMORES", MaterialId = getMaterialId("Mantequilla La Perfecta"), ConsumptionPerBatch = 230 },
+        new() { CookieCode = "SMORES", MaterialId = getMaterialId("Azúcar morena"), ConsumptionPerBatch = 90 },
+        new() { CookieCode = "SMORES", MaterialId = getMaterialId("Azúcar blanca"), ConsumptionPerBatch = 90 },
+        new() { CookieCode = "SMORES", MaterialId = getMaterialId("Harina"), ConsumptionPerBatch = 500 },
+        new() { CookieCode = "SMORES", MaterialId = getMaterialId("Chispas chocolate"), ConsumptionPerBatch = 100 },
+        new() { CookieCode = "SMORES", MaterialId = getMaterialId("Huevo"), ConsumptionPerBatch = 3 },
+        new() { CookieCode = "SMORES", MaterialId = getMaterialId("Esencia"), ConsumptionPerBatch = 5 },
+        new() { CookieCode = "SMORES", MaterialId = getMaterialId("Marshmallow"), ConsumptionPerBatch = 120 },
+        new() { CookieCode = "SMORES", MaterialId = getMaterialId("Mini chocolate"), ConsumptionPerBatch = 20 },
+        new() { CookieCode = "SMORES", MaterialId = getMaterialId("Sal"), ConsumptionPerBatch = 2 },
+        new() { CookieCode = "SMORES", MaterialId = getMaterialId("Vasito cupcake"), ConsumptionPerBatch = 20 },
+        new() { CookieCode = "SMORES", MaterialId = getMaterialId("Bolsa celofán"), ConsumptionPerBatch = 20 },
 
         // ===== RECETA OREO =====
-        new()
-        {
-          CookieCode = oreo.CookieCode, MaterialId = getMaterialId("Mantequilla La Perfecta"), ConsumptionPerBatch = 230
-        },
-        new() { CookieCode = oreo.CookieCode, MaterialId = getMaterialId("Azúcar morena"), ConsumptionPerBatch = 90 },
-        new() { CookieCode = oreo.CookieCode, MaterialId = getMaterialId("Azúcar blanca"), ConsumptionPerBatch = 90 },
-        new() { CookieCode = oreo.CookieCode, MaterialId = getMaterialId("Harina"), ConsumptionPerBatch = 500 },
-        new()
-        {
-          CookieCode = oreo.CookieCode, MaterialId = getMaterialId("Chispas chocolate"), ConsumptionPerBatch = 100
-        },
-        new()
-        {
-          CookieCode = oreo.CookieCode, MaterialId = getMaterialId("Oreo normal"), ConsumptionPerBatch = 29
-        }, // 9 triturada + 20 decoración
-        new() { CookieCode = oreo.CookieCode, MaterialId = getMaterialId("Huevo"), ConsumptionPerBatch = 3 },
-        new() { CookieCode = oreo.CookieCode, MaterialId = getMaterialId("Esencia"), ConsumptionPerBatch = 5 },
-        new() { CookieCode = oreo.CookieCode, MaterialId = getMaterialId("Sal"), ConsumptionPerBatch = 2 },
-        new() { CookieCode = oreo.CookieCode, MaterialId = getMaterialId("Nutella"), ConsumptionPerBatch = 160 },
-        new() { CookieCode = oreo.CookieCode, MaterialId = getMaterialId("Vasito cupcake"), ConsumptionPerBatch = 20 },
-        new() { CookieCode = oreo.CookieCode, MaterialId = getMaterialId("Bolsa celofán"), ConsumptionPerBatch = 20 }
+        new() { CookieCode = "OREO", MaterialId = getMaterialId("Mantequilla La Perfecta"), ConsumptionPerBatch = 230 },
+        new() { CookieCode = "OREO", MaterialId = getMaterialId("Azúcar morena"), ConsumptionPerBatch = 90 },
+        new() { CookieCode = "OREO", MaterialId = getMaterialId("Azúcar blanca"), ConsumptionPerBatch = 90 },
+        new() { CookieCode = "OREO", MaterialId = getMaterialId("Harina"), ConsumptionPerBatch = 500 },
+        new() { CookieCode = "OREO", MaterialId = getMaterialId("Chispas chocolate"), ConsumptionPerBatch = 100 },
+        new() { CookieCode = "OREO", MaterialId = getMaterialId("Oreo normal"), ConsumptionPerBatch = 29 }, // 9 triturada + 20 decoración
+        new() { CookieCode = "OREO", MaterialId = getMaterialId("Huevo"), ConsumptionPerBatch = 3 },
+        new() { CookieCode = "OREO", MaterialId = getMaterialId("Esencia"), ConsumptionPerBatch = 5 },
+        new() { CookieCode = "OREO", MaterialId = getMaterialId("Sal"), ConsumptionPerBatch = 2 },
+        new() { CookieCode = "OREO", MaterialId = getMaterialId("Nutella"), ConsumptionPerBatch = 160 },
+        new() { CookieCode = "OREO", MaterialId = getMaterialId("Vasito cupcake"), ConsumptionPerBatch = 20 },
+        new() { CookieCode = "OREO", MaterialId = getMaterialId("Bolsa celofán"), ConsumptionPerBatch = 20 }
       };
 
       context.CookieMaterials.AddRange(cookieMaterials);

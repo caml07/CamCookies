@@ -36,8 +36,8 @@ builder.Services.AddIdentity<User, Role>(options =>
   })
   .AddEntityFrameworkStores<CmcDBContext>()
   .AddDefaultTokenProviders()
-  .AddRoleManager<RoleManager<Role>>()  // ← AGREGAR ESTA LÍNEA
-  .AddUserManager<UserManager<User>>();  // ← AGREGAR ESTA LÍNEA
+  .AddRoleManager<RoleManager<Role>>() // ← AGREGAR ESTA LÍNEA
+  .AddUserManager<UserManager<User>>(); // ← AGREGAR ESTA LÍNEA
 
 // Configurar cookies de autenticación
 builder.Services.ConfigureApplicationCookie(options =>
@@ -50,6 +50,10 @@ builder.Services.ConfigureApplicationCookie(options =>
   options.Cookie.HttpOnly = true; // Protege contra XSS
   options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Solo HTTPS
 });
+
+// ===== FACTORY PATTERN - Dependency Injection =====
+builder.Services.AddScoped<cmcookies.Models.Factories.ICookieFactory,
+  cmcookies.Models.Factories.CookieFactory>();
 
 var app = builder.Build();
 
@@ -86,7 +90,7 @@ using (var scope = app.Services.CreateScope())
   // │ OPCIÓN 1: SEED COMPLETO (admin + customer + galletas)  │
   // │ Descomentar para poblar con datos completos             │
   // └───────────────────────────────────┘
-  // await DbSeeder.SeedAsync(context, userManager, roleManager);
+  await DbSeeder.SeedAsync(context, userManager, roleManager);
 
   // ┌───────────────────────────────────┐
   // │ OPCIÓN 2: LIMPIEZA TOTAL borra tod o y deja solo admin│
@@ -98,7 +102,7 @@ using (var scope = app.Services.CreateScope())
   // │ OPCIÓN 3: SEED AUTOMÁTICO (solo si BD está vacía)│
   // │ Útil para producción - no borra datos existentes │
   // └───────────────────────────────┘
-  if (!await userManager.Users.AnyAsync()) await DbSeeder.SeedAsync(context, userManager, roleManager);
+  // if (!await userManager.Users.AnyAsync()) await DbSeeder.SeedAsync(context, userManager, roleManager);
 }
 
 app.Run();
