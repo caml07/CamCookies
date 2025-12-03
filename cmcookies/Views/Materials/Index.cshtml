@@ -1,0 +1,84 @@
+@model IEnumerable<cmcookies.Models.Material>
+
+@{
+    ViewData["Title"] = "Gestión de Materiales";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Materiales e Insumos</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a asp-action="Create" class="btn btn-sm btn-primary">
+            <i class="bi bi-plus-lg"></i> Nuevo Material
+        </a>
+    </div>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                <tr>
+                    <th>Material</th>
+                    <th>Stock Actual</th>
+                    <th>Unidad</th>
+                    <th>Costo Unitario</th>
+                    <th>Última Actualización</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="fw-bold">@item.Name</td>
+                        <td>
+                            @if (item.Stock < 10)
+                            {
+                                <span class="badge bg-danger">@item.Stock</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-success">@item.Stock</span>
+                            }
+                        </td>
+                        <td>@item.Unit</td>
+                        <td>@item.UnitCost.ToString("C")</td>
+                        <td class="text-muted small">
+                            @(item.UpdatedAt?.ToString("dd/MM/yyyy HH:mm") ?? item.CreatedAt?.ToString("dd/MM/yyyy HH:mm"))
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <a asp-action="Edit" asp-route-id="@item.MaterialId"
+                                   class="btn btn-sm btn-outline-secondary" title="Editar">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a asp-action="Delete" asp-route-id="@item.MaterialId"
+                                   class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+            @if (!Model.Any())
+            {
+                <div class="text-center py-5 text-muted">
+                    <i class="bi bi-box-seam display-4"></i>
+                    <p class="mt-3">No hay materiales registrados aún.</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>

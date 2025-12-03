@@ -18,7 +18,7 @@ public partial class Material
   [Column("stock")] [Precision(10, 2)] public decimal Stock { get; set; }
 
   [Column("unit_cost")]
-  [Precision(10, 2)]
+  [Precision(10, 4)]
   public decimal UnitCost { get; set; }
 
   [Column("created_at", TypeName = "datetime")]

@@ -53,9 +53,9 @@
 - Navbar responsivo con Bootstrap 5
 - Logo de Cam Cookies (imagen naranja)
 - Links condicionales según autenticación:
-  - No autenticado: Login, Register
-  - Autenticado (Customer): Logout
-  - Autenticado (Admin): Admin Dashboard, Logout
+    - No autenticado: Login, Register
+    - Autenticado (Customer): Logout
+    - Autenticado (Admin): Admin Dashboard, Logout
 - Footer sticky corregido (position absolute method)
 
 **Archivos:**
@@ -88,16 +88,17 @@ body {
 - Vista: `Views/Admin/Dashboard.cshtml`
 - Autorización: Solo accesible por rol "Admin" (`[Authorize(Roles = "Admin")]`)
 - Dashboard con métricas:
-  - Total Revenue (calculado desde Orders)
-  - Total Costs (calculado desde Batches)
-  - Net Profit (Revenue - Costs)
-  - Total Orders, Pending, Completed
-  - Total Cookies con alertas de stock bajo
+    - Total Revenue (calculado desde Orders)
+    - Total Costs (calculado desde Batches)
+    - Net Profit (Revenue - Costs)
+    - Total Orders, Pending, Completed
+    - Total Cookies con alertas de stock bajo
 
 **ViewModel:**
 
 - `Models/ViewModels/Admin/DashboardViewModel.cs`
-- Contiene: TotalRevenue, TotalCosts, NetProfit, TotalOrders, PendingOrders, CompletedOrders, LowStockCookies, LowStockMaterials, RecentOrders
+- Contiene: TotalRevenue, TotalCosts, NetProfit, TotalOrders, PendingOrders, CompletedOrders, LowStockCookies,
+  LowStockMaterials, RecentOrders
 
 ---
 
@@ -118,17 +119,17 @@ body {
 
 1. `Views/Shared/_AdminLayout.cshtml`
 
-   - Sidebar con logo, navegación, user info
-   - Topbar con breadcrumbs
-   - Main content area
-   - Bootstrap Icons CDN integrado
+    - Sidebar con logo, navegación, user info
+    - Topbar con breadcrumbs
+    - Main content area
+    - Bootstrap Icons CDN integrado
 
 2. `wwwroot/css/admin.css`
-   - Sidebar: width 250px, sticky, gradiente naranja
-   - Navigation con active states
-   - Logo: 100px width, filter brightness(0) invert(1) para blanco
-   - Scrollbar personalizado solo en nav
-   - Footer del sidebar: fijo abajo con flex-shrink: 0
+    - Sidebar: width 250px, sticky, gradiente naranja
+    - Navigation con active states
+    - Logo: 100px width, filter brightness(0) invert(1) para blanco
+    - Scrollbar personalizado solo en nav
+    - Footer del sidebar: fijo abajo con flex-shrink: 0
 
 **Estructura del Sidebar:**
 
@@ -183,7 +184,8 @@ body.admin-page {
 
 **Soluciones a Problemas:**
 
-1. **Espacio blanco debajo del sidebar:** Agregado `body.admin-page { background: none !important; }` en admin.css + gradiente en admin-wrapper
+1. **Espacio blanco debajo del sidebar:** Agregado `body.admin-page { background: none !important; }` en admin.css +
+   gradiente en admin-wrapper
 2. **Footer no visible:** Agregado `min-height: 0` en .admin-nav (bug de flexbox)
 3. **Logo muy grande:** Reducido de 180px a 100px
 
@@ -195,16 +197,16 @@ body.admin-page {
 
 - `Models/Factories/ICookieFactory.cs`: Interface con métodos:
 
-  - `CreateNormalCookie()`
-  - `CreateSeasonalCookie()`
-  - `CreateFromViewModel()`
-  - `UpdateFromViewModel()`
+    - `CreateNormalCookie()`
+    - `CreateSeasonalCookie()`
+    - `CreateFromViewModel()`
+    - `UpdateFromViewModel()`
 
 - `Models/Factories/CookieFactory.cs`: Implementación concreta
 
-  - Encapsula lógica de creación de cookies
-  - Asigna valores por defecto (IsActive=true, CreatedAt=DateTime.Now)
-  - Decisión automática de categoría (normal vs seasonal)
+    - Encapsula lógica de creación de cookies
+    - Asigna valores por defecto (IsActive=true, CreatedAt=DateTime.Now)
+    - Decisión automática de categoría (normal vs seasonal)
 
 - Registrado en `Program.cs`:
   ```csharp
@@ -215,13 +217,13 @@ body.admin-page {
 
 - `Models/ViewModels/Cookie/CookieViewModel.cs`
 - Validaciones con Data Annotations:
-  - CookieName: Required, MaxLength(50)
-  - Description: MaxLength(255), opcional
-  - Price: Required, Range(0.01, 999999.99)
-  - Category: Required, Regex("^(normal|seasonal)$")
-  - Stock: Range(0, int.MaxValue)
-  - ImageFile: IFormFile para upload
-  - CurrentImagePath: Para mostrar imagen actual en Edit
+    - CookieName: Required, MaxLength(50)
+    - Description: MaxLength(255), opcional
+    - Price: Required, Range(0.01, 999999.99)
+    - Category: Required, Regex("^(normal|seasonal)$")
+    - Stock: Range(0, int.MaxValue)
+    - ImageFile: IFormFile para upload
+    - CurrentImagePath: Para mostrar imagen actual en Edit
 
 **3. Controller Completo:**
 
@@ -237,55 +239,55 @@ body.admin-page {
 
 - **Métodos implementados:**
 
-  - `Index()`: Lista todas las cookies
-  - `Create() GET`: Muestra formulario vacío
-  - `Create() POST`: Procesa creación + upload de imagen
-  - `Edit(id) GET`: Muestra formulario con datos
-  - `Edit(id) POST`: Procesa actualización + cambio de imagen
-  - `Delete(id) GET`: Muestra confirmación
-  - `DeleteConfirmed(id) POST`: Elimina cookie + imagen
+    - `Index()`: Lista todas las cookies
+    - `Create() GET`: Muestra formulario vacío
+    - `Create() POST`: Procesa creación + upload de imagen
+    - `Edit(id) GET`: Muestra formulario con datos
+    - `Edit(id) POST`: Procesa actualización + cambio de imagen
+    - `Delete(id) GET`: Muestra confirmación
+    - `DeleteConfirmed(id) POST`: Elimina cookie + imagen
 
 - **Upload de Imágenes:**
 
-  - Valida extensión: .jpg, .jpeg, .png, .webp
-  - Valida tamaño: máx 5MB
-  - Guarda en: `wwwroot/images/cookies/`
-  - Nombre único: Guid + extensión
-  - Path en DB: relativo, ej: `/images/cookies/abc123.jpg`
+    - Valida extensión: .jpg, .jpeg, .png, .webp
+    - Valida tamaño: máx 5MB
+    - Guarda en: `wwwroot/images/cookies/`
+    - Nombre único: Guid + extensión
+    - Path en DB: relativo, ej: `/images/cookies/abc123.jpg`
 
 - **Helper Methods:**
-  - `ValidateImage()`: Validación de imagen
-  - `SaveImageAsync()`: Guarda imagen en disco
-  - `DeleteImage()`: Elimina imagen del disco
-  - `CookieExists()`: Verifica existencia
+    - `ValidateImage()`: Validación de imagen
+    - `SaveImageAsync()`: Guarda imagen en disco
+    - `DeleteImage()`: Elimina imagen del disco
+    - `CookieExists()`: Verifica existencia
 
 **4. Views Completas:**
 
 - ✅ `Views/Cookies/Index.cshtml`: Tabla con todas las cookies
 
-  - Muestra: imagen, nombre, categoría, precio, stock, estado
-  - Badges de colores según stock (rojo <10, amarillo <30, verde ≥30)
-  - Botones: Edit, Delete
-  - TempData messages (success/error)
+    - Muestra: imagen, nombre, categoría, precio, stock, estado
+    - Badges de colores según stock (rojo <10, amarillo <30, verde ≥30)
+    - Botones: Edit, Delete
+    - TempData messages (success/error)
 
 - ✅ `Views/Cookies/Create.cshtml`: Formulario de creación
 
-  - Campos: Nombre, Descripción, Precio, Categoría, Stock, Imagen
-  - Preview de imagen con JavaScript
-  - Validaciones client-side
-  - Checkbox IsActive
+    - Campos: Nombre, Descripción, Precio, Categoría, Stock, Imagen
+    - Preview de imagen con JavaScript
+    - Validaciones client-side
+    - Checkbox IsActive
 
 - ✅ `Views/Cookies/Edit.cshtml`: Formulario de edición
 
-  - Pre-llenado con datos existentes
-  - Muestra imagen actual
-  - Opción de cambiar imagen (opcional)
-  - Mismo diseño que Create
+    - Pre-llenado con datos existentes
+    - Muestra imagen actual
+    - Opción de cambiar imagen (opcional)
+    - Mismo diseño que Create
 
 - ✅ `Views/Cookies/Delete.cshtml`: Confirmación de eliminación
-  - Muestra todos los datos de la cookie
-  - Alerta roja de advertencia
-  - Botones: Confirmar / Cancelar
+    - Muestra todos los datos de la cookie
+    - Alerta roja de advertencia
+    - Botones: Confirmar / Cancelar
 
 ---
 
@@ -305,46 +307,46 @@ body.admin-page {
 
 2. **⚠️ TESTING MANUAL - Checklist:**
 
-   - [ ] Navegar a `/Cookies` desde sidebar
-   - [ ] Verificar que lista aparece vacía (o con cookies seed)
-   - [ ] Click "Crear Nueva Cookie"
-   - [ ] Llenar formulario:
-     - Nombre: "Test Cookie"
-     - Descripción: "Cookie de prueba"
-     - Precio: 25.50
-     - Categoría: normal
-     - Stock: 100
-     - Subir imagen de prueba
-   - [ ] Verificar preview de imagen funciona
-   - [ ] Click "Crear Cookie"
-   - [ ] Verificar redirect a Index
-   - [ ] Verificar mensaje de éxito aparece
-   - [ ] Verificar cookie aparece en la tabla
-   - [ ] Verificar imagen se muestra correctamente
-   - [ ] Click "Edit" en la cookie
-   - [ ] Cambiar precio a 30.00
-   - [ ] Cambiar imagen (opcional)
-   - [ ] Guardar cambios
-   - [ ] Verificar actualización exitosa
-   - [ ] Click "Delete"
-   - [ ] Verificar página de confirmación
-   - [ ] Confirmar eliminación
-   - [ ] Verificar cookie eliminada de la lista
-   - [ ] Verificar imagen eliminada del disco
+    - [ ] Navegar a `/Cookies` desde sidebar
+    - [ ] Verificar que lista aparece vacía (o con cookies seed)
+    - [ ] Click "Crear Nueva Cookie"
+    - [ ] Llenar formulario:
+        - Nombre: "Test Cookie"
+        - Descripción: "Cookie de prueba"
+        - Precio: 25.50
+        - Categoría: normal
+        - Stock: 100
+        - Subir imagen de prueba
+    - [ ] Verificar preview de imagen funciona
+    - [ ] Click "Crear Cookie"
+    - [ ] Verificar redirect a Index
+    - [ ] Verificar mensaje de éxito aparece
+    - [ ] Verificar cookie aparece en la tabla
+    - [ ] Verificar imagen se muestra correctamente
+    - [ ] Click "Edit" en la cookie
+    - [ ] Cambiar precio a 30.00
+    - [ ] Cambiar imagen (opcional)
+    - [ ] Guardar cambios
+    - [ ] Verificar actualización exitosa
+    - [ ] Click "Delete"
+    - [ ] Verificar página de confirmación
+    - [ ] Confirmar eliminación
+    - [ ] Verificar cookie eliminada de la lista
+    - [ ] Verificar imagen eliminada del disco
 
 3. **🐛 BUGS POSIBLES A REVISAR:**
 
-   - Validación de imagen no funciona → Verificar accept="image/\*" en input
-   - Preview no aparece → Verificar script JavaScript cargado
-   - Imagen no se guarda → Verificar carpeta wwwroot/images/cookies existe
-   - Path de imagen incorrecto → Verificar que empieza con `/images/`
-   - Error 404 al mostrar imagen → Verificar ruta relativa vs absoluta
+    - Validación de imagen no funciona → Verificar accept="image/\*" en input
+    - Preview no aparece → Verificar script JavaScript cargado
+    - Imagen no se guarda → Verificar carpeta wwwroot/images/cookies existe
+    - Path de imagen incorrecto → Verificar que empieza con `/images/`
+    - Error 404 al mostrar imagen → Verificar ruta relativa vs absoluta
 
 4. **📝 DESPUÉS DEL TESTING:**
-   - Documentar bugs encontrados
-   - Crear 2-3 cookies de prueba con imágenes
-   - Verificar que Dashboard muestra conteo correcto
-   - Screenshot de Index funcionando para documentación
+    - Documentar bugs encontrados
+    - Crear 2-3 cookies de prueba con imágenes
+    - Verificar que Dashboard muestra conteo correcto
+    - Screenshot de Index funcionando para documentación
 
 ---
 
@@ -358,18 +360,18 @@ body.admin-page {
 
 1. `Models/ViewModels/Material/MaterialViewModel.cs`
 
-   - Validaciones: Name (Required, MaxLength 50), Unit (Required), Stock (≥0), UnitCost (>0)
+    - Validaciones: Name (Required, MaxLength 50), Unit (Required), Stock (≥0), UnitCost (>0)
 
 2. `Controllers/MaterialsController.cs`
 
-   - CRUD completo (sin upload de imagen, solo datos)
-   - Factory no necesario (Material es más simple)
+    - CRUD completo (sin upload de imagen, solo datos)
+    - Factory no necesario (Material es más simple)
 
 3. `Views/Materials/`:
-   - Index.cshtml: Tabla con nombre, unidad, stock, costo
-   - Create.cshtml: Formulario simple
-   - Edit.cshtml: Edición de datos
-   - Delete.cshtml: Confirmación
+    - Index.cshtml: Tabla con nombre, unidad, stock, costo
+    - Create.cshtml: Formulario simple
+    - Edit.cshtml: Edición de datos
+    - Delete.cshtml: Confirmación
 
 **Sin Factory Pattern porque:**
 
@@ -401,30 +403,30 @@ public class Material
 
 1. Cada batch produce **EXACTAMENTE 20 cookies** (regla fija)
 2. Al crear un batch:
-   - Se DESCUENTA el consumo de materiales (según CookieMaterials)
-   - Se SUMA +20 al stock de la cookie
-   - Se calcula el costo total del batch
+    - Se DESCUENTA el consumo de materiales (según CookieMaterials)
+    - Se SUMA +20 al stock de la cookie
+    - Se calcula el costo total del batch
 3. NO se consumen bolsas ni stickers en batches (solo en Orders)
 
 **Archivos a crear:**
 
 1. `Models/ViewModels/Batch/BatchViewModel.cs`
 
-   - Fields: CookieCode (selección), QtyMade (siempre 20, readonly)
+    - Fields: CookieCode (selección), QtyMade (siempre 20, readonly)
 
 2. `Controllers/BatchesController.cs`
 
-   - `Create() GET`: Muestra form con dropdown de cookies disponibles
-   - `Create() POST`:
-     - Valida que hay suficientes materiales
-     - Crea el batch
-     - Actualiza stock de cookie (+20)
-     - Descuenta materiales
-   - `Index()`: Historial de batches (tabla ordenada por fecha)
+    - `Create() GET`: Muestra form con dropdown de cookies disponibles
+    - `Create() POST`:
+        - Valida que hay suficientes materiales
+        - Crea el batch
+        - Actualiza stock de cookie (+20)
+        - Descuenta materiales
+    - `Index()`: Historial de batches (tabla ordenada por fecha)
 
 3. `Views/Batches/`:
-   - Create.cshtml: Form con select de cookie, muestra preview de materiales necesarios
-   - Index.cshtml: Tabla con: Fecha, Cookie, Qty, Costo, Materiales usados
+    - Create.cshtml: Form con select de cookie, muestra preview de materiales necesarios
+    - Index.cshtml: Tabla con: Fecha, Cookie, Qty, Costo, Materiales usados
 
 **Lógica de Descuento de Materiales:**
 
@@ -458,8 +460,8 @@ foreach (var cm in cookieMaterials)
 
 1. Los pedidos NO desucuentan inventario hasta que el Admin cambia estado a "on_preparation"
 2. Cálculo automático de Bag y Sticker:
-   - 1-2 cookies: bag=small, sticker=false
-   - 3+ cookies: bag=medium, sticker=true
+    - 1-2 cookies: bag=small, sticker=false
+    - 3+ cookies: bag=medium, sticker=true
 3. Estados: pending → on_preparation → delivered (o cancelled)
 
 **Flujos:**
@@ -474,21 +476,21 @@ foreach (var cm in cookieMaterials)
 
 - Ve lista de Orders
 - Puede cambiar estado:
-  - pending → on_preparation: DESCUENTA inventario (cookies + bag + sticker)
-  - on_preparation → delivered: NO afecta inventario
-  - pending → cancelled: NO afecta inventario
+    - pending → on_preparation: DESCUENTA inventario (cookies + bag + sticker)
+    - on_preparation → delivered: NO afecta inventario
+    - pending → cancelled: NO afecta inventario
 
 **Archivos a crear:**
 
 1. `Controllers/OrdersController.cs` (Admin)
 
-   - `Index()`: Lista TODOS los pedidos
-   - `Details(id)`: Muestra detalles completos del pedido
-   - `ChangeStatus(id, newStatus)`: Cambia estado + actualiza inventario
+    - `Index()`: Lista TODOS los pedidos
+    - `Details(id)`: Muestra detalles completos del pedido
+    - `ChangeStatus(id, newStatus)`: Cambia estado + actualiza inventario
 
 2. `Views/Orders/`:
-   - Index.cshtml: Tabla con filtros por estado
-   - Details.cshtml: Detalles completos (customer, items, billing, shipping)
+    - Index.cshtml: Tabla con filtros por estado
+    - Details.cshtml: Detalles completos (customer, items, billing, shipping)
 
 **Lógica de Cambio de Estado:**
 
@@ -1646,7 +1648,8 @@ TotalRevenue = await _context.Orders
     .SumAsync(o => o.OrderDetails.Sum(d => d.Qty * d.UnitPrice));
 ```
 
-**Issue:** Si un Order tiene `Status = "cancelled"`, NO debería sumar al revenue, pero actualmente solo filtra por "delivered". Si hay orders con otros status (pending, on_preparation), podrían contar mal.
+**Issue:** Si un Order tiene `Status = "cancelled"`, NO debería sumar al revenue, pero actualmente solo filtra por "
+delivered". Si hay orders con otros status (pending, on_preparation), podrían contar mal.
 
 **Fix futuro:**
 
@@ -1779,21 +1782,21 @@ protected override void OnModelCreating(ModelBuilder modelBuilder)
 
 1. **Visual Studio 2022 (17.8 o superior)**
 
-   - Workloads: ASP.NET y desarrollo web, Desarrollo multiplataforma .NET
-   - O Visual Studio Code con extensiones de C# y .NET
+    - Workloads: ASP.NET y desarrollo web, Desarrollo multiplataforma .NET
+    - O Visual Studio Code con extensiones de C# y .NET
 
 2. **.NET 9.0 SDK**
 
-   - Verificar: `dotnet --version` (debe ser 9.0.x)
-   - Descargar: https://dotnet.microsoft.com/download/dotnet/9.0
+    - Verificar: `dotnet --version` (debe ser 9.0.x)
+    - Descargar: https://dotnet.microsoft.com/download/dotnet/9.0
 
 3. **MySQL 8.0+**
 
-   - Servidor MySQL corriendo
-   - Usuario con permisos de CREATE DATABASE
+    - Servidor MySQL corriendo
+    - Usuario con permisos de CREATE DATABASE
 
 4. **MySQL Workbench (Opcional pero recomendado)**
-   - Para gestionar la BD visualmente
+    - Para gestionar la BD visualmente
 
 ---
 
@@ -2058,34 +2061,34 @@ Abrir navegador en: `https://localhost:7232`
 
 1. **Home Page carga:**
 
-   - [ ] Navegar a `https://localhost:7232`
-   - [ ] Logo de Cam Cookies visible
-   - [ ] Navbar con links "Login" y "Register"
+    - [ ] Navegar a `https://localhost:7232`
+    - [ ] Logo de Cam Cookies visible
+    - [ ] Navbar con links "Login" y "Register"
 
 2. **Login funciona:**
 
-   - [ ] Click en "Login"
-   - [ ] Ingresar: `admin@camcookies.com` / `Admin123!`
-   - [ ] Redirect a Home
-   - [ ] Navbar muestra "Admin Dashboard" y "Logout"
+    - [ ] Click en "Login"
+    - [ ] Ingresar: `admin@camcookies.com` / `Admin123!`
+    - [ ] Redirect a Home
+    - [ ] Navbar muestra "Admin Dashboard" y "Logout"
 
 3. **Admin Dashboard funciona:**
 
-   - [ ] Click en "Admin Dashboard"
-   - [ ] Sidebar naranja visible
-   - [ ] Métricas muestran $0 (no hay datos aún)
-   - [ ] Secciones: Dashboard, Cookies, Materials, Production, Orders
+    - [ ] Click en "Admin Dashboard"
+    - [ ] Sidebar naranja visible
+    - [ ] Métricas muestran $0 (no hay datos aún)
+    - [ ] Secciones: Dashboard, Cookies, Materials, Production, Orders
 
 4. **Cookies CRUD funciona:**
-   - [ ] Click en "Cookies" → "Ver Todas" en sidebar
-   - [ ] Tabla vacía con mensaje "No hay cookies"
-   - [ ] Click "Crear Nueva Cookie"
-   - [ ] Formulario se muestra correctamente
-   - [ ] Subir imagen de prueba
-   - [ ] Preview funciona
-   - [ ] Guardar cookie
-   - [ ] Redirect a Index con mensaje de éxito
-   - [ ] Cookie aparece en tabla con imagen
+    - [ ] Click en "Cookies" → "Ver Todas" en sidebar
+    - [ ] Tabla vacía con mensaje "No hay cookies"
+    - [ ] Click "Crear Nueva Cookie"
+    - [ ] Formulario se muestra correctamente
+    - [ ] Subir imagen de prueba
+    - [ ] Preview funciona
+    - [ ] Guardar cookie
+    - [ ] Redirect a Index con mensaje de éxito
+    - [ ] Cookie aparece en tabla con imagen
 
 ---
 
@@ -2324,42 +2327,42 @@ mysql -u root -p cmcookiesdb < backup.sql
 
 1. **Autenticación y Autorización:**
 
-   - Login, Register, Logout
-   - Roles: Admin, Customer
-   - Protección de rutas admin
+    - Login, Register, Logout
+    - Roles: Admin, Customer
+    - Protección de rutas admin
 
 2. **Admin Layout:**
 
-   - Sidebar con navegación completa
-   - Colores personalizados (naranja/marrón)
-   - Responsive
-   - Footer sticky
+    - Sidebar con navegación completa
+    - Colores personalizados (naranja/marrón)
+    - Responsive
+    - Footer sticky
 
 3. **CRUD de Cookies:**
 
-   - Index: Lista con filtros visuales
-   - Create: Form con upload de imagen
-   - Edit: Form con cambio de imagen
-   - Delete: Confirmación
+    - Index: Lista con filtros visuales
+    - Create: Form con upload de imagen
+    - Edit: Form con cambio de imagen
+    - Delete: Confirmación
 
 4. **Factory Pattern:**
 
-   - ICookieFactory interface
-   - CookieFactory implementation
-   - Inyección de dependencias
-   - Uso en controller
+    - ICookieFactory interface
+    - CookieFactory implementation
+    - Inyección de dependencias
+    - Uso en controller
 
 5. **Dashboard Admin:**
-   - Métricas básicas
-   - Alerts de stock bajo
-   - Recent orders (vacío aún)
+    - Métricas básicas
+    - Alerts de stock bajo
+    - Recent orders (vacío aún)
 
 ## 🚧 En Progreso (80%):
 
 1. **Testing de Cookies CRUD:**
-   - Views creadas ✅
-   - Controller implementado ✅
-   - **Falta:** Testing manual completo ⏳
+    - Views creadas ✅
+    - Controller implementado ✅
+    - **Falta:** Testing manual completo ⏳
 
 ## 📝 Pendiente (0%):
 
@@ -2374,20 +2377,20 @@ mysql -u root -p cmcookiesdb < backup.sql
 
 1. **AHORA (5 min):**
 
-   - Crear carpeta `wwwroot/images/cookies/`
-   - Testing manual del CRUD de Cookies (checklist arriba)
+    - Crear carpeta `wwwroot/images/cookies/`
+    - Testing manual del CRUD de Cookies (checklist arriba)
 
 2. **HOY (2-3 horas):**
 
-   - Terminar testing de Cookies
-   - Crear 2-3 cookies de prueba con imágenes
-   - Screenshot de Index funcionando
-   - Iniciar MISIÓN 8C: CRUD de Materials
+    - Terminar testing de Cookies
+    - Crear 2-3 cookies de prueba con imágenes
+    - Screenshot de Index funcionando
+    - Iniciar MISIÓN 8C: CRUD de Materials
 
 3. **ESTA SEMANA:**
-   - Completar Materials CRUD
-   - Iniciar Batches (producción)
-   - Testing integrado de flujo: Material → Batch → Cookie Stock
+    - Completar Materials CRUD
+    - Iniciar Batches (producción)
+    - Testing integrado de flujo: Material → Batch → Cookie Stock
 
 ---
 
@@ -2472,7 +2475,8 @@ Antes de cerrar este chat, el nuevo desarrollador debe:
 
 # 🎉 PALABRAS FINALES
 
-**Este proyecto está en un estado SÓLIDO.** La arquitectura es limpia, las convenciones son consistentes, y el código es mantenible.
+**Este proyecto está en un estado SÓLIDO.** La arquitectura es limpia, las convenciones son consistentes, y el código es
+mantenible.
 
 **Lo que FUNCIONA:**
 
@@ -2490,7 +2494,8 @@ Antes de cerrar este chat, el nuevo desarrollador debe:
 
 **Total estimado para completar MVP Admin:** 10-12 horas de desarrollo.
 
-**Confianza en el código:** Alta (8/10). El código es profesional, sigue SOLID, usa patrones modernos, y está bien documentado.
+**Confianza en el código:** Alta (8/10). El código es profesional, sigue SOLID, usa patrones modernos, y está bien
+documentado.
 
 **¡Éxito con el proyecto! 🍪🚀**
 

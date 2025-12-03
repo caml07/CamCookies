@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using cmcookies.Models;
 
@@ -11,9 +12,11 @@ using cmcookies.Models;
 namespace cmcookies.Migrations
 {
     [DbContext(typeof(CmcDBContext))]
-    partial class CmcDBContextModelSnapshot : ModelSnapshot
+    [Migration("20251203071519_IncreaseMaterialUnitCostPrecision")]
+    partial class IncreaseMaterialUnitCostPrecision
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

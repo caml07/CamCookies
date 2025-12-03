@@ -106,8 +106,8 @@ public class CookiesController : Controller
       // Verificar si ya existe una cookie con el mismo CookieCode
       if (await _context.Cookies.AnyAsync(c => c.CookieCode == viewModel.CookieCode))
       {
-          ModelState.AddModelError("CookieCode", "Ya existe una cookie con este código. Por favor, elija otro.");
-          return View(viewModel);
+        ModelState.AddModelError("CookieCode", "Ya existe una cookie con este código. Por favor, elija otro.");
+        return View(viewModel);
       }
 
       // ===== FACTORY PATTERN EN ACCIÓN =====

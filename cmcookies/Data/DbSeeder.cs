@@ -372,7 +372,10 @@ public static class DbSeeder
       var cookieMaterials = new List<CookieMaterial>
       {
         // ===== RECETA S'MORES =====
-        new() { CookieCode = "SMORES", MaterialId = getMaterialId("Mantequilla La Perfecta"), ConsumptionPerBatch = 230 },
+        new()
+        {
+          CookieCode = "SMORES", MaterialId = getMaterialId("Mantequilla La Perfecta"), ConsumptionPerBatch = 230
+        },
         new() { CookieCode = "SMORES", MaterialId = getMaterialId("Azúcar morena"), ConsumptionPerBatch = 90 },
         new() { CookieCode = "SMORES", MaterialId = getMaterialId("Azúcar blanca"), ConsumptionPerBatch = 90 },
         new() { CookieCode = "SMORES", MaterialId = getMaterialId("Harina"), ConsumptionPerBatch = 500 },
@@ -391,7 +394,10 @@ public static class DbSeeder
         new() { CookieCode = "OREO", MaterialId = getMaterialId("Azúcar blanca"), ConsumptionPerBatch = 90 },
         new() { CookieCode = "OREO", MaterialId = getMaterialId("Harina"), ConsumptionPerBatch = 500 },
         new() { CookieCode = "OREO", MaterialId = getMaterialId("Chispas chocolate"), ConsumptionPerBatch = 100 },
-        new() { CookieCode = "OREO", MaterialId = getMaterialId("Oreo normal"), ConsumptionPerBatch = 29 }, // 9 triturada + 20 decoración
+        new()
+        {
+          CookieCode = "OREO", MaterialId = getMaterialId("Oreo normal"), ConsumptionPerBatch = 29
+        }, // 9 triturada + 20 decoración
         new() { CookieCode = "OREO", MaterialId = getMaterialId("Huevo"), ConsumptionPerBatch = 3 },
         new() { CookieCode = "OREO", MaterialId = getMaterialId("Esencia"), ConsumptionPerBatch = 5 },
         new() { CookieCode = "OREO", MaterialId = getMaterialId("Sal"), ConsumptionPerBatch = 2 },

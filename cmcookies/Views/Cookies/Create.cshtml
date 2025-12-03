@@ -15,37 +15,37 @@
         <div class="admin-card">
             <form asp-action="Create" method="post" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
-                
+
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label asp-for="CookieCode" class="form-label"></label>
-                        <input asp-for="CookieCode" class="form-control" placeholder="Ej: SMO, ORE" />
+                        <input asp-for="CookieCode" class="form-control" placeholder="Ej: SMO, ORE"/>
                         <span asp-validation-for="CookieCode" class="text-danger"></span>
                     </div>
                     <div class="col-md-6 mb-3">
                         <label asp-for="CookieName" class="form-label"></label>
-                        <input asp-for="CookieName" class="form-control" placeholder="Ej: SMO, ORE" />
+                        <input asp-for="CookieName" class="form-control" placeholder="Ej: S'more, Oreo"/>
                         <span asp-validation-for="CookieName" class="text-danger"></span>
                     </div>
                 </div>
-                
+
                 <div class="mb-3">
                     <label asp-for="Description" class="form-label"></label>
-                    <textarea asp-for="Description" class="form-control" rows="3" 
+                    <textarea asp-for="Description" class="form-control" rows="3"
                               placeholder="Descripción corta de la cookie"></textarea>
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
-                
+
                 <div class="row">
                     <div class="col-md-4 mb-3">
                         <label asp-for="Price" class="form-label"></label>
                         <div class="input-group">
                             <span class="input-group-text">C$</span>
-                            <input asp-for="Price" class="form-control" placeholder="0.00" step="0.01" />
+                            <input asp-for="Price" class="form-control" placeholder="0.00" step="0.01"/>
                         </div>
                         <span asp-validation-for="Price" class="text-danger"></span>
                     </div>
-                    
+
                     <div class="col-md-4 mb-3">
                         <label asp-for="Category" class="form-label"></label>
                         <select asp-for="Category" class="form-select">
@@ -54,18 +54,18 @@
                         </select>
                         <span asp-validation-for="Category" class="text-danger"></span>
                     </div>
-                    
+
                     <div class="col-md-4 mb-3">
                         <label asp-for="Stock" class="form-label"></label>
-                        <input asp-for="Stock" class="form-control" placeholder="0" />
+                        <input asp-for="Stock" class="form-control" placeholder="0"/>
                         <span asp-validation-for="Stock" class="text-danger"></span>
                     </div>
                 </div>
-                
+
                 <div class="mb-3">
                     <label asp-for="ImageFile" class="form-label"></label>
-                    <input asp-for="ImageFile" type="file" class="form-control" accept="image/*" 
-                           onchange="previewImage(this)" />
+                    <input asp-for="ImageFile" type="file" class="form-control" accept="image/*"
+                           onchange="previewImage(this)"/>
                     <span asp-validation-for="ImageFile" class="text-danger"></span>
                     <small class="form-text text-muted">
                         Formatos: JPG, PNG, WEBP. Máximo 5 MB.
@@ -74,12 +74,12 @@
                         <img id="preview" src="#" alt="Preview" class="img-thumbnail" style="max-width: 300px;">
                     </div>
                 </div>
-                
+
                 <div class="mb-3 form-check">
-                    <input asp-for="IsActive" class="form-check-input" type="checkbox" />
+                    <input asp-for="IsActive" class="form-check-input" type="checkbox"/>
                     <label asp-for="IsActive" class="form-check-label"></label>
                 </div>
-                
+
                 <div class="d-flex gap-2">
                     <button type="submit" class="btn admin-btn-primary">
                         <i class="bi bi-check-circle"></i> Crear Cookie
@@ -94,12 +94,12 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
     <script>
         function previewImage(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     document.getElementById('preview').src = e.target.result;
                     document.getElementById('imagePreview').style.display = 'block';
                 };

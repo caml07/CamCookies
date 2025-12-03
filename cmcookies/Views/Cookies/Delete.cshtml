@@ -17,15 +17,15 @@
                 <i class="bi bi-exclamation-triangle-fill"></i>
                 <strong>¿Estás seguro que deseas eliminar esta cookie?</strong>
             </div>
-            
+
             <div class="mb-3">
                 @if (!string.IsNullOrEmpty(Model.ImagePath))
                 {
-                    <img src="@Model.ImagePath" alt="@Model.CookieName" 
+                    <img src="@Model.ImagePath" alt="@Model.CookieName"
                          class="img-thumbnail mb-3" style="max-width: 200px;">
                 }
             </div>
-            
+
             <table class="table">
                 <tr>
                     <th>Código:</th>
@@ -61,9 +61,9 @@
                     <td><span class="badge bg-secondary">@Model.Stock</span></td>
                 </tr>
             </table>
-            
+
             <form asp-action="Delete" asp-route-cookieCode="@Model.CookieCode" method="post">
-                <input type="hidden" asp-for="CookieCode" />
+                <input type="hidden" asp-for="CookieCode"/>
                 <div class="d-flex gap-2">
                     <button type="submit" class="btn btn-danger">
                         <i class="bi bi-trash"></i> Sí, Eliminar
