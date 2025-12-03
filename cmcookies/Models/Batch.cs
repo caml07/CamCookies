@@ -20,14 +20,14 @@ public partial class Batch
 
   [Column("total_cost")]
   [Precision(10, 2)]
-  public decimal TotalCost { get; set; }
+  public decimal? TotalCost { get; set; }
 
   [Column("produced_at", TypeName = "datetime")]
   public DateTime? ProducedAt { get; set; }
 
   [ForeignKey("CookieCode")]
   [InverseProperty("Batches")]
-  public virtual Cookie CookieCodeNavigation { get; set; } = null!;
+  public virtual Cookie Cookie { get; set; } = null!;
 
   [InverseProperty("Batch")]
   public virtual ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();

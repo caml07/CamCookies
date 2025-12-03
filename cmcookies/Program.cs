@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using cmcookies.Models; //para la coneccion con la database
 using cmcookies.Data; //para que pueda modificar data dentro de la database
+using cmcookies.Models.Factories;
+using cmcookies.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,9 +52,9 @@ builder.Services.ConfigureApplicationCookie(options =>
   options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Solo HTTPS
 });
 
-// ===== FACTORY PATTERN - Dependency Injection =====
-builder.Services.AddScoped<cmcookies.Models.Factories.ICookieFactory,
-  cmcookies.Models.Factories.CookieFactory>();
+// ===== SERVICIOS Y FACTORIES - Dependency Injection =====
+builder.Services.AddScoped<ICookieFactory, CookieFactory>();
+builder.Services.AddScoped<IBatchService, BatchService>();
 
 var app = builder.Build();
 
