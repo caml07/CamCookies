@@ -33,7 +33,7 @@ public class AdminController : Controller
         .SelectMany(o => o.OrderDetails)
         .SumAsync(od => od.UnitPrice * od.Qty),
 
-      TotalCosts = await _context.Batches.SumAsync(b => b.TotalCost),
+      TotalCosts = await _context.Batches.SumAsync(b => (decimal?)b.TotalCost) ?? 0,
 
       // ===== CONTADORES DE PEDIDOS =====
       TotalOrders = await _context.Orders.CountAsync(),

@@ -142,7 +142,7 @@ public partial class
       entity.Property(e => e.ProducedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
       entity.Property(e => e.QtyMade).HasDefaultValueSql("'20'");
       //Relaciones con otras tablas One Cookie has many batches
-      entity.HasOne(d => d.CookieCodeNavigation).WithMany(p => p.Batches)
+      entity.HasOne(d => d.Cookie).WithMany(p => p.Batches)
         .OnDelete(DeleteBehavior.ClientSetNull)
         .HasConstraintName("fk_batches_cookie_code");
     });
