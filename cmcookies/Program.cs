@@ -5,7 +5,6 @@ using cmcookies.Data; //para que pueda modificar data dentro de la database
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 
 //Registrar DbContext con MySQL
@@ -57,7 +56,6 @@ builder.Services.AddScoped<cmcookies.Models.Factories.ICookieFactory,
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
   app.UseExceptionHandler("/Home/Error");
@@ -90,13 +88,13 @@ using (var scope = app.Services.CreateScope())
   // │ OPCIÓN 1: SEED COMPLETO (admin + customer + galletas)  │
   // │ Descomentar para poblar con datos completos             │
   // └───────────────────────────────────┘
-  await DbSeeder.SeedAsync(context, userManager, roleManager);
+  // await DbSeeder.SeedAsync(context, userManager, roleManager);
 
   // ┌───────────────────────────────────┐
   // │ OPCIÓN 2: LIMPIEZA TOTAL borra tod o y deja solo admin│
   // │ ⚠️ ADVERTENCIA: Esto BORRA todos los datos              │
   // └───────────────────────────────────┘
-  // await DbSeeder.CleanAndSeedAsync(context, userManager, roleManager);
+  await DbSeeder.CleanAndSeedAsync(context, userManager, roleManager);
 
   // ┌───────────────────────────────┐
   // │ OPCIÓN 3: SEED AUTOMÁTICO (solo si BD está vacía)│
