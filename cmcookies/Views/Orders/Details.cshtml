@@ -85,10 +85,10 @@
 
         <div class="col-md-4">
             <div class="card shadow-sm mb-4">
-                <div class="card-header bg-dark text-white">
-                    <h5 class="mb-0">Estado Actual</h5>
+                <div class="card-header status-card-header text-center py-3">
+                    <h5 class="mb-0 fw-bold text-uppercase">Estado Actual</h5>
                 </div>
-                <div class="card-body text-center">
+                <div class="card-body status-card-body text-center">
                     <h2 class="mb-3">
                         @if(Model.Status == "pending") { <span class="badge bg-warning text-dark">PENDIENTE</span> }
                         else if(Model.Status == "on_preparation") { <span class="badge bg-primary">EN PREPARACIÓN</span> }

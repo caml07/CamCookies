@@ -46,7 +46,7 @@ namespace cmcookies.Controllers
                 .Include(o => o.Customer)
                     .ThenInclude(c => c.User)
                 .Include(o => o.OrderDetails)
-                    .ThenInclude(od => od.CookieCodeNavigation) // Ojo: Asegúrate que la relación en OrderDetail se llame 'Cookie'
+                    .ThenInclude(od => od.CookieCodeNavigation)
                 .FirstOrDefaultAsync(m => m.OrderId == id);
 
             if (order == null) return NotFound();
