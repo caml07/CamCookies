@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using cmcookies.Models;
 using cmcookies.Models.Factories;
@@ -292,6 +293,93 @@ public class CookiesController : Controller
       return RedirectToAction(nameof(Index));
     }
   }
+
+  // ========================================================================
+  // RECIPE MANAGEMENT - Administración de recetas
+  // ========================================================================
+
+  // GET: Cookies/Recipe/5
+  public async Task<IActionResult> Recipe(string id)
+  {
+      if (id == null) return NotFound();
+
+      var cookie = await _context.Cookies
+          .Include(c => c.CookieMaterials)
+          .ThenInclude(cm => cm.Material)
+          .FirstOrDefaultAsync(m => m.CookieCode == id);
+
+      if (cookie == null) return NotFound();
+
+      // Preparamos el ViewModel
+      var viewModel = new cmcookies.Models.ViewModels.Cookie.RecipeViewModel
+      {
+          CookieCode = cookie.CookieCode,
+          CookieName = cookie.CookieName,
+          CookieImage = cookie.ImagePath,
+          Ingredients = cookie.CookieMaterials.Select(cm => new cmcookies.Models.ViewModels.Cookie.RecipeItem
+          {
+              CookieMaterialId = cm.CookieMaterialId,
+              MaterialName = cm.Material.Name,
+              Unit = cm.Material.Unit,
+              Quantity = cm.ConsumptionPerBatch,
+              CostCalculated = cm.ConsumptionPerBatch * cm.Material.UnitCost
+          }).ToList(),
+          // Cargamos la lista de materiales para el dropdown (excluyendo los que ya están en la receta si quisieras ser muy pro, pero por ahora todos)
+          MaterialsList = new SelectList(_context.Materials.OrderBy(m => m.Name), "MaterialId", "Name")
+      };
+
+      return View(viewModel);
+  }
+
+  // POST: Cookies/AddIngredient
+  [HttpPost]
+  [ValidateAntiForgeryToken]
+  public async Task<IActionResult> AddIngredient(cmcookies.Models.ViewModels.Cookie.RecipeViewModel model)
+  {
+      // Validar que no estemos duplicando el material
+      var exists = await _context.CookieMaterials
+          .AnyAsync(cm => cm.CookieCode == model.CookieCode && cm.MaterialId == model.NewMaterialId);
+
+      if (exists)
+      {
+          TempData["ErrorMessage"] = "Este material ya está en la receta. Edítalo o bórralo si deseas cambiarlo.";
+          return RedirectToAction(nameof(Recipe), new { id = model.CookieCode });
+      }
+
+      if (model.NewQuantity > 0)
+      {
+          var newIngredient = new CookieMaterial
+          {
+              CookieCode = model.CookieCode,
+              MaterialId = model.NewMaterialId,
+              ConsumptionPerBatch = model.NewQuantity
+          };
+
+          _context.Add(newIngredient);
+          await _context.SaveChangesAsync();
+          TempData["SuccessMessage"] = "Ingrediente agregado a la receta.";
+      }
+
+      return RedirectToAction(nameof(Recipe), new { id = model.CookieCode });
+  }
+
+  // POST: Cookies/RemoveIngredient
+  [HttpPost]
+  [ValidateAntiForgeryToken]
+  public async Task<IActionResult> RemoveIngredient(int id)
+  {
+      var ingredient = await _context.CookieMaterials.FindAsync(id);
+      if (ingredient != null)
+      {
+          var cookieCode = ingredient.CookieCode; // Guardamos ID para el redirect
+          _context.CookieMaterials.Remove(ingredient);
+          await _context.SaveChangesAsync();
+          TempData["SuccessMessage"] = "Ingrediente eliminado.";
+          return RedirectToAction(nameof(Recipe), new { id = cookieCode });
+      }
+      return RedirectToAction(nameof(Index));
+  }
+
 
   // ========================================================================
   // HELPER METHODS - Métodos auxiliares privados
