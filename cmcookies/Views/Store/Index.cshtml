@@ -1,0 +1,200 @@
+@model IEnumerable<cmcookies.Models.Cookie>
+
+@{
+ViewData["Title"] = "Menú de Galletas";
+}
+
+<style>
+    /* Input de Cantidad Personalizado */
+    .qty-input-group {
+        border: 2px solid #eee;
+        border-radius: 50px;
+        overflow: hidden;
+        display: flex;
+        width: 100%;
+        transition: border-color 0.3s;
+    }
+    .qty-input-group:focus-within {
+        border-color: #f29f05;
+    }
+    .qty-btn {
+        background: white;
+        border: none;
+        padding: 5px 15px;
+        color: #592c1c;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .qty-btn:hover { background: #fff8e1; }
+
+    .qty-field {
+        border: none;
+        text-align: center;
+        width: 100%;
+        font-weight: bold;
+        color: #592c1c;
+        -moz-appearance: textfield; /* Quitar flechas en Firefox */
+    }
+    .qty-field::-webkit-outer-spin-button,
+    .qty-field::-webkit-inner-spin-button {
+        -webkit-appearance: none; /* Quitar flechas en Chrome */
+        margin: 0;
+    }
+
+    /* Imagen contenida (No cortada) */
+    .cookie-img-box {
+        height: 160px; /* Más compacto */
+        padding: 10px;
+        background: radial-gradient(circle, #fff 40%, #f8f9fa 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .cookie-img {
+        max-height: 100%;
+        max-width: 100%;
+        object-fit: contain;
+        filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        transition: transform 0.3s;
+    }
+
+    /* Barra Flotante Inferior */
+    .bulk-action-bar {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #592c1c;
+        color: white;
+        padding: 15px 30px;
+        border-radius: 50px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        width: 90%;
+        max-width: 600px;
+        animation: slideUp 0.5s ease-out;
+    }
+
+    @@keyframes slideUp {
+        from { transform: translate(-50%, 100px); opacity: 0; }
+        to { transform: translate(-50%, 0); opacity: 1; }
+    }
+
+    .btn-checkout {
+        background: #f29f05;
+        color: white;
+        border: none;
+        border-radius: 30px;
+        padding: 10px 25px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.2s;
+    }
+    .btn-checkout:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px rgba(242, 159, 5, 0.5);
+    }
+
+    /* Grid Compacto */
+    .cookie-card {
+        border: none;
+        border-radius: 12px;
+        transition: transform 0.2s;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .cookie-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+</style>
+
+<div class="container py-5 pb-5 mb-5">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold" style="color: #592c1c;">Ordena tus Favoritas 🍪</h1>
+        <p class="text-muted">Elige las cantidades y agrégalas todas al final.</p>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+    <div class="alert alert-success text-center shadow-sm">
+        <i class="bi bi-check-circle-fill"></i> @TempData["Success"]
+    </div>
+    }
+
+    <form asp-action="AddBulkToCart" id="bulkForm">
+
+        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-3">
+            @foreach (var cookie in Model)
+            {
+            <div class="col">
+                <div class="card h-100 cookie-card">
+                    <div class="cookie-img-box">
+                        <img src="@(string.IsNullOrEmpty(cookie.ImagePath) ? "/images/logo.png" : cookie.ImagePath)"
+                             class="cookie-img" alt="@cookie.CookieName">
+                    </div>
+
+                    <div class="card-body p-3 text-center">
+                        <h6 class="fw-bold text-truncate mb-1" title="@cookie.CookieName">@cookie.CookieName</h6>
+                        <div class="text-primary fw-bold mb-2">@cookie.Price.ToString("C")</div>
+
+                        @if (cookie.Stock > 0)
+                        {
+                        <div class="qty-input-group">
+                            <button type="button" class="qty-btn" onclick="updateQty('@cookie.CookieCode', -1)">-</button>
+                            <input type="number" id="qty-@cookie.CookieCode"
+                                   name="products[@cookie.CookieCode]"
+                                   value="0" min="0" max="@cookie.Stock"
+                                   class="qty-field" readonly>
+                            <button type="button" class="qty-btn" onclick="updateQty('@cookie.CookieCode', 1)">+</button>
+                        </div>
+                        <small class="text-muted" style="font-size: 0.7rem;">Stock: @cookie.Stock</small>
+                        }
+                        else
+                        {
+                        <span class="badge bg-secondary w-100 py-2">Agotado</span>
+                        }
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+
+        <div class="bulk-action-bar">
+            <div class="flex-grow-1">
+                <div class="fs-5 fw-bold"><i class="bi bi-cart3"></i> Tu Selección</div>
+                <small class="text-white-50" id="totalSelected">0 productos seleccionados</small>
+            </div>
+            <button type="submit" class="btn-checkout">
+                Agregar al Carrito <i class="bi bi-arrow-right"></i>
+            </button>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    function updateQty(code, change) {
+        const input = document.getElementById('qty-' + code);
+        let newVal = parseInt(input.value) + change;
+        const max = parseInt(input.getAttribute('max'));
+
+        if (newVal >= 0 && newVal <= max) {
+            input.value = newVal;
+            updateTotal();
+        }
+    }
+
+    function updateTotal() {
+        const inputs = document.querySelectorAll('.qty-field');
+        let total = 0;
+        inputs.forEach(input => {
+            total += parseInt(input.value || '0');
+        });
+
+        document.getElementById('totalSelected').innerText = total === 1 ? "1 galleta seleccionada" : `${total} galletas seleccionadas`;
+    }
+</script>

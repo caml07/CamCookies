@@ -12,20 +12,24 @@
 
 <ul class="nav nav-tabs mb-4">
     <li class="nav-item">
-        <a class="nav-link @(currentStatus == "all" ? "active" : "")" asp-action="Index" asp-route-status="all">Todos</a>
+        <a class="nav-link @(currentStatus == "all" ? "active" : "")" asp-action="Index"
+           asp-route-status="all">Todos</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link @(currentStatus == "pending" ? "active fw-bold text-warning" : "text-secondary")" asp-action="Index" asp-route-status="pending">
+        <a class="nav-link @(currentStatus == "pending" ? "active fw-bold text-warning" : "text-secondary")"
+           asp-action="Index" asp-route-status="pending">
             <i class="bi bi-clock"></i> Pendientes
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link @(currentStatus == "on_preparation" ? "active fw-bold text-primary" : "text-secondary")" asp-action="Index" asp-route-status="on_preparation">
+        <a class="nav-link @(currentStatus == "on_preparation" ? "active fw-bold text-primary" : "text-secondary")"
+           asp-action="Index" asp-route-status="on_preparation">
             <i class="bi bi-gear-wide-connected"></i> En Preparación
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link @(currentStatus == "delivered" ? "active fw-bold text-success" : "text-secondary")" asp-action="Index" asp-route-status="delivered">
+        <a class="nav-link @(currentStatus == "delivered" ? "active fw-bold text-success" : "text-secondary")"
+           asp-action="Index" asp-route-status="delivered">
             <i class="bi bi-check-circle"></i> Entregados
         </a>
     </li>
@@ -36,40 +40,52 @@
         <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
                 <thead class="table-light">
-                    <tr>
-                        <th># Orden</th>
-                        <th>Cliente</th>
-                        <th>Fecha</th>
-                        <th>Total</th>
-                        <th>Estado</th>
-                        <th>Acción</th>
-                    </tr>
+                <tr>
+                    <th># Orden</th>
+                    <th>Cliente</th>
+                    <th>Fecha</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                    <th>Acción</th>
+                </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
-                    {
-                        var total = item.OrderDetails.Sum(d => d.Qty * d.UnitPrice);
-                        <tr>
-                            <td><strong>#@item.OrderId</strong></td>
-                            <td>
-                                @item.Customer.User.FirstName @item.Customer.User.LastName<br/>
-                                <small class="text-muted">@item.Customer.User.Email</small>
-                            </td>
-                            <td>@item.CreatedAt?.ToString("dd/MM/yyyy HH:mm")</td>
-                            <td>@total.ToString("C")</td>
-                            <td>
-                                @if(item.Status == "pending") { <span class="badge bg-warning text-dark">PENDIENTE</span> }
-                                else if(item.Status == "on_preparation") { <span class="badge bg-primary">PREPARANDO</span> }
-                                else if(item.Status == "delivered") { <span class="badge bg-success">ENTREGADO</span> }
-                                else { <span class="badge bg-secondary">@item.Status?.ToUpper()</span> }
-                            </td>
-                            <td>
-                                <a asp-action="Details" asp-route-id="@item.OrderId" class="btn btn-sm btn-outline-dark">
-                                    Ver Detalles
-                                </a>
-                            </td>
-                        </tr>
-                    }
+                @foreach (var item in Model)
+                {
+                    var total = item.OrderDetails.Sum(d => d.Qty * d.UnitPrice);
+                    <tr>
+                        <td><strong>#@item.OrderId</strong></td>
+                        <td>
+                            @item.Customer.User.FirstName @item.Customer.User.LastName<br/>
+                            <small class="text-muted">@item.Customer.User.Email</small>
+                        </td>
+                        <td>@item.CreatedAt?.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>@total.ToString("C")</td>
+                        <td>
+                            @if (item.Status == "pending")
+                            {
+                                <span class="badge bg-warning text-dark">PENDIENTE</span>
+                            }
+                            else if (item.Status == "on_preparation")
+                            {
+                                <span class="badge bg-primary">PREPARANDO</span>
+                            }
+                            else if (item.Status == "delivered")
+                            {
+                                <span class="badge bg-success">ENTREGADO</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">@item.Status?.ToUpper()</span>
+                            }
+                        </td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.OrderId" class="btn btn-sm btn-outline-dark">
+                                Ver Detalles
+                            </a>
+                        </td>
+                    </tr>
+                }
                 </tbody>
             </table>
             @if (!Model.Any())

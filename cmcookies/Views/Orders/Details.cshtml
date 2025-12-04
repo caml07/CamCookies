@@ -37,39 +37,40 @@
                 </div>
                 <table class="table align-middle">
                     <thead>
-                        <tr>
-                            <th>Galleta</th>
-                            <th class="text-center">Cant.</th>
-                            <th class="text-end">Precio U.</th>
-                            <th class="text-end">Subtotal</th>
-                        </tr>
+                    <tr>
+                        <th>Galleta</th>
+                        <th class="text-center">Cant.</th>
+                        <th class="text-end">Precio U.</th>
+                        <th class="text-end">Subtotal</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        @foreach (var detail in Model.OrderDetails)
-                        {
-                            <tr>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        @* Si tienes imagen en Cookie, podrías mostrarla aquí *@
-                                        <div class="fw-bold">@detail.CookieCodeNavigation.CookieName</div>
-                                    </div>
-                                </td>
-                                <td class="text-center"><span class="badge bg-light text-dark border">@detail.Qty</span></td>
-                                <td class="text-end">@detail.UnitPrice.ToString("C")</td>
-                                <td class="text-end">@((detail.Qty * detail.UnitPrice).ToString("C"))</td>
-                            </tr>
-                        }
+                    @foreach (var detail in Model.OrderDetails)
+                    {
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    @* Si tienes imagen en Cookie, podrías mostrarla aquí *@
+                                    <div class="fw-bold">@detail.CookieCodeNavigation.CookieName</div>
+                                </div>
+                            </td>
+                            <td class="text-center"><span class="badge bg-light text-dark border">@detail.Qty</span>
+                            </td>
+                            <td class="text-end">@detail.UnitPrice.ToString("C")</td>
+                            <td class="text-end">@((detail.Qty * detail.UnitPrice).ToString("C"))</td>
+                        </tr>
+                    }
                     </tbody>
                     <tfoot class="table-light">
-                        <tr>
-                            <td colspan="3" class="text-end fw-bold">TOTAL:</td>
-                            <td class="text-end fw-bold fs-5">@totalAmount.ToString("C")</td>
-                        </tr>
+                    <tr>
+                        <td colspan="3" class="text-end fw-bold">TOTAL:</td>
+                        <td class="text-end fw-bold fs-5">@totalAmount.ToString("C")</td>
+                    </tr>
                     </tfoot>
                 </table>
             </div>
 
-            @if(Model.Status != "pending")
+            @if (Model.Status != "pending")
             {
                 <div class="card shadow-sm border-info">
                     <div class="card-body">
@@ -90,28 +91,41 @@
                 </div>
                 <div class="card-body status-card-body text-center">
                     <h2 class="mb-3">
-                        @if(Model.Status == "pending") { <span class="badge bg-warning text-dark">PENDIENTE</span> }
-                        else if(Model.Status == "on_preparation") { <span class="badge bg-primary">EN PREPARACIÓN</span> }
-                        else if(Model.Status == "delivered") { <span class="badge bg-success">ENTREGADO</span> }
-                        else { <span class="badge bg-secondary">@Model.Status?.ToUpper()</span> }
+                        @if (Model.Status == "pending")
+                        {
+                            <span class="badge bg-warning text-dark">PENDIENTE</span>
+                        }
+                        else if (Model.Status == "on_preparation")
+                        {
+                            <span class="badge bg-primary">EN PREPARACIÓN</span>
+                        }
+                        else if (Model.Status == "delivered")
+                        {
+                            <span class="badge bg-success">ENTREGADO</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">@Model.Status?.ToUpper()</span>
+                        }
                     </h2>
 
-                    <hr />
+                    <hr/>
 
                     @if (Model.Status == "pending")
                     {
                         <div class="d-grid gap-2">
                             <p class="small text-muted mb-1">Al iniciar preparación, se descontará el stock.</p>
                             <form asp-action="UpdateStatus" method="post">
-                                <input type="hidden" name="id" value="@Model.OrderId" />
-                                <input type="hidden" name="newStatus" value="on_preparation" />
+                                <input type="hidden" name="id" value="@Model.OrderId"/>
+                                <input type="hidden" name="newStatus" value="on_preparation"/>
                                 <button type="submit" class="btn btn-primary w-100 btn-lg">
                                     <i class="bi bi-play-circle"></i> Iniciar Preparación
                                 </button>
                             </form>
-                            <form asp-action="UpdateStatus" method="post" onsubmit="return confirm('¿Cancelar este pedido?');">
-                                <input type="hidden" name="id" value="@Model.OrderId" />
-                                <input type="hidden" name="newStatus" value="cancelled" />
+                            <form asp-action="UpdateStatus" method="post"
+                                  onsubmit="return confirm('¿Cancelar este pedido?');">
+                                <input type="hidden" name="id" value="@Model.OrderId"/>
+                                <input type="hidden" name="newStatus" value="cancelled"/>
                                 <button type="submit" class="btn btn-outline-danger w-100">Cancelar Pedido</button>
                             </form>
                         </div>
@@ -120,8 +134,8 @@
                     {
                         <div class="d-grid">
                             <form asp-action="UpdateStatus" method="post">
-                                <input type="hidden" name="id" value="@Model.OrderId" />
-                                <input type="hidden" name="newStatus" value="delivered" />
+                                <input type="hidden" name="id" value="@Model.OrderId"/>
+                                <input type="hidden" name="newStatus" value="delivered"/>
                                 <button type="submit" class="btn btn-success w-100 btn-lg">
                                     <i class="bi bi-check2-circle"></i> Marcar Entregado
                                 </button>

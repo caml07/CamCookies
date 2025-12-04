@@ -41,8 +41,7 @@ public partial class Cookie
   [Column("updated_at", TypeName = "datetime")]
   public DateTime? UpdatedAt { get; set; }
 
-  [InverseProperty("Cookie")]
-  public virtual ICollection<Batch> Batches { get; set; } = new List<Batch>();
+  [InverseProperty("Cookie")] public virtual ICollection<Batch> Batches { get; set; } = new List<Batch>();
 
   [InverseProperty("CookieCodeNavigation")]
   public virtual ICollection<CookieMaterial> CookieMaterials { get; set; } = new List<CookieMaterial>();

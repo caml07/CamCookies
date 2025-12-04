@@ -56,6 +56,15 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddScoped<ICookieFactory, CookieFactory>();
 builder.Services.AddScoped<IBatchService, BatchService>();
 
+// NUEVO: Agregar servicio de Session y Cache (necesario para session)
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+  options.IdleTimeout = TimeSpan.FromMinutes(30); // El carrito dura 30 mins inactivo
+  options.Cookie.HttpOnly = true;
+  options.Cookie.IsEssential = true;
+});
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -70,6 +79,8 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication(); //lee la cookie de secion para verificar qué usuario es el que se inicia sesión
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapControllerRoute(
   "default",

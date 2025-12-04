@@ -1,9 +1,8 @@
 using cmcookies.Models;
 
-namespace cmcookies.Services
+namespace cmcookies.Services;
+
+public interface IBatchService
 {
-  public interface IBatchService
-  {
-    Task<Batch> CreateBatchAsync(string cookieCode);
-  }
+  Task<Batch> CreateBatchAsync(string cookieCode);
 }

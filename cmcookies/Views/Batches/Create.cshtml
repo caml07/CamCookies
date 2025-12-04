@@ -14,7 +14,8 @@
                 </div>
                 <div class="card-body">
                     <div class="alert alert-info">
-                        <i class="bi bi-info-circle"></i> Un batch produce automáticamente <strong>20 galletas</strong> y descuenta los materiales necesarios del inventario.
+                        <i class="bi bi-info-circle"></i> Un batch produce automáticamente <strong>20 galletas</strong>
+                        y descuenta los materiales necesarios del inventario.
                     </div>
 
                     <form asp-action="Create">
@@ -22,7 +23,8 @@
 
                         <div class="mb-4">
                             <label asp-for="CookieCode" class="form-label fw-bold"></label>
-                            <select asp-for="CookieCode" class="form-select form-select-lg" asp-items="Model.CookiesList">
+                            <select asp-for="CookieCode" class="form-select form-select-lg"
+                                    asp-items="Model.CookiesList">
                                 <option value="">-- Selecciona una receta --</option>
                             </select>
                             <span asp-validation-for="CookieCode" class="text-danger"></span>
@@ -42,5 +44,5 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

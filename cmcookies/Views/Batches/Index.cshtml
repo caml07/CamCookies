@@ -27,25 +27,25 @@
         <div class="table-responsive">
             <table class="table table-hover align-middle">
                 <thead class="table-light">
-                    <tr>
-                        <th># Batch</th>
-                        <th>Galleta</th>
-                        <th>Cantidad</th>
-                        <th>Costo Total</th>
-                        <th>Fecha de Producción</th>
-                    </tr>
+                <tr>
+                    <th># Batch</th>
+                    <th>Galleta</th>
+                    <th>Cantidad</th>
+                    <th>Costo Total</th>
+                    <th>Fecha de Producción</th>
+                </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>#@item.BatchId</td>
-                            <td class="fw-bold text-primary">@item.Cookie.CookieName</td>
-                            <td><span class="badge bg-secondary">@item.QtyMade un.</span></td>
-                            <td>@item.TotalCost?.ToString("C")</td>
-                            <td>@item.ProducedAt?.ToString("dd/MM/yyyy HH:mm")</td>
-                        </tr>
-                    }
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>#@item.BatchId</td>
+                        <td class="fw-bold text-primary">@item.Cookie.CookieName</td>
+                        <td><span class="badge bg-secondary">@item.QtyMade un.</span></td>
+                        <td>@item.TotalCost?.ToString("C")</td>
+                        <td>@item.ProducedAt?.ToString("dd/MM/yyyy HH:mm")</td>
+                    </tr>
+                }
                 </tbody>
             </table>
             @if (!Model.Any())
