@@ -27,7 +27,7 @@ public partial class Batch
 
   [ForeignKey("CookieCode")]
   [InverseProperty("Batches")]
-  public virtual Cookie Cookie { get; set; } = null!;
+  public virtual Cookie Cookie { get; set; } = null!; // Nombre limpio: Cookie
 
   [InverseProperty("Batch")]
   public virtual ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();

@@ -109,12 +109,14 @@
                         }
                     </td>
                     <td>
-                        <div class="btn-group" role="group">
-                            <a asp-action="Edit" asp-route-cookieCode="@cookie.CookieCode"
-                               class="btn btn-sm btn-outline-primary" title="Editar">
+                        <div class="btn-group">
+                            <a asp-action="Recipe" asp-route-id="@cookie.CookieCode" class="btn btn-sm btn-warning text-dark" title="Gestionar Receta">
+                                <i class="bi bi-list-task"></i> Receta
+                            </a>
+                            <a asp-action="Edit" asp-route-cookieCode="@cookie.CookieCode" class="btn btn-sm btn-outline-secondary" title="Editar">
                                 <i class="bi bi-pencil"></i>
                             </a>
-                            <a asp-action="Delete" asp-route-cookieCode="@cookie.CookieCode"
+                             <a asp-action="Delete" asp-route-cookieCode="@cookie.CookieCode"
                                class="btn btn-sm btn-outline-danger" title="Eliminar">
                                 <i class="bi bi-trash"></i>
                             </a>
