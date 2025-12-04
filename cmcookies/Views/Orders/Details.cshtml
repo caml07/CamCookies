@@ -1,0 +1,153 @@
+@model cmcookies.Models.Order
+
+@{
+    ViewData["Title"] = "Detalle Pedido #" + Model.OrderId;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var totalAmount = Model.OrderDetails.Sum(x => x.Qty * x.UnitPrice);
+    var totalCookies = Model.OrderDetails.Sum(x => x.Qty);
+}
+
+<div class="container-fluid mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3">Pedido <span class="text-primary">#@Model.OrderId</span></h1>
+            <p class="text-muted">Realizado el: @Model.CreatedAt?.ToString("f")</p>
+        </div>
+        <a asp-action="Index" class="btn btn-outline-secondary">Volver</a>
+    </div>
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger shadow-sm">
+            <i class="bi bi-exclamation-octagon-fill"></i> <strong>¡Alto!</strong> @TempData["ErrorMessage"]
+        </div>
+    }
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success shadow-sm">
+            <i class="bi bi-check-lg"></i> @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0"><i class="bi bi-basket"></i> Contenido del Pedido</h5>
+                </div>
+                <table class="table align-middle">
+                    <thead>
+                        <tr>
+                            <th>Galleta</th>
+                            <th class="text-center">Cant.</th>
+                            <th class="text-end">Precio U.</th>
+                            <th class="text-end">Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var detail in Model.OrderDetails)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        @* Si tienes imagen en Cookie, podrías mostrarla aquí *@
+                                        <div class="fw-bold">@detail.CookieCodeNavigation.CookieName</div>
+                                    </div>
+                                </td>
+                                <td class="text-center"><span class="badge bg-light text-dark border">@detail.Qty</span></td>
+                                <td class="text-end">@detail.UnitPrice.ToString("C")</td>
+                                <td class="text-end">@((detail.Qty * detail.UnitPrice).ToString("C"))</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot class="table-light">
+                        <tr>
+                            <td colspan="3" class="text-end fw-bold">TOTAL:</td>
+                            <td class="text-end fw-bold fs-5">@totalAmount.ToString("C")</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            @if(Model.Status != "pending")
+            {
+                <div class="card shadow-sm border-info">
+                    <div class="card-body">
+                        <h6 class="text-info"><i class="bi bi-box-seam"></i> Empaque Utilizado (Automático)</h6>
+                        <ul>
+                            <li><strong>Bolsa:</strong> @(Model.Bag ?? "No calculada")</li>
+                            <li><strong>Sticker:</strong> @(Model.Sticker == true ? "Sí incluido" : "No aplica")</li>
+                        </ul>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">Estado Actual</h5>
+                </div>
+                <div class="card-body text-center">
+                    <h2 class="mb-3">
+                        @if(Model.Status == "pending") { <span class="badge bg-warning text-dark">PENDIENTE</span> }
+                        else if(Model.Status == "on_preparation") { <span class="badge bg-primary">EN PREPARACIÓN</span> }
+                        else if(Model.Status == "delivered") { <span class="badge bg-success">ENTREGADO</span> }
+                        else { <span class="badge bg-secondary">@Model.Status?.ToUpper()</span> }
+                    </h2>
+
+                    <hr />
+
+                    @if (Model.Status == "pending")
+                    {
+                        <div class="d-grid gap-2">
+                            <p class="small text-muted mb-1">Al iniciar preparación, se descontará el stock.</p>
+                            <form asp-action="UpdateStatus" method="post">
+                                <input type="hidden" name="id" value="@Model.OrderId" />
+                                <input type="hidden" name="newStatus" value="on_preparation" />
+                                <button type="submit" class="btn btn-primary w-100 btn-lg">
+                                    <i class="bi bi-play-circle"></i> Iniciar Preparación
+                                </button>
+                            </form>
+                            <form asp-action="UpdateStatus" method="post" onsubmit="return confirm('¿Cancelar este pedido?');">
+                                <input type="hidden" name="id" value="@Model.OrderId" />
+                                <input type="hidden" name="newStatus" value="cancelled" />
+                                <button type="submit" class="btn btn-outline-danger w-100">Cancelar Pedido</button>
+                            </form>
+                        </div>
+                    }
+                    else if (Model.Status == "on_preparation")
+                    {
+                        <div class="d-grid">
+                            <form asp-action="UpdateStatus" method="post">
+                                <input type="hidden" name="id" value="@Model.OrderId" />
+                                <input type="hidden" name="newStatus" value="delivered" />
+                                <button type="submit" class="btn btn-success w-100 btn-lg">
+                                    <i class="bi bi-check2-circle"></i> Marcar Entregado
+                                </button>
+                            </form>
+                        </div>
+                    }
+                    else if (Model.Status == "delivered")
+                    {
+                        <div class="text-success">
+                            <i class="bi bi-check-all display-4"></i>
+                            <p class="fw-bold mt-2">Pedido Completado</p>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-white">
+                    <h6 class="mb-0">Datos del Cliente</h6>
+                </div>
+                <div class="card-body">
+                    <p class="mb-1 fw-bold">@Model.Customer.User.FirstName @Model.Customer.User.LastName</p>
+                    <p class="mb-1"><a href="mailto:@Model.Customer.User.Email">@Model.Customer.User.Email</a></p>
+                    <p class="text-muted small">Cliente ID: @Model.Customer.CustomerId</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
