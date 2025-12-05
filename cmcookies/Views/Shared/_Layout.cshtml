@@ -34,6 +34,19 @@
                                 <a class="nav-link" asp-controller="Admin" asp-action="Dashboard">Admin Dashboard</a>
                             </li>
                         }
+                        
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Store" asp-action="Index">Menú</a>
+                        </li>
+
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-primary fw-bold" asp-controller="Store" asp-action="MyOrders">
+                                    <i class="bi bi-clock-history"></i> Mis Pedidos ((っ˘ڡ˘ς)
+                                </a>
+                            </li>
+                        }
                     </ul>
 
                     @* Sección de autenticación - derecha del navbar *@
@@ -42,7 +55,7 @@
                         {
                             @* Usuario está logueado *@
                             <li class="nav-item">
-                                <span class="nav-link user-greeting">Hello, @User.Identity.Name</span>
+                                <span class="nav-link user-greeting">Hello, @User.Identity.Name ◝(^⌣^)◜</span>
                             </li>
                             <li class="nav-item">
                                 <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">

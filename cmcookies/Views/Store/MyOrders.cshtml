@@ -1,0 +1,74 @@
+@model IEnumerable<cmcookies.Models.Order>
+
+@{
+    ViewData["Title"] = "Mis Pedidos";
+}
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-dark">Mis Pedidos < (´∀｀)っ</h2>
+        <a asp-action="Index" class="btn btn-outline-primary rounded-pill px-4">
+            <i class="bi bi-plus-lg"></i> Nuevo Pedido
+        </a>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="text-center py-5 bg-light rounded-3">
+            <i class="bi bi-bag-x display-1 text-muted"></i>
+            <h4 class="mt-3 text-muted">Aún no tienes pedidos</h4>
+            <p>¡Nuestras galletas te están esperando! (⌒_⌒;)</p>
+            <a asp-action="Index" class="btn btn-warning mt-2 text-dark fw-bold">Ir a la Tienda</a>
+        </div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var order in Model)
+            {
+                var total = order.OrderDetails.Sum(d => d.Qty * d.UnitPrice);
+                var itemCount = order.OrderDetails.Sum(d => d.Qty);
+                
+                // Lógica de colores según estado
+                string statusBadge = "bg-secondary";
+                string statusText = order.Status?.ToUpper() ?? "DESCONOCIDO";
+                
+                if (order.Status == "pending") { statusBadge = "bg-warning text-dark"; statusText = "⏳ PENDIENTE"; }
+                else if (order.Status == "on_preparation") { statusBadge = "bg-primary"; statusText = "🔥 EN EL HORNO"; }
+                else if (order.Status == "delivered") { statusBadge = "bg-success"; statusText = "✅ ENTREGADO"; }
+                else if (order.Status == "cancelled") { statusBadge = "bg-danger"; statusText = "❌ CANCELADO"; }
+
+                <div class="col-md-6 col-lg-4">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
+                            <span class="fw-bold text-muted">#@order.OrderId</span>
+                            <span class="badge @statusBadge rounded-pill">@statusText</span>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold text-primary">@total.ToString("C")</h5>
+                            <p class="card-text text-muted small mb-3">
+                                <i class="bi bi-calendar3"></i> @order.CreatedAt?.ToString("dd/MM/yyyy HH:mm")
+                            </p>
+                            
+                            <hr class="border-secondary opacity-10">
+                            
+                            <ul class="list-unstyled small mb-0">
+                                @foreach (var detail in order.OrderDetails.Take(3))
+                                {
+                                    <li class="mb-1">
+                                        <span class="fw-bold">@detail.Qty x</span> @detail.CookieCodeNavigation.CookieName
+                                    </li>
+                                }
+                                @if (order.OrderDetails.Count > 3)
+                                {
+                                    <li class="text-muted fst-italic">+ @(order.OrderDetails.Count - 3) más...</li>
+                                }
+                            </ul>
+                        </div>
+                        @* Futuro: Aquí podríamos poner un botón "Ver Detalles" *@
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

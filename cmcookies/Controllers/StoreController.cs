@@ -190,5 +190,30 @@ namespace cmcookies.Controllers
         {
             return View(id);
         }
+
+        // GET: Store/MyOrders
+        [Authorize]
+        public async Task<IActionResult> MyOrders()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return Challenge();
+
+            // Buscar el Customer asociado al Usuario
+            var customer = await _context.Customers
+                .FirstOrDefaultAsync(c => c.UserId == user.Id);
+
+            // Si no es cliente aún, retornamos lista vacía
+            if (customer == null) return View(new List<Order>());
+
+            // Traer órdenes con sus detalles
+            var orders = await _context.Orders
+                .Include(o => o.OrderDetails)
+                    .ThenInclude(od => od.CookieCodeNavigation) // Para mostrar nombres de galletas
+                .Where(o => o.CustomerId == customer.CustomerId)
+                .OrderByDescending(o => o.CreatedAt) // Las más recientes primero
+                .ToListAsync();
+
+            return View(orders);
+        }
     }
-}
+}   
