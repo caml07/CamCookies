@@ -1,0 +1,28 @@
+@model int
+@{
+  ViewData["Title"] = "¡Pedido Recibido!";
+}
+
+<div class="container py-5 text-center" style="min-height: 60vh; display: flex; flex-direction: column; justify-content: center;">
+  <div class="mb-4">
+    <div class="d-inline-block p-4 rounded-circle bg-success bg-opacity-10 text-success mb-3">
+      <i class="bi bi-check-lg display-1"></i>
+    </div>
+    <h1 class="display-5 fw-bold text-dark">¡Gracias por tu compra!</h1>
+    <p class="lead text-muted">Hemos recibido tu orden correctamente.</p>
+  </div>
+
+  <div class="card shadow-sm mx-auto mb-5" style="max-width: 400px;">
+    <div class="card-body">
+      <h6 class="text-muted text-uppercase small mb-2">Número de Orden</h6>
+      <span class="display-6 fw-bold text-primary">#@Model</span>
+    </div>
+  </div>
+
+  <div>
+    <p class="text-muted">Te notificaremos cuando estemos preparando tus galletas.</p>
+    <a asp-controller="Store" asp-action="Index" class="btn btn-dark px-4 py-2 rounded-pill">
+      <i class="bi bi-arrow-left"></i> Volver a la Tienda
+    </a>
+  </div>
+</div>
