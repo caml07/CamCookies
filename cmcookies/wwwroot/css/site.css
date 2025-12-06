@@ -8,15 +8,32 @@
    VARIABLES CSS (Custom Properties)
    ============================================================================ */
 :root {
-  /* Paleta de colores principal */
-  --primary: #f29f05; /* Naranja principal */
-  --secondary: #f28705; /* Naranja oscuro */
-  --accent: #bf5b04; /* Marrón naranja */
-  --dark: #8c4820; /* Marrón */
-  --darker: #592c1c; /* Marrón oscuro */
+  /* --- PALETA DE OTOÑO (CMC) --- */
+  --cmc-orange: #f29f05;       /* Naranja principal */
+  --cmc-dark-orange: #d98e04;  /* Para hovers */
+  --cmc-brown: #592c1c;        /* Marrón oscuro */
+  --cmc-light-brown: #8c4820;  /* Marrón claro para enlaces */
 
-  /* Colores complementarios */
-  --light: #fef5e7; /* Crema claro */
+  /* --- COLORES DE ESTADO OTOÑALES --- */
+  --success: #6A994E;
+  --danger: #B85042;
+  --warning: #D4A017;
+  --info: #8D6E63;
+
+  /* --- SOBREESCRITURA DE BOOTSTRAP --- */
+  --bs-primary: var(--cmc-orange);
+  --bs-primary-rgb: 242, 159, 5;
+  --bs-link-color: var(--cmc-light-brown);
+  --bs-link-hover-color: var(--cmc-dark-orange);
+  --bs-focus-ring-color: rgba(242, 159, 5, 0.25);
+
+  /* --- VARIABLES DE DISEÑO ORIGINALES (para referencia) --- */
+  --primary: var(--cmc-orange);
+  --secondary: #f28705;
+  --accent: #bf5b04;
+  --dark: var(--cmc-light-brown);
+  --darker: var(--cmc-brown);
+  --light: #fef5e7;
   --white: #ffffff;
   --gray-100: #f8f9fa;
   --gray-200: #e9ecef;
@@ -29,12 +46,6 @@
   --gray-900: #212529;
   --black: #000000;
 
-  /* Estados */
-  --success: #6A994E;
-  --danger: #B85042;
-  --warning: #D4A017;
-  --info: #8D6E63;
-
   /* Tipografía */
   --font-primary: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-size-base: 16px;
@@ -43,35 +54,29 @@
   --font-weight-bold: 700;
 
   /* Espaciado */
-  --spacing-xs: 0.25rem; /* 4px */
-  --spacing-sm: 0.5rem; /* 8px */
-  --spacing-md: 1rem; /* 16px */
-  --spacing-lg: 1.5rem; /* 24px */
-  --spacing-xl: 2rem; /* 32px */
-  --spacing-2xl: 3rem; /* 48px */
-  --spacing-3xl: 4rem; /* 64px */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
 
   /* Border radius */
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 12px;
-  --radius-xl: 16px;
-  --radius-full: 9999px;
 
   /* Sombras */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 
   /* Transiciones */
   --transition-fast: 150ms ease-in-out;
   --transition-base: 300ms ease-in-out;
-  --transition-slow: 500ms ease-in-out;
 }
 
 /* ============================================================================
-   RESET Y BASE - STICKY FOOTER (MÉTODO INFALIBLE)
+   RESET Y BASE - STICKY FOOTER
    ============================================================================ */
 * {
   margin: 0;
@@ -81,8 +86,6 @@
 
 html {
   font-size: var(--font-size-base);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   height: 100%;
 }
 
@@ -91,14 +94,13 @@ body {
   color: var(--gray-900);
   background-color: var(--gray-100);
   line-height: 1.6;
-  /* STICKY FOOTER - Métod o Position (compatible con Bootstrap) */
   position: relative;
   min-height: 100vh;
   padding-bottom: 80px; /* Altura del footer */
 }
 
 .content-wrapper {
-  min-height: calc(100vh - 80px); /* 100vh menos altura del footer */
+  min-height: calc(100vh - 80px);
 }
 
 /* ============================================================================
@@ -111,61 +113,38 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--darker);
 }
 
-h1 {
-  font-size: 2.5rem;
-  margin-bottom: var(--spacing-lg);
-}
-
-h2 {
-  font-size: 2rem;
-}
-
-h3 {
-  font-size: 1.75rem;
-}
-
-h4 {
-  font-size: 1.5rem;
-}
-
-h5 {
-  font-size: 1.25rem;
-}
-
-h6 {
-  font-size: 1rem;
-}
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
 
 p {
   margin-bottom: var(--spacing-md);
 }
 
 a {
-  color: var(--primary);
+  color: var(--bs-link-color);
   text-decoration: none;
   transition: color var(--transition-fast);
 }
 
 a:hover {
-  color: var(--secondary);
+  color: var(--bs-link-hover-color);
   text-decoration: underline;
 }
 
 /* ============================================================================
-   BOTONES
+   SOBREESCRITURA DE COMPONENTES BOOTSTRAP
    ============================================================================ */
+
+.text-primary {
+    color: var(--cmc-light-brown) !important;
+}
+
 .btn {
-  display: inline-block;
-  padding: var(--spacing-sm) var(--spacing-lg);
-  font-size: 1rem;
-  font-weight: var(--font-weight-medium);
-  text-align: center;
-  text-decoration: none;
-  border: none;
-  border-radius: var(--radius-md);
-  cursor: pointer;
   transition: all var(--transition-fast);
-  white-space: nowrap;
 }
 
 .btn:hover {
@@ -173,62 +152,43 @@ a:hover {
   box-shadow: var(--shadow-md);
 }
 
-.btn:active {
-  transform: translateY(0);
-}
-
 .btn-primary {
-  background-color: var(--primary);
-  color: var(--white);
+    background-color: var(--bs-primary) !important;
+    border-color: var(--bs-primary) !important;
+    color: #000 !important;
+    font-weight: 600;
 }
 
 .btn-primary:hover {
-  background-color: var(--secondary);
-  color: var(--white);
-  text-decoration: none;
+    background-color: var(--cmc-dark-orange) !important;
+    border-color: var(--cmc-dark-orange) !important;
 }
 
-.btn-secondary {
-  background-color: var(--dark);
-  color: var(--white);
+.btn-outline-primary {
+    color: var(--cmc-light-brown) !important;
+    border-color: var(--cmc-light-brown) !important;
 }
 
-.btn-secondary:hover {
-  background-color: var(--darker);
-  color: var(--white);
-  text-decoration: none;
+.btn-outline-primary:hover {
+    background-color: var(--cmc-light-brown) !important;
+    color: #fff !important;
 }
 
-.btn-outline {
-  background-color: transparent;
-  color: var(--primary);
-  border: 2px solid var(--primary);
+/* Paginación, Navs y elementos activos */
+.page-link, .nav-link {
+    color: var(--cmc-brown);
 }
-
-.btn-outline:hover {
-  background-color: var(--primary);
-  color: var(--white);
-  text-decoration: none;
-}
-
-.btn-lg {
-  padding: var(--spacing-md) var(--spacing-xl);
-  font-size: 1.125rem;
-}
-
-.btn-sm {
-  padding: var(--spacing-xs) var(--spacing-md);
-  font-size: 0.875rem;
-}
-
-.btn-block {
-  display: block;
-  width: 100%;
+.nav-link.active, .nav-pills .nav-link.active, .page-item.active .page-link {
+    background-color: var(--bs-primary) !important;
+    color: black !important;
+    border-color: var(--bs-primary) !important;
 }
 
 /* ============================================================================
-   NAVBAR - ESTILO NARANJA CONSISTENTE
+   COMPONENTES PERSONALIZADOS (CMC)
    ============================================================================ */
+
+/* --- NAVBAR --- */
 header .navbar,
 .navbar {
   background-color: var(--primary) !important;
@@ -242,87 +202,9 @@ header .navbar-brand,
   color: var(--darker) !important;
   font-weight: 700 !important;
   font-size: 1.8rem !important;
-  letter-spacing: 1px;
-  transition: all 0.3s ease;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-header .navbar-brand:hover,
-.navbar .navbar-brand:hover {
-  color: var(--dark) !important;
-  transform: scale(1.05);
-  text-decoration: none !important;
-}
-
-header .navbar-nav .nav-link,
-.navbar .navbar-nav .nav-link {
-  color: var(--darker) !important;
-  font-weight: 600 !important;
-  padding: 0.5rem 1rem !important;
-  transition: all 0.3s ease;
-  border-radius: 8px;
-  margin: 0 0.25rem;
-}
-
-header .navbar-nav .nav-link:hover,
-.navbar .navbar-nav .nav-link:hover {
-  color: var(--white) !important;
-  background-color: var(--secondary) !important;
-  transform: translateY(-2px);
-  text-decoration: none !important;
-}
-
-/* Botón de logout con estilo de link */
-header .navbar-nav .btn-link,
-.navbar .navbar-nav .btn-link {
-  color: var(--darker) !important;
-  text-decoration: none !important;
-  font-weight: 600 !important;
-  padding: 0.5rem 1rem !important;
-  transition: all 0.3s ease;
-  border-radius: 8px;
-  border: none !important;
-  margin: 0 0.25rem;
-  background: transparent !important;
-}
-
-header .navbar-nav .btn-link:hover,
-.navbar .navbar-nav .btn-link:hover {
-  color: var(--white) !important;
-  background-color: var(--secondary) !important;
-  transform: translateY(-2px);
-  text-decoration: none !important;
-}
-
-/* Saludo del usuario */
-header .navbar-nav .user-greeting,
-.navbar .navbar-nav .user-greeting {
-  color: var(--dark) !important;
-  font-weight: 700 !important;
-  cursor: default;
-  padding: 0.5rem 1rem !important;
-}
-
-/* Navbar toggler para móvil */
-header .navbar-toggler,
-.navbar .navbar-toggler {
-  border-color: var(--darker) !important;
-  border-width: 2px !important;
-}
-
-header .navbar-toggler-icon,
-.navbar .navbar-toggler-icon {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(89, 44, 28, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
-}
-
-header .navbar-toggler:focus,
-.navbar .navbar-toggler:focus {
-  box-shadow: 0 0 0 0.25rem rgba(242, 159, 5, 0.5) !important;
-}
-
-/* ============================================================================
-   CARDS
-   ============================================================================ */
+/* --- CARDS --- */
 .card {
   background-color: var(--white);
   border-radius: var(--radius-lg);
@@ -336,233 +218,52 @@ header .navbar-toggler:focus,
   transform: translateY(-4px);
 }
 
-.card-img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
-
 .card-body {
   padding: var(--spacing-lg);
 }
 
 .card-title {
   font-size: 1.25rem;
-  font-weight: var(--font-weight-bold);
-  margin-bottom: var(--spacing-sm);
   color: var(--darker);
-}
-
-.card-text {
-  color: var(--gray-600);
-  margin-bottom: var(--spacing-md);
 }
 
 .card-price {
   font-size: 1.5rem;
   font-weight: var(--font-weight-bold);
   color: var(--primary);
-  margin-bottom: var(--spacing-md);
 }
 
-/* ============================================================================
-   GRID SYSTEM
-   ============================================================================ */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--spacing-lg);
-}
-
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 calc(var(--spacing-md) * -1);
-}
-
-.col {
-  flex: 1;
-  padding: 0 var(--spacing-md);
-  margin-bottom: var(--spacing-lg);
-}
-
-.col-12 {
-  flex: 0 0 100%;
-  max-width: 100%;
-}
-
-.col-6 {
-  flex: 0 0 50%;
-  max-width: 50%;
-}
-
-.col-4 {
-  flex: 0 0 33.333333%;
-  max-width: 33.333333%;
-}
-
-.col-3 {
-  flex: 0 0 25%;
-  max-width: 25%;
-}
-
-@media (max-width: 768px) {
-  .col-sm-12 {
-    flex: 0 0 100%;
-    max-width: 100%;
-  }
-}
-
-/* ============================================================================
-   UTILIDADES
-   ============================================================================ */
-.text-center {
-  text-align: center;
-}
-
-.text-right {
-  text-align: right;
-}
-
-.text-left {
-  text-align: left;
-}
-
-.mt-0 {
-  margin-top: 0;
-}
-
-.mt-1 {
-  margin-top: var(--spacing-xs);
-}
-
-.mt-2 {
-  margin-top: var(--spacing-sm);
-}
-
-.mt-3 {
-  margin-top: var(--spacing-md);
-}
-
-.mt-4 {
-  margin-top: var(--spacing-lg);
-}
-
-.mt-5 {
-  margin-top: var(--spacing-xl);
-}
-
-.mb-0 {
-  margin-bottom: 0;
-}
-
-.mb-1 {
-  margin-bottom: var(--spacing-xs);
-}
-
-.mb-2 {
-  margin-bottom: var(--spacing-sm);
-}
-
-.mb-3 {
-  margin-bottom: var(--spacing-md);
-}
-
-.mb-4 {
-  margin-bottom: var(--spacing-lg);
-}
-
-.mb-5 {
-  margin-bottom: var(--spacing-xl);
-}
-
-.pt-3 {
-  padding-top: var(--spacing-md);
-}
-
-.pt-4 {
-  padding-top: var(--spacing-lg);
-}
-
-.pt-5 {
-  padding-top: var(--spacing-xl);
-}
-
-.pb-3 {
-  padding-bottom: var(--spacing-md);
-}
-
-.pb-4 {
-  padding-bottom: var(--spacing-lg);
-}
-
-.pb-5 {
-  padding-bottom: var(--spacing-xl);
-}
-
-/* ============================================================================
-   FOOTER - STICKY BOTTOM CON DISEÑO NARANJA
-   ============================================================================ */
+/* --- FOOTER --- */
 .footer {
-  /* STICKY FOOTER - Position absolute */
   position: absolute;
   bottom: 0;
-  left: 0;
   width: 100%;
-  height: 80px; /* IMPORTANTE: Esta altura debe coincidir con padding-bottom del body */
-
+  height: 80px;
   background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
   color: var(--light);
   padding: 1.5rem 0;
   border-top: 4px solid var(--primary);
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-
   display: flex;
-  align-items: center; /* Centra verticalmente el contenido */
+  align-items: center;
 }
 
 .footer .container {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
-  font-size: 0.95rem;
-}
-
-.footer a {
-  color: var(--primary);
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-}
-
-.footer a:hover {
-  color: var(--white);
-  background-color: rgba(242, 159, 5, 0.2);
-  text-decoration: none;
 }
 
 /* ============================================================================
-   RESPONSIVE
+   UTILIDADES Y RESPONSIVE
    ============================================================================ */
+.text-center { text-align: center; }
+.mt-3 { margin-top: var(--spacing-md); }
+.mb-3 { margin-bottom: var(--spacing-md); }
+
 @media (max-width: 768px) {
-  .navbar-nav {
-    gap: var(--spacing-md);
-  }
-
-  h1 {
-    font-size: 2rem;
-  }
-
-  .container {
-    padding: 0 var(--spacing-md);
-  }
-
+  h1 { font-size: 2rem; }
   .footer .container {
     flex-direction: column;
     text-align: center;
-    gap: 0.5rem;
   }
 }
