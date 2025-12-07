@@ -3,144 +3,6 @@
     ViewData["Title"] = "Admin Dashboard";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-<!-- Custom CSS para el Dashboard -->
-<style>
-    .dashboard-container {
-        padding: 2rem 0;
-    }
-
-    /* Tarjetas de estadísticas */
-    .stat-card {
-        background: white;
-        border-radius: 12px;
-        padding: 1.5rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        transition: transform 0.2s, box-shadow 0.2s;
-        border-left: 4px solid #f29f05;
-        margin-bottom: 1.5rem;
-    }
-
-    .stat-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-    }
-
-    .stat-card h3 {
-        color: #592c1c;
-        font-size: 0.9rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        margin-bottom: 0.5rem;
-        letter-spacing: 0.5px;
-    }
-
-    .stat-card .value {
-        color: #f28705;
-        font-size: 2.5rem;
-        font-weight: 700;
-        line-height: 1;
-    }
-
-    .stat-card .label {
-        color: #8c4820;
-        font-size: 0.85rem;
-        margin-top: 0.5rem;
-    }
-
-    /* Tarjeta de ganancia */
-    .profit-positive {
-        border-left-color: #28a745;
-    }
-
-    .profit-negative {
-        border-left-color: #dc3545;
-    }
-
-    .profit-positive .value {
-        color: #28a745;
-    }
-
-    .profit-negative .value {
-        color: #dc3545;
-    }
-
-    /* Secciones */
-    .section-title {
-        color: #592c1c;
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin: 2rem 0 1rem 0;
-        padding-bottom: 0.5rem;
-        border-bottom: 3px solid #f29f05;
-    }
-
-    /* Tablas */
-    .custom-table {
-        background: white;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .custom-table thead {
-        background: #f29f05;
-        color: #592c1c;
-    }
-
-    .custom-table thead th {
-        font-weight: 700;
-        padding: 1rem;
-        border: none;
-    }
-
-    .custom-table tbody tr {
-        border-bottom: 1px solid #f0f0f0;
-        transition: background-color 0.2s;
-    }
-
-    .custom-table tbody tr:hover {
-        background-color: #fff8e6;
-    }
-
-    .custom-table tbody td {
-        padding: 1rem;
-        vertical-align: middle;
-    }
-
-    /* Badges de estado */
-    .badge-pending {
-        background-color: #ffc107;
-        color: #000;
-    }
-
-    .badge-delivered {
-        background-color: #28a745;
-        color: #fff;
-    }
-
-    .badge-cancelled {
-        background-color: #dc3545;
-        color: #fff;
-    }
-
-    .badge-on_preparation {
-        background-color: #17a2b8;
-        color: #fff;
-    }
-
-    /* Alertas de stock */
-    .alert-custom {
-        border-left: 4px solid #dc3545;
-        background: #fff5f5;
-        padding: 1rem;
-        margin-bottom: 1rem;
-        border-radius: 8px;
-    }
-
-    .alert-custom strong {
-        color: #dc3545;
-    }
-</style>
 
 <div class="dashboard-container">
     <div class="container">
@@ -205,7 +67,7 @@
                     <div class="value">@Model.TotalCookies</div>
                     @if (Model.LowStockCookies > 0)
                     {
-                        <div class="label" style="color: #dc3545;">⚠️ @Model.LowStockCookies low stock</div>
+                        <div class="label text-danger">⚠️ @Model.LowStockCookies low stock</div>
                     }
                 </div>
             </div>
@@ -231,7 +93,7 @@
                             </div>
                             <div class="col-md-4 text-center">
                                 <h3>Total Revenue</h3>
-                                <div class="value" style="color: #28a745;">
+                                <div class="value text-success">
                                     C$@topCookie.TotalRevenue.ToString("N2")</div>
                                 <div class="label">from this cookie</div>
                             </div>
@@ -271,7 +133,7 @@
                             <td>@customer.CustomerName</td>
                             <td>@customer.Email</td>
                             <td>@customer.TotalOrders</td>
-                            <td style="color: #28a745; font-weight: 600;">C$@customer.TotalSpent.ToString("N2")</td>
+                            <td class="text-success fw-bold">C$@customer.TotalSpent.ToString("N2")</td>
                         </tr>
                     }
                     </tbody>
@@ -306,11 +168,11 @@
                         <tr>
                             <td><strong>#@order.OrderId</strong></td>
                             <td>@order.CustomerName</td>
-                            <td style="font-weight: 600;">C$@order.TotalAmount.ToString("N2")</td>
+                            <td class="fw-bold">C$@order.TotalAmount.ToString("N2")</td>
                             <td>
-                                    <span class="badge badge-@order.Status">
-                                        @order.Status.ToUpper()
-                                    </span>
+                                <span class="badge badge-@order.Status">
+                                    @order.Status.ToUpper()
+                                </span>
                             </td>
                             <td>@order.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
                         </tr>
@@ -334,7 +196,7 @@
                 @foreach (var alert in Model.LowStockAlerts)
                 {
                     <div class="col-md-6">
-                        <div class="alert-custom">
+                        <div class="alert alert-danger">
                             <strong>@alert.ItemType:</strong> @alert.ItemName
                             <br>
                             <small>Current stock: @alert.CurrentStock @alert.Unit</small>
