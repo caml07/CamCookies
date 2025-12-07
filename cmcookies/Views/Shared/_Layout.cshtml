@@ -31,12 +31,12 @@
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="Admin" asp-action="Dashboard">Admin Dashboard</a>
+                                <a class="nav-link" asp-controller="Admin" asp-action="Dashboard">(⌐ロ⌓ロ)" Admin Dashboard</a>
                             </li>
                         }
                         
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Store" asp-action="Index">Menú</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Store" asp-action="Index">Menú ( ˶ˆᗜˆ˵ )</a>
                         </li>
 
                         @if (User.Identity?.IsAuthenticated == true)
@@ -67,10 +67,10 @@
                         {
                             @* Usuario NO está logueado *@
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="Account" asp-action="Login">Login</a>
+                                <a class="nav-link" asp-controller="Account" asp-action="Login">Login ヾ(＾ ∇ ＾).</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="Account" asp-action="Register">Register</a>
+                                <a class="nav-link" asp-controller="Account" asp-action="Register">(•˕ •マ.ᐟ Register</a>
                             </li>
                         }
                     </ul>

@@ -91,7 +91,7 @@ body {
   color: var(--gray-900);
   background-color: var(--gray-100);
   line-height: 1.6;
-  /* STICKY FOOTER - Métod o Position (compatible con Bootstrap) */
+  /* STICKY FOOTER - Método Position (compatible con Bootstrap) */
   position: relative;
   min-height: 100vh;
   padding-bottom: 80px; /* Altura del footer */
@@ -542,6 +542,297 @@ header .navbar-toggler:focus,
   color: var(--white);
   background-color: rgba(242, 159, 5, 0.2);
   text-decoration: none;
+}
+
+/* ============================================================================
+   BOOTSTRAP OVERRIDES - PALETA OTOÑO
+   IMPORTANTE: Estas reglas sobrescriben los colores por defecto de Bootstrap
+   para que TODO el proyecto use la paleta naranja/marrón definida arriba
+   ============================================================================ */
+
+/* BOTONES DE BOOTSTRAP CON PALETA OTOÑO */
+.btn-primary {
+  background-color: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: var(--white) !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+  background-color: var(--secondary) !important;
+  border-color: var(--secondary) !important;
+  color: var(--white) !important;
+}
+
+.btn-secondary {
+  background-color: var(--dark) !important;
+  border-color: var(--dark) !important;
+  color: var(--white) !important;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-secondary:active {
+  background-color: var(--darker) !important;
+  border-color: var(--darker) !important;
+  color: var(--white) !important;
+}
+
+.btn-warning {
+  background-color: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: var(--darker) !important;
+  font-weight: 700 !important;
+}
+
+.btn-warning:hover,
+.btn-warning:focus,
+.btn-warning:active {
+  background-color: var(--secondary) !important;
+  border-color: var(--secondary) !important;
+  color: var(--white) !important;
+}
+
+.btn-success {
+  background-color: var(--success) !important;
+  border-color: var(--success) !important;
+}
+
+.btn-danger {
+  background-color: var(--danger) !important;
+  border-color: var(--danger) !important;
+}
+
+.btn-info {
+  background-color: var(--info) !important;
+  border-color: var(--info) !important;
+  color: var(--white) !important;
+}
+
+.btn-outline-primary {
+  color: var(--primary) !important;
+  border-color: var(--primary) !important;
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: var(--white) !important;
+}
+
+.btn-outline-secondary {
+  color: var(--dark) !important;
+  border-color: var(--dark) !important;
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--dark) !important;
+  border-color: var(--dark) !important;
+  color: var(--white) !important;
+}
+
+/* BADGES CON PALETA OTOÑO */
+.badge.bg-primary,
+.badge-primary {
+  background-color: var(--primary) !important;
+  color: var(--white) !important;
+}
+
+.badge.bg-secondary,
+.badge-secondary {
+  background-color: var(--dark) !important;
+  color: var(--white) !important;
+}
+
+.badge.bg-warning,
+.badge-warning {
+  background-color: var(--warning) !important;
+  color: var(--darker) !important;
+}
+
+.badge.bg-success,
+.badge-success {
+  background-color: var(--success) !important;
+  color: var(--white) !important;
+}
+
+.badge.bg-danger,
+.badge-danger {
+  background-color: var(--danger) !important;
+  color: var(--white) !important;
+}
+
+.badge.bg-info,
+.badge-info {
+  background-color: var(--info) !important;
+  color: var(--white) !important;
+}
+
+/* ALERTS CON PALETA OTOÑO */
+.alert-primary {
+  background-color: rgba(242, 159, 5, 0.15) !important;
+  border-color: var(--primary) !important;
+  color: var(--darker) !important;
+}
+
+.alert-warning {
+  background-color: rgba(212, 160, 23, 0.15) !important;
+  border-color: var(--warning) !important;
+  color: var(--darker) !important;
+}
+
+.alert-success {
+  background-color: rgba(106, 153, 78, 0.15) !important;
+  border-color: var(--success) !important;
+  color: var(--darker) !important;
+}
+
+.alert-danger {
+  background-color: rgba(184, 80, 66, 0.15) !important;
+  border-color: var(--danger) !important;
+  color: var(--darker) !important;
+}
+
+/* LINKS DE BOOTSTRAP */
+a.link-primary {
+  color: var(--primary) !important;
+}
+
+a.link-primary:hover {
+  color: var(--secondary) !important;
+}
+
+/* FORMS - INPUTS CON PALETA OTOÑO */
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 0.25rem rgba(242, 159, 5, 0.25) !important;
+}
+
+.form-check-input:checked {
+  background-color: var(--primary) !important;
+  border-color: var(--primary) !important;
+}
+
+.form-check-input:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 0.25rem rgba(242, 159, 5, 0.25) !important;
+}
+
+/* PAGINATION CON PALETA OTOÑO */
+.pagination .page-item.active .page-link {
+  background-color: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: var(--white) !important;
+}
+
+.pagination .page-link {
+  color: var(--primary) !important;
+}
+
+.pagination .page-link:hover {
+  background-color: var(--light) !important;
+  color: var(--secondary) !important;
+}
+
+/* PROGRESS BARS CON PALETA OTOÑO */
+.progress-bar {
+  background-color: var(--primary) !important;
+}
+
+/* SPINNERS CON PALETA OTOÑO */
+.spinner-border.text-primary,
+.spinner-grow.text-primary {
+  color: var(--primary) !important;
+}
+
+/* TABLAS */
+.table-primary {
+  background-color: rgba(242, 159, 5, 0.1) !important;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(242, 159, 5, 0.05) !important;
+}
+
+/* MODALS */
+.modal-header {
+  background-color: var(--primary) !important;
+  color: var(--white) !important;
+}
+
+/* TOOLTIPS */
+.tooltip .tooltip-inner {
+  background-color: var(--darker) !important;
+}
+
+/* DROPDOWNS */
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: var(--primary) !important;
+  color: var(--white) !important;
+}
+
+.dropdown-item:hover {
+  background-color: var(--light) !important;
+  color: var(--darker) !important;
+}
+
+/* TEXT COLORS */
+.text-primary {
+  color: var(--primary) !important;
+}
+
+.text-secondary {
+  color: var(--dark) !important;
+}
+
+.text-success {
+  color: var(--success) !important;
+}
+
+.text-danger {
+  color: var(--danger) !important;
+}
+
+.text-warning {
+  color: var(--warning) !important;
+}
+
+.text-info {
+  color: var(--info) !important;
+}
+
+/* BACKGROUND COLORS */
+.bg-primary {
+  background-color: var(--primary) !important;
+  color: var(--white) !important;
+}
+
+.bg-secondary {
+  background-color: var(--dark) !important;
+  color: var(--white) !important;
+}
+
+.bg-success {
+  background-color: var(--success) !important;
+  color: var(--white) !important;
+}
+
+.bg-danger {
+  background-color: var(--danger) !important;
+  color: var(--white) !important;
+}
+
+.bg-warning {
+  background-color: var(--warning) !important;
+  color: var(--darker) !important;
+}
+
+.bg-info {
+  background-color: var(--info) !important;
+  color: var(--white) !important;
 }
 
 /* ============================================================================

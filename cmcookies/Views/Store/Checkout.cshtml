@@ -6,57 +6,186 @@
 
 <div class="container py-5">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-lg-8">
             <div class="card shadow-lg border-0 rounded-4">
-                <div class="card-header bg-primary text-white text-center py-4 rounded-top-4" 
+                <!-- HEADER -->
+                <div class="card-header text-white text-center py-4 rounded-top-4" 
                      style="background: linear-gradient(135deg, #592c1c 0%, #8c4820 100%);">
-                    <h3 class="mb-0 fw-bold"><i class="bi bi-bag-check"></i> Checkout</h3>
+                    <h3 class="mb-0 fw-bold"><i class="bi bi-bag-check-fill"></i> Checkout</h3>
                     <p class="mb-0 opacity-75">Estás a un paso de tus galletas</p>
                 </div>
                 
                 <div class="card-body p-4">
-                    <div class="alert alert-warning d-flex justify-content-between align-items-center mb-4">
+                    <!-- RESUMEN FINANCIERO -->
+                    <div class="alert d-flex justify-content-between align-items-center mb-4"
+                         style="background-color: #fef5e7; border-left: 4px solid #f29f05;">
                         <div>
-                            <small class="text-muted d-block">TOTAL A PAGAR</small>
-                            <span class="fs-4 fw-bold text-dark">@Model.TotalAmount.ToString("C")</span>
+                            <small class="text-muted d-block fw-bold">TOTAL A PAGAR</small>
+                            <span class="fs-4 fw-bold" style="color: #592c1c;">@Model.TotalAmount.ToString("C")</span>
                         </div>
                         <div class="text-end">
-                            <small class="text-muted d-block">ARTÍCULOS</small>
-                            <span class="fs-5 fw-bold">@Model.TotalItems</span>
+                            <small class="text-muted d-block fw-bold">ARTÍCULOS</small>
+                            <span class="fs-5 fw-bold" style="color: #8c4820;">@Model.TotalItems</span>
                         </div>
                     </div>
 
                     <form asp-action="Checkout" method="post">
-                        <h5 class="mb-3 text-secondary">Tus Datos</h5>
-                        
-                        <div class="mb-3">
-                            <label asp-for="CustomerName" class="form-label small text-muted fw-bold">NOMBRE</label>
-                            <input asp-for="CustomerName" class="form-control bg-light" readonly />
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="Email" class="form-label small text-muted fw-bold">EMAIL</label>
-                            <input asp-for="Email" class="form-control bg-light" readonly />
-                        </div>
-
+                        <!-- SECCIÓN 1: DATOS DEL CLIENTE -->
                         <div class="mb-4">
-                            <label asp-for="Phone" class="form-label small text-muted fw-bold">TELÉFONO <span class="text-danger">*</span></label>
-                            <input asp-for="Phone" class="form-control form-control-lg" placeholder="Ej: 8888-8888" />
-                            <span asp-validation-for="Phone" class="text-danger small"></span>
-                            <div class="form-text">Te contactaremos aquí cuando el pedido esté listo.</div>
+                            <h5 class="mb-3 pb-2 border-bottom" style="color: #592c1c;">
+                                <i class="bi bi-person-circle"></i> Tus Datos
+                            </h5>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="CustomerName" class="form-label small fw-bold" style="color: #8c4820;">NOMBRE</label>
+                                    <input asp-for="CustomerName" class="form-control bg-light" readonly />
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label asp-for="Email" class="form-label small fw-bold" style="color: #8c4820;">EMAIL</label>
+                                    <input asp-for="Email" class="form-control bg-light" readonly />
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label asp-for="Phone" class="form-label small fw-bold" style="color: #8c4820;">
+                                    TELÉFONO <span class="text-danger">*</span>
+                                </label>
+                                <input asp-for="Phone" class="form-control form-control-lg" 
+                                       placeholder="Ej: 8888-8888" 
+                                       style="border-color: #f29f05;" />
+                                <span asp-validation-for="Phone" class="text-danger small"></span>
+                                <div class="form-text">Te contactaremos aquí cuando el pedido esté listo.</div>
+                            </div>
                         </div>
 
+                        <!-- SECCIÓN 2: MÉTODO DE PAGO -->
                         <div class="mb-4">
-                            <label asp-for="Notes" class="form-label small text-muted fw-bold">NOTAS (OPCIONAL)</label>
-                            <textarea asp-for="Notes" class="form-control" rows="2" placeholder="¿Alguna instrucción especial?"></textarea>
+                            <h5 class="mb-3 pb-2 border-bottom" style="color: #592c1c;">
+                                <i class="bi bi-credit-card-fill"></i> Método de Pago
+                            </h5>
+                            
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-check p-3 border rounded-3" style="background-color: #fef5e7;">
+                                        <input class="form-check-input" type="radio" 
+                                               asp-for="BillingType" value="cash" 
+                                               id="paymentCash" checked 
+                                               style="border-color: #f29f05;">
+                                        <label class="form-check-label w-100" for="paymentCash" style="cursor: pointer;">
+                                            <div class="d-flex align-items-center">
+                                                <i class="bi bi-cash-coin fs-3 me-3" style="color: #6A994E;"></i>
+                                                <div>
+                                                    <strong style="color: #592c1c;">Efectivo</strong>
+                                                    <small class="d-block text-muted">Pago al recibir</small>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-check p-3 border rounded-3" style="background-color: #fef5e7;">
+                                        <input class="form-check-input" type="radio" 
+                                               asp-for="BillingType" value="card" 
+                                               id="paymentCard"
+                                               style="border-color: #f29f05;">
+                                        <label class="form-check-label w-100" for="paymentCard" style="cursor: pointer;">
+                                            <div class="d-flex align-items-center">
+                                                <i class="bi bi-credit-card fs-3 me-3" style="color: #f28705;"></i>
+                                                <div>
+                                                    <strong style="color: #592c1c;">Tarjeta</strong>
+                                                    <small class="d-block text-muted">Débito o Crédito</small>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <span asp-validation-for="BillingType" class="text-danger small"></span>
                         </div>
 
+                        <!-- SECCIÓN 3: MÉTODO DE ENVÍO -->
+                        <div class="mb-4">
+                            <h5 class="mb-3 pb-2 border-bottom" style="color: #592c1c;">
+                                <i class="bi bi-geo-alt-fill"></i> Entrega
+                            </h5>
+                            
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-check p-3 border rounded-3" style="background-color: #fef5e7;">
+                                        <input class="form-check-input" type="radio" 
+                                               asp-for="ShippingType" value="on campus" 
+                                               id="shippingOnCampus" checked
+                                               style="border-color: #f29f05;">
+                                        <label class="form-check-label w-100" for="shippingOnCampus" style="cursor: pointer;">
+                                            <div class="d-flex align-items-center">
+                                                <i class="bi bi-building fs-3 me-3" style="color: #8d6e63;"></i>
+                                                <div>
+                                                    <strong style="color: #592c1c;">En el Campus</strong>
+                                                    <small class="d-block text-muted">Recoge en la universidad</small>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-check p-3 border rounded-3" style="background-color: #fef5e7;">
+                                        <input class="form-check-input" type="radio" 
+                                               asp-for="ShippingType" value="outside campus" 
+                                               id="shippingOutside"
+                                               style="border-color: #f29f05;">
+                                        <label class="form-check-label w-100" for="shippingOutside" style="cursor: pointer;">
+                                            <div class="d-flex align-items-center">
+                                                <i class="bi bi-house-fill fs-3 me-3" style="color: #bf5b04;"></i>
+                                                <div>
+                                                    <strong style="color: #592c1c;">Fuera del Campus</strong>
+                                                    <small class="d-block text-muted">Entrega a domicilio</small>
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <span asp-validation-for="ShippingType" class="text-danger small"></span>
+
+                            <!-- LUGAR DE ENTREGA -->
+                            <div class="mb-3">
+                                <label asp-for="ShippingSite" class="form-label small fw-bold" style="color: #8c4820;">
+                                    LUGAR ESPECÍFICO <span class="text-danger">*</span>
+                                </label>
+                                <input asp-for="ShippingSite" class="form-control form-control-lg" 
+                                       placeholder="Ej: Frente al Academic Building, Bancas de los labs, Casa #22 Lomas del Valle..." 
+                                       style="border-color: #f29f05;" />
+                                <span asp-validation-for="ShippingSite" class="text-danger small"></span>
+                                <div class="form-text">
+                                    <i class="bi bi-info-circle"></i> Sé específico para que encontremos el lugar fácilmente.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECCIÓN 4: NOTAS ADICIONALES -->
+                        <div class="mb-4">
+                            <label asp-for="Notes" class="form-label small fw-bold" style="color: #8c4820;">
+                                NOTAS ESPECIALES (OPCIONAL)
+                            </label>
+                            <textarea asp-for="Notes" class="form-control" rows="3" 
+                                      placeholder="¿Alguna instrucción adicional? Ej: 'Alérgico a nueces', 'Sin azúcar extra'..."
+                                      style="border-color: #f29f05;"></textarea>
+                            <span asp-validation-for="Notes" class="text-danger small"></span>
+                        </div>
+
+                        <!-- BOTONES DE ACCIÓN -->
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-warning btn-lg text-dark fw-bold py-3 shadow-sm" 
-                                    style="background-color: #f29f05; border: none;">
-                                CONFIRMAR PEDIDO <i class="bi bi-arrow-right-circle-fill ms-2"></i>
+                            <button type="submit" class="btn btn-lg text-white fw-bold py-3 shadow-sm" 
+                                    style="background: linear-gradient(135deg, #f29f05 0%, #f28705 100%); border: none;">
+                                <i class="bi bi-check-circle-fill me-2"></i> CONFIRMAR PEDIDO
                             </button>
-                            <a asp-action="Index" class="btn btn-outline-secondary">Volver al Menú</a>
+                            <a asp-action="Index" class="btn btn-outline-secondary">
+                                <i class="bi bi-arrow-left"></i> Volver al Menú
+                            </a>
                         </div>
                     </form>
                 </div>

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using cmcookies.Models;
 using cmcookies.Models.Store;           // Para CartItem
-using cmcookies.Models.ViewModels.Store; // Para CheckoutViewModel (¡IMPORTANTE!)
+using cmcookies.Models.ViewModels.Store; // Para CheckoutViewModel
 using cmcookies.Extensions;             // Para Session Helpers
 
 namespace cmcookies.Controllers
@@ -109,6 +109,9 @@ namespace cmcookies.Controllers
                 CustomerName = $"{user.FirstName} {user.LastName}",
                 Email = user.Email ?? "",
                 Phone = user.PhoneNumber ?? "", 
+                BillingType = "cash", // Valor por defecto
+                ShippingType = "on campus", // Valor por defecto
+                ShippingSite = "", // El usuario debe llenar esto
                 TotalItems = cart.Sum(x => x.Quantity),
                 TotalAmount = cart.Sum(x => x.Total)
             };
@@ -124,39 +127,87 @@ namespace cmcookies.Controllers
         {
             // 1. Validar carrito de nuevo
             var cart = HttpContext.Session.Get<List<CartItem>>("Cart");
-            if (cart == null || !cart.Any()) return RedirectToAction(nameof(Index));
+            if (cart == null || !cart.Any()) 
+            {
+                TempData["Error"] = "Tu carrito está vacío.";
+                return RedirectToAction(nameof(Index));
+            }
 
-            if (!ModelState.IsValid) return View(model);
+            if (!ModelState.IsValid) 
+            {
+                // Recargar totales en caso de error
+                model.TotalAmount = cart.Sum(x => x.Total);
+                model.TotalItems = cart.Sum(x => x.Quantity);
+                return View(model);
+            }
 
             // 2. Obtener Usuario
             var user = await _userManager.GetUserAsync(User);
+            if (user == null) return Challenge();
             
-            // --- AUTO-REGISTRO DE CLIENTE ---
-            // Buscamos si este usuario ya es un "Customer" en nuestra tabla de negocio
+            // 3. AUTO-REGISTRO DE CLIENTE
             var customer = await _context.Customers.FirstOrDefaultAsync(c => c.UserId == user.Id);
-
             if (customer == null)
             {
-                // Si es la primera vez que compra, creamos su perfil de cliente
                 customer = new Customer { UserId = user.Id };
                 _context.Customers.Add(customer);
                 await _context.SaveChangesAsync();
             }
 
-            // 3. Crear la Orden
+            // ============================================================================
+            // 4. PROCESAR BILLING (Método de Pago)
+            // ============================================================================
+            var billing = await _context.Billings
+                .FirstOrDefaultAsync(b => b.BillingType == model.BillingType);
+            
+            if (billing == null)
+            {
+                // Crear nuevo método de pago si no existe
+                billing = new Billing { BillingType = model.BillingType };
+                _context.Billings.Add(billing);
+                await _context.SaveChangesAsync();
+            }
+
+            // ============================================================================
+            // 5. PROCESAR SHIPPING (Método de Envío)
+            // ============================================================================
+            var shipping = await _context.Shippings
+                .FirstOrDefaultAsync(s => 
+                    s.ShippingType == model.ShippingType && 
+                    s.ShippingSite == model.ShippingSite);
+            
+            if (shipping == null)
+            {
+                // Crear nuevo registro de shipping
+                shipping = new Shipping 
+                { 
+                    ShippingType = model.ShippingType,
+                    ShippingSite = model.ShippingSite
+                };
+                _context.Shippings.Add(shipping);
+                await _context.SaveChangesAsync();
+            }
+
+            // ============================================================================
+            // 6. CREAR LA ORDEN
+            // ============================================================================
+            var totalCookies = cart.Sum(x => x.Quantity);
             var order = new Order
             {
                 CustomerId = customer.CustomerId,
-                Status = "pending", // Nace pendiente
+                Status = "pending",
+                Bag = totalCookies <= 2 ? "small" : "medium", // Lógica automática
+                Sticker = totalCookies >= 3, // Lógica automática
                 CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now,
-                Sticker = false 
+                UpdatedAt = DateTime.Now
             };
 
             _context.Orders.Add(order);
             await _context.SaveChangesAsync(); // Guardamos para obtener OrderId
 
-            // 4. Guardar los Detalles (Items)
+            // ============================================================================
+            // 7. GUARDAR ORDER DETAILS (Items del pedido)
+            // ============================================================================
             foreach (var item in cart)
             {
                 var detail = new OrderDetail
@@ -168,18 +219,63 @@ namespace cmcookies.Controllers
                 };
                 _context.OrderDetails.Add(detail);
             }
-            
-            // Actualizar teléfono si cambió
+            await _context.SaveChangesAsync(); // Guardamos los detalles
+
+            // ============================================================================
+            // 8. RELACIONAR CUSTOMER CON BILLING (Tabla pivot)
+            // ============================================================================
+            // Nota: Asumimos que cada OrderDetail necesita su propio CustomerBilling
+            // Si prefieres una relación 1-a-1 con Order, modifica esta lógica
+            foreach (var detail in _context.OrderDetails.Where(od => od.OrderId == order.OrderId))
+            {
+                var customerBilling = new CustomerBilling
+                {
+                    CustomerId = customer.CustomerId,
+                    BillingId = billing.BillingId,
+                    OrderDetailId = detail.OrderDetailId
+                };
+                _context.CustomerBillings.Add(customerBilling);
+            }
+
+            // ============================================================================
+            // 9. RELACIONAR CUSTOMER CON SHIPPING (Tabla pivot)
+            // ============================================================================
+            foreach (var detail in _context.OrderDetails.Where(od => od.OrderId == order.OrderId))
+            {
+                var customerShipping = new CustomerShipping
+                {
+                    CustomerId = customer.CustomerId,
+                    ShippingId = shipping.ShippingId,
+                    OrderDetailId = detail.OrderDetailId
+                };
+                _context.CustomerShippings.Add(customerShipping);
+            }
+
+            // ============================================================================
+            // 10. ACTUALIZAR TELÉFONO SI CAMBIÓ
+            // ============================================================================
             if (user.PhoneNumber != model.Phone)
             {
                 user.PhoneNumber = model.Phone;
                 await _userManager.UpdateAsync(user);
             }
 
+            // ============================================================================
+            // 11. GUARDAR TODO
+            // ============================================================================
             await _context.SaveChangesAsync();
 
-            // 5. ¡LIMPIEZA! Borramos el carrito de la sesión
+            // ============================================================================
+            // 12. LIMPIAR CARRITO
+            // ============================================================================
             HttpContext.Session.Remove("Cart");
+
+            // ============================================================================
+            // 13. MENSAJE DE ÉXITO
+            // ============================================================================
+            TempData["Success"] = $"¡Pedido #{order.OrderId} confirmado! " +
+                                  $"Método de pago: {billing.BillingType}. " +
+                                  $"Entrega: {shipping.ShippingType} en {shipping.ShippingSite}.";
 
             return RedirectToAction(nameof(OrderConfirmation), new { id = order.OrderId });
         }

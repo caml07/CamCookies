@@ -21,8 +21,8 @@
         <div class="auth-header">
             <div class="auth-header-content">
                 <img src="~/images/logo.png" alt="Cam Cookies Logo"/>
-                <h2>Create Account</h2>
-                <p>Join Cam Cookies and start ordering delicious cookies! 🍪</p>
+                <h2>Crear una Cuenta</h2>
+                <p>¡Unete a Cam Cookies y empieza a ordenar las mejores galletas! (๑*ᗜ*)</p>
             </div>
         </div>
 
@@ -38,62 +38,62 @@
                 <!--lo bueno de esto es que si se cambia la ruta del controller no se necesita actualizar la vista-->
                 <!-- First Name -->
                 <div class="form-group">
-                    <label asp-for="FirstName" class="form-label">First Name</label>
+                    <label asp-for="FirstName" class="form-label">Nombre</label>
                     <!-- para Generar automaticamente name y id del First Name, se envia el form y ASP.NET se encarga de llenarlo automaticamente el model.FirstName-->
-                    <input asp-for="FirstName" class="form-control" placeholder="Enter your first name" autofocus/>
+                    <input asp-for="FirstName" class="form-control" placeholder="Su primer Nombre" autofocus/>
                     <span asp-validation-for="FirstName" class="invalid-feedback"></span>
                     <!--Validaciones automaticas que se dan con ASP.NET, y muestra errores de validacion automatica, lee las anotaciones del ViewModel.-->
                 </div>
 
                 <!-- Last Name -->
                 <div class="form-group">
-                    <label asp-for="LastName" class="form-label">Last Name</label>
+                    <label asp-for="LastName" class="form-label">Apellido</label>
                     <!---Para lo que sige en adelante la misma logica que First Name-->
-                    <input asp-for="LastName" class="form-control" placeholder="Enter your last name"/>
+                    <input asp-for="LastName" class="form-control" placeholder="Su apellido"/>
                     <span asp-validation-for="LastName" class="invalid-feedback"></span>
                 </div>
 
                 <!-- Email -->
                 <div class="form-group">
-                    <label asp-for="Email" class="form-label">Email Address</label>
+                    <label asp-for="Email" class="form-label">Email</label>
                     <input asp-for="Email" class="form-control" placeholder="your@email.com"/>
                     <span asp-validation-for="Email" class="invalid-feedback"></span>
                 </div>
 
                 <!-- Phone Number 1 -->
                 <div class="form-group">
-                    <label asp-for="PhoneNumber" class="form-label">Phone Number</label>
+                    <label asp-for="PhoneNumber" class="form-label">Teléfono</label>
                     <input asp-for="PhoneNumber" class="form-control" placeholder="+505 8888 8888"/>
                     <span asp-validation-for="PhoneNumber" class="invalid-feedback"></span>
                 </div>
 
                 <!--Phone Number 2 (Optional)-->
                 <div class="form-group">
-                    <label asp-for="PhoneNumber2" class="form-label">Second Phone (Optional)</label>
+                    <label asp-for="PhoneNumber2" class="form-label">Teléfono 2 (Opcional)</label>
                     <input asp-for="PhoneNumber2" class="form-control" placeholder="+505 7777 7767 (optional)"/>
                     <span asp-validation-for="PhoneNumber2" class="invalid-feedback"></span>
                 </div>
 
                 <!-- Password -->
                 <div class="form-group">
-                    <label asp-for="Password" class="form-label">Password</label>
-                    <input asp-for="Password" class="form-control" placeholder="Min. 8 characters"/>
+                    <label asp-for="Password" class="form-label">Contraseña</label>
+                    <input asp-for="Password" class="form-control" placeholder="Min. 8 caracteres"/>
                     <span asp-validation-for="Password" class="invalid-feedback"></span>
                 </div>
 
                 <!-- Confirm Password -->
                 <div class="form-group">
-                    <label asp-for="ConfirmPassword" class="form-label">Confirm Password</label>
-                    <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm your password"/>
+                    <label asp-for="ConfirmPassword" class="form-label">Confirmar Contraseña</label>
+                    <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirmar su contraseña"/>
                     <span asp-validation-for="ConfirmPassword" class="invalid-feedback"></span>
                 </div>
 
                 <!-- Submit Button -->
-                <button type="submit" class="btn btn-primary btn-auth">Create Account</button>
+                <button type="submit" class="btn btn-primary btn-auth">Crear Cuenta</button>
 
                 <!-- FOOTER dentro del formulario -->
                 <div class="auth-footer">
-                    <p>Already have an account? <a asp-action="Login" class="auth-link">Sign In</a></p>
+                    <p>¿Ya tienes una cuenta?<a asp-action="Login" class="auth-link"> Ingresar</a></p>
                 </div>
             </form>
         </div>

@@ -21,8 +21,8 @@
         <div class="auth-header">
             <div class="auth-header-content">
                 <img src="~/images/logo.png" alt="Cam Cookies Logo"/>
-                <h2>Welcome Back!</h2>
-                <p>Sign in to continue to Cam Cookies 🍪 :D</p>
+                <h2>¡Bienvenido de vuelta!</h2>
+                <p>Ingresa para continuar a Cam Cookies („• ֊ •„)</p>
             </div>
         </div>
 
@@ -38,7 +38,7 @@
                 <!--Si un usuario no loggeado intenta ir a /Admin/Dashboard por ejemplo, ASP.NET lo redirige a Loggin y el GET de loggin guarda que quiso ir hacia Dashboard. Este se loggea, y el POST lee el returnURL y lo redirige-->
                 <!-- Email -->
                 <div class="form-group">
-                    <label asp-for="Email" class="form-label">Email Address</label>
+                    <label asp-for="Email" class="form-label">Email</label>
                     <input asp-for="Email" class="form-control" placeholder="your@email.com" autofocus/>
                     <!--cuando la pag carga el cursor ya esta sobre el campo del email, para que el usuario pueda empezar a escribir sin hacerle click-->
                     <span asp-validation-for="Email" class="invalid-feedback"></span>
@@ -69,7 +69,7 @@
 
                 <!-- FOOTER dentro del formulario -->
                 <div class="auth-footer">
-                    <p>Don't have an account? <a asp-action="Register" class="auth-link">Create Account</a></p>
+                    <p>¿No tienes una cuenta? <a asp-action="Register" class="auth-link">Crear una cuenta</a></p>
                 </div>
             </form>
         </div>
