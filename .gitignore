@@ -1,23 +1,169 @@
-## Ignorar carpetas de compilación (CRÍTICO)
+## ============================================================================
+## .GITIGNORE para Cam Cookies - ASP.NET Core 9.0 + MySQL
+## ============================================================================
+
+# ============================================================================
+# COMPILACIÓN Y BUILD (CRÍTICO - Nunca subir estos)
+# ============================================================================
 [Bb]in/
 [Oo]bj/
+[Ll]og/
+[Ll]ogs/
 
-## Ignorar archivos de Visual Studio y configuraciones de usuario
+# ============================================================================
+# IDEs Y EDITORES
+# ============================================================================
+## Visual Studio
 .vs/
-.vscode/
-.idea/
 *.user
 *.suo
 *.userosscache
 *.sln.docstates
+*.userprefs
 
-## Ignorar archivos de sistema
+## JetBrains Rider
+.idea/
+*.sln.iml
+
+## Visual Studio Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# ============================================================================
+# ARCHIVOS DE SISTEMA OPERATIVO
+# ============================================================================
 .DS_Store
 Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
 
-## Ignorar configuraciones con secretos (IMPORTANTE para seguridad)
-appsettings.Development.json
-appsettings.Local.json
+# ============================================================================
+# ⚠️ CONFIGURACIONES CON SECRETOS (IMPORTANTE PARA SEGURIDAD) ⚠️
+# ============================================================================
+## NUNCA subir estos archivos con contraseñas reales
+**/appsettings.json
+**/appsettings.Development.json
+**/appsettings.Local.json
+**/appsettings.Production.json
+secrets.json
 
-## Pero MANTENER la carpeta wwwroot y sus subcarpetas
-!wwwroot/
+## PERO SÍ subir el archivo de ejemplo (con placeholder)
+!**/appsettings.Example.json
+
+## Certificados SSL de desarrollo
+*.pfx
+*.p12
+
+# ============================================================================
+# NUGET PACKAGES
+# ============================================================================
+*.nupkg
+*.snupkg
+packages/
+!packages/build/
+
+# ============================================================================
+# ENTITY FRAMEWORK (Temporal)
+# ============================================================================
+## Archivos de migraciones temporales (si existen)
+**/Migrations/*.Designer.cs.bak
+**/Migrations/*.bak
+
+# ============================================================================
+# PUBLICACIÓN Y DEPLOYMENT
+# ============================================================================
+[Pp]ublish/
+*.publishsettings
+*.pubxml
+*.pubxml.user
+PublishProfiles/
+
+# ============================================================================
+# BASES DE DATOS LOCALES (Si usaras SQLite)
+# ============================================================================
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# ============================================================================
+# LOGS Y REPORTES
+# ============================================================================
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# ============================================================================
+# NODE_MODULES (Por si usas npm para frontend)
+# ============================================================================
+node_modules/
+npm-debug.log
+package-lock.json
+
+# ============================================================================
+# ARCHIVOS DE BACKUP Y TEMPORALES
+# ============================================================================
+*~
+*.swp
+*.swo
+*.bak
+*.tmp
+*.temp
+
+# ============================================================================
+# RESHARPER (Visual Studio plugin)
+# ============================================================================
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# ============================================================================
+# TESTCOVERAGE REPORTS
+# ============================================================================
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# ============================================================================
+# DOCKER
+# ============================================================================
+docker-compose.override.yml
+
+# ============================================================================
+# ✅ IMPORTANTE: ARCHIVOS QUE SÍ DEBEN SUBIRSE
+# ============================================================================
+## Estos NO deben estar en .gitignore (deben subirse al repo):
+# !wwwroot/                  ← Toda la carpeta de archivos estáticos
+# !wwwroot/images/           ← Todas las imágenes
+# !wwwroot/css/              ← Todos los CSS
+# !wwwroot/js/               ← Todos los JS
+# !README.md                 ← Documentación
+# !QUICKSTART.md             ← Guía rápida
+# !ARCHITECTURE.md           ← Arquitectura
+# !appsettings.Example.json  ← Archivo de ejemplo (SIN contraseñas)
+# !.gitignore                ← Este mismo archivo
+
+# ============================================================================
+# IMÁGENES DE USUARIO (Uploads - Si tuvieras)
+# ============================================================================
+## Si los usuarios pueden subir imágenes, NO las subas al repo
+# wwwroot/uploads/
+
+# ============================================================================
+# ARCHIVOS GRANDES (Opcional)
+# ============================================================================
+## Si tienes archivos muy grandes que no deben estar en Git
+# *.psd
+# *.zip
+# *.rar
+
+# ============================================================================
+# FIN DEL .GITIGNORE
+# ============================================================================
