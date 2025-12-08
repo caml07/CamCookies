@@ -7,6 +7,20 @@ using cmcookies.Models.Store;           // Para CartItem
 using cmcookies.Models.ViewModels.Store; // Para CheckoutViewModel
 using cmcookies.Extensions;             // Para Session Helpers
 
+// ============================================================================
+// STORE CONTROLLER - El corazón del e-commerce 🛒
+// ============================================================================
+// Este controlador maneja TODA la experiencia del cliente:
+// 1. Ver el menú de galletas (Index)
+// 2. Agregar al carrito (AddBulkToCart)
+// 3. Hacer checkout (Checkout GET y POST)
+// 4. Ver confirmación de pedido (OrderConfirmation)
+// 5. Ver historial de pedidos (MyOrders)
+//
+// IMPORTANTE: El carrito se guarda en SESSION, no en base de datos.
+// Esto significa que si cierras el navegador, pierdes el carrito (como Amazon).
+// ============================================================================
+
 namespace cmcookies.Controllers
 {
     public class StoreController : Controller
@@ -119,7 +133,28 @@ namespace cmcookies.Controllers
             return View(viewModel);
         }
 
-        // POST: Store/Checkout
+        // ============================================================================
+        // POST: Store/Checkout - EL PROCESO MÁS IMPORTANTE DE TODO EL SISTEMA 💳
+        // ============================================================================
+        // Qué hace esto? (Prepárate, es largo):
+        // 1. Valida que el carrito exista (no puedes comprar nada si no hay nada)
+        // 2. Obtiene el usuario logueado (necesitamos saber quién eres)
+        // 3. Auto-registra al cliente si es su primer pedido (magia ✨)
+        // 4. Crea o encuentra el método de pago (efectivo/tarjeta)
+        // 5. Crea o encuentra el método de envío (on campus/outside)
+        // 6. Crea la orden con estado PENDING (aún no se descuenta inventario)
+        // 7. Guarda los items del pedido (OrderDetails)
+        // 8. Relaciona el cliente con el billing (CustomerBillings)
+        // 9. Relaciona el cliente con el shipping (CustomerShippings)
+        // 10. Actualiza el teléfono si cambió
+        // 11. Guarda TODO en la BD
+        // 12. Limpia el carrito de la sesión (adiós carrito 👋)
+        // 13. Redirige a la página de confirmación
+        //
+        // NOTA IMPORTANTE: En estado PENDING no se descuenta inventario.
+        // El inventario se descuenta cuando el admin cambia el estado a "on_preparation".
+        // Esto evita que alguien haga 100 pedidos y nos deje sin stock sin pagar.
+        // ============================================================================
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]

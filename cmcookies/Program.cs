@@ -37,8 +37,8 @@ builder.Services.AddIdentity<User, Role>(options =>
   })
   .AddEntityFrameworkStores<CmcDBContext>()
   .AddDefaultTokenProviders()
-  .AddRoleManager<RoleManager<Role>>() // ← AGREGAR ESTA LÍNEA
-  .AddUserManager<UserManager<User>>(); // ← AGREGAR ESTA LÍNEA
+  .AddRoleManager<RoleManager<Role>>()
+  .AddUserManager<UserManager<User>>(); 
 
 // Configurar cookies de autenticación
 builder.Services.ConfigureApplicationCookie(options =>

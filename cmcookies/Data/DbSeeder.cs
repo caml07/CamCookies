@@ -4,6 +4,34 @@ using cmcookies.Models;
 
 namespace cmcookies.Data;
 
+// ============================================================================
+// DB SEEDER - El Jardinero de la Base de Datos 🌱
+// ============================================================================
+// ¿Qué es un Seeder?
+// Un seeder es como el jardinero que siembra las primeras semillas en tu BD.
+// Crea los datos iniciales necesarios para que la app funcione desde el día 1.
+//
+// ¿Por qué lo necesitamos?
+// Imagina que instalas la app: la BD está vacía. Sin un seeder tendrías que:
+// 1. Crear manualmente el admin en la BD (SQL puro)
+// 2. Hashear la contraseña manualmente (imposible)
+// 3. Crear todos los roles a mano
+// 4. Agregar galletas una por una
+// 5. Agregar todos los materiales...
+//
+// Con un seeder, solo ejecutas la app y todo se crea automáticamente. ✨
+//
+// DOS MÉTODOS IMPORTANTES:
+// 1. SeedAsync() - Crea TODO: admin + customer + galletas + materiales
+// 2. CleanAndSeedAsync() - BORRA TODO y deja solo 1 admin (peligroso ⚠️)
+//
+// ¿Cómo funciona?
+// En Program.cs, al iniciar la app, se ejecuta automáticamente:
+// if (!await userManager.Users.AnyAsync()) await DbSeeder.SeedAsync(...);
+//
+// Esto significa: "Si no hay usuarios, crea todo desde cero".
+// ============================================================================
+
 /// <summary>
 /// Clase encargada de poblar (seed) la base de datos con datos iniciales.
 /// Incluye dos métodos principales:
@@ -12,6 +40,31 @@ namespace cmcookies.Data;
 /// </summary>
 public static class DbSeeder
 {
+  // ============================================================================
+  // CleanAndSeedAsync - EL BOTÓN NUCLEAR ☢️
+  // ============================================================================
+  // ¿Cuándo usar esto?
+  // Cuando tu BD está tan rota que necesitas empezar de CERO.
+  // Literalmente borra TODO y deja solo 1 admin.
+  //
+  // ADVERTENCIA ⚠️: Esto es IRREVERSIBLE.
+  // - Borra todos los usuarios
+  // - Borra todas las galletas
+  // - Borra todos los pedidos
+  // - Borra todos los materiales
+  // - Borra TODO TODO TODO
+  //
+  // Cómo usarlo:
+  // 1. Ve a Program.cs
+  // 2. Descomenta: await DbSeeder.CleanAndSeedAsync(context, userManager, roleManager);
+  // 3. Ejecuta la app UNA vez
+  // 4. Vuelve a comentar la línea (para no borrar cada vez que inicias)
+  //
+  // Después de ejecutar:
+  // - Solo existirá 1 usuario: admin@camcookies.com / Admin@123
+  // - Todo lo demás estará vacío (como una BD recién creada)
+  // ============================================================================
+  
   /// <summary>
   /// Limpia COMPLETAMENTE la base de datos y deja solo 1 usuario admin.
   /// ADVERTENCIA: Esto BORRA TODOS los datos existentes (usuarios, galletas, pedidos, TODO).
@@ -135,6 +188,31 @@ public static class DbSeeder
     }
   }
 
+  // ============================================================================
+  // SeedAsync - EL SEMBRADOR COMPLETO 🌿
+  // ============================================================================
+  // Este es el método que usas el 99% del tiempo.
+  // Crea TODO lo necesario para que la app funcione:
+  //
+  // 1. ROLES: Admin y Customer
+  // 2. USUARIOS: 
+  //    - admin@camcookies.com / Admin@123 (Admin + Customer)
+  //    - customer@test.com / Customer@123 (Solo Customer)
+  // 3. MATERIALES: 24 ingredientes con stock inicial
+  // 4. GALLETAS: S'mores y Oreo (sin stock, debes hacer batches)
+  // 5. RECETAS: Relaciones Cookie-Material (qué ingredientes lleva cada galleta)
+  // 6. CAPITAL INICIAL: Transacción de -C$2000 (inversión inicial en materiales)
+  //
+  // INTELIGENTE: Solo crea datos si las tablas están vacías.
+  // Si ya hay usuarios, no crea duplicados. Safe 🛡️
+  //
+  // Cómo usarlo:
+  // En Program.cs ya está configurado:
+  // if (!await userManager.Users.AnyAsync()) await DbSeeder.SeedAsync(...);
+  //
+  // Esto significa: "Primera vez? Crea todo. Ya existe algo? No toques nada."
+  // ============================================================================
+  
   /// <summary>
   /// Puebla la base de datos con datos iniciales COMPLETOS.
   /// Incluye: Admin + Customer + Galletas + Materiales + Recetas + Capital inicial.

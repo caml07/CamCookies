@@ -1,5 +1,33 @@
 namespace cmcookies.Models.Factories;
 
+// ============================================================================
+// COOKIE FACTORY - Patrón de Diseño Factory 🏭
+// ============================================================================
+// ¿Qué es el Factory Pattern?
+// Es como una fábrica de galletas real: tú le dices qué tipo de galleta quieres
+// y la fábrica se encarga de crearla con todos los ingredientes correctos.
+//
+// ¿Por qué usamos Factory en vez de simplemente hacer "new Cookie()"?
+// 1. Encapsulación: La lógica de creación está en UN solo lugar
+// 2. Flexibilidad: Puedo cambiar cómo se crean las galletas sin tocar todo el código
+// 3. Consistencia: Todas las galletas se crean de la misma manera
+// 4. Testing: Puedo hacer mock de la factory fácilmente
+// 5. Principio SOLID: Single Responsibility (cada clase hace UNA cosa)
+//
+// Ejemplo de uso:
+// var factory = new CookieFactory();
+// var galleta = factory.CreateNormalCookie("ORE001", "Oreo", "Deliciosa", 70, 20);
+//
+// En vez de:
+// var galleta = new Cookie { 
+//     CookieCode = "ORE001", 
+//     CookieName = "Oreo", 
+//     Category = "normal",  // ← Puedo olvidar esto
+//     IsActive = true,      // ← O esto
+//     CreatedAt = DateTime.Now  // ← O esto
+// };
+// ============================================================================
+
 /// <summary>
 /// Factory concreto que implementa la lógica de creación de Cookies.
 /// Encapsula las reglas de negocio para crear diferentes tipos de cookies.
