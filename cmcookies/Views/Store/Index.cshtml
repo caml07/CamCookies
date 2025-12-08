@@ -1,4 +1,6 @@
 @model IEnumerable<cmcookies.Models.Cookie>
+@using cmcookies.Extensions
+@using cmcookies.Models.Store
 
 @{
 ViewData["Title"] = "Menú de Galletas";
@@ -117,6 +119,30 @@ ViewData["Title"] = "Menú de Galletas";
         <h1 class="fw-bold" style="color: #592c1c;">Ordena tus Favoritas (๑>؂•̀๑)</h1>
         <p class="text-muted">Elige las cantidades y agrégalas todas al final.</p>
     </div>
+
+    @* Resumen del Carrito (si hay items) *@
+    @{
+        var existingCart = Context.Session.Get<List<CartItem>>("Cart") ?? new List<CartItem>();
+        var existingItemCount = existingCart.Sum(x => x.Quantity);
+        var existingTotal = existingCart.Sum(x => x.Total);
+    }
+    @if (existingItemCount > 0)
+    {
+        <div class="alert shadow-sm mb-4" style="background: linear-gradient(135deg, #f29f05 0%, #f28705 100%); border: none; border-radius: 15px;">
+            <div class="d-flex justify-content-between align-items-center text-white">
+                <div>
+                    <i class="bi bi-cart-check-fill fs-4 me-2"></i>
+                    <strong class="fs-5">Tienes @existingItemCount galleta@(existingItemCount > 1 ? "s" : "") en tu carrito</strong>
+                    <div class="small mt-1">Total: @existingTotal.ToString("C")</div>
+                </div>
+                <div>
+                    <a asp-action="Checkout" class="btn btn-light btn-lg fw-bold" style="color: #592c1c; border-radius: 30px;">
+                        <i class="bi bi-arrow-right-circle-fill"></i> Ir al Checkout
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
 
     @if (TempData["Success"] != null)
     {

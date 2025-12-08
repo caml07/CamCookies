@@ -60,50 +60,45 @@
                             </div>
                         </div>
 
-                        <!-- SECCIÓN 2: MÉTODO DE PAGO -->
-                        <div class="mb-4">
-                            <h5 class="mb-3 pb-2 border-bottom" style="color: #592c1c;">
-                                <i class="bi bi-credit-card-fill"></i> Método de Pago
-                            </h5>
-                            
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <div class="form-check p-3 border rounded-3" style="background-color: #fef5e7;">
-                                        <input class="form-check-input" type="radio" 
-                                               asp-for="BillingType" value="cash" 
-                                               id="paymentCash" checked 
-                                               style="border-color: #f29f05;">
-                                        <label class="form-check-label w-100" for="paymentCash" style="cursor: pointer;">
-                                            <div class="d-flex align-items-center">
+                        <!-- Sección 2: Método de Pago -->
+                        <div class="card mb-4">
+                            <div class="card-header" style="background-color: #f29f05; color: #592c1c;">
+                                <h5 class="mb-0"><i class="bi bi-credit-card"></i> Método de Pago</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="form-check p-3 border rounded-3" style="background-color: #fef5e7;">
+                                            <input class="form-check-input" type="radio" asp-for="BillingType" value="cash" id="paymentCash" checked>
+                                            <label class="form-check-label w-100" for="paymentCash">
                                                 <i class="bi bi-cash-coin fs-3 me-3" style="color: #6A994E;"></i>
-                                                <div>
-                                                    <strong style="color: #592c1c;">Efectivo</strong>
-                                                    <small class="d-block text-muted">Pago al recibir</small>
-                                                </div>
-                                            </div>
-                                        </label>
+                                                <strong style="color: #592c1c;">Efectivo</strong>
+                                                <p class="text-muted small mb-0 mt-2">Paga al momento de recibir tu pedido</p>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check p-3 border rounded-3" style="background-color: #fef5e7;">
+                                            <input class="form-check-input" type="radio" asp-for="BillingType" value="card" id="paymentCard">
+                                            <label class="form-check-label w-100" for="paymentCard">
+                                                <i class="bi bi-credit-card fs-3 me-3" style="color: #f29f05;"></i>
+                                                <strong style="color: #592c1c;">Tarjeta / Transferencia</strong>
+                                                <p class="text-muted small mb-0 mt-2">Depósito o transferencia bancaria</p>
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-check p-3 border rounded-3" style="background-color: #fef5e7;">
-                                        <input class="form-check-input" type="radio" 
-                                               asp-for="BillingType" value="card" 
-                                               id="paymentCard"
-                                               style="border-color: #f29f05;">
-                                        <label class="form-check-label w-100" for="paymentCard" style="cursor: pointer;">
-                                            <div class="d-flex align-items-center">
-                                                <i class="bi bi-credit-card fs-3 me-3" style="color: #f28705;"></i>
-                                                <div>
-                                                    <strong style="color: #592c1c;">Tarjeta</strong>
-                                                    <small class="d-block text-muted">Débito o Crédito</small>
-                                                </div>
-                                            </div>
-                                        </label>
-                                    </div>
+                                <span asp-validation-for="BillingType" class="text-danger"></span>
+                                
+                                <!-- NUEVO: Alerta informativa cuando se selecciona tarjeta -->
+                                <div id="bankInfoAlert" class="alert alert-info mt-3" style="display: none; background-color: rgba(242, 159, 5, 0.1); border-color: #f29f05; color: #592c1c;">
+                                    <i class="bi bi-info-circle-fill me-2"></i>
+                                    <strong>Información bancaria disponible:</strong> 
+                                    <button type="button" class="btn btn-sm btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#bankingModal">
+                                        <i class="bi bi-bank"></i> Ver Datos de Cuenta
+                                    </button>
                                 </div>
                             </div>
-                            <span asp-validation-for="BillingType" class="text-danger small"></span>
                         </div>
 
                         <!-- SECCIÓN 3: MÉTODO DE ENVÍO -->
@@ -194,6 +189,149 @@
     </div>
 </div>
 
+<!-- ============================================================================
+     MODAL: Información Bancaria
+     ============================================================================ -->
+<div class="modal fade" id="bankingModal" tabindex="-1" aria-labelledby="bankingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border: 3px solid #f29f05;">
+            <!-- Header del Modal -->
+            <div class="modal-header" style="background: linear-gradient(135deg, #f29f05 0%, #f28705 100%); color: #fff;">
+                <h5 class="modal-title" id="bankingModalLabel">
+                    <i class="bi bi-bank2"></i> Información para Depósito
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <!-- Body del Modal -->
+            <div class="modal-body" style="background-color: #fef5e7;">
+                <div class="text-center mb-4">
+                    <i class="bi bi-credit-card-2-front" style="font-size: 4rem; color: #f29f05;"></i>
+                    <h6 class="mt-3" style="color: #8c4820;">Realiza tu depósito o transferencia a:</h6>
+                </div>
+                
+                <!-- Información Bancaria -->
+                <div class="card mb-3" style="border: 2px solid #f29f05;">
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-4 text-end">
+                                <strong style="color: #592c1c;">Banco:</strong>
+                            </div>
+                            <div class="col-8">
+                                <span class="text-muted">BAC CORDOBA</span>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-4 text-end">
+                                <strong style="color: #592c1c;">Beneficiario:</strong>
+                            </div>
+                            <div class="col-8">
+                                <span class="text-muted">Eduardo Raziel Quant Avellán</span>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-4 text-end">
+                                <strong style="color: #592c1c;">Número de Cuenta:</strong>
+                            </div>
+                            <div class="col-8">
+                                <span class="fs-5 fw-bold" style="color: #f29f05;" id="accountNumber">369915574</span>
+                                <button type="button" class="btn btn-sm btn-outline-secondary ms-2" onclick="copyAccountNumber()" title="Copiar número de cuenta">
+                                    <i class="bi bi-clipboard"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4 text-end">
+                                <strong style="color: #592c1c;">Monto a pagar:</strong>
+                            </div>
+                            <div class="col-8">
+                                <span class="fs-4 fw-bold" style="color: #6A994E;">C$@Model.TotalAmount.ToString("N2")</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Instrucciones -->
+                <div class="alert alert-warning" style="background-color: rgba(212, 160, 23, 0.15); border-color: #D4A017; color: #8a6010;">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <strong>Importante:</strong> Una vez realizado el pago, guarda el comprobante. Te contactaremos para confirmar tu pedido.
+                </div>
+            </div>
+            
+            <!-- Footer del Modal -->
+            <div class="modal-footer" style="background-color: #fff8e6;">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle"></i> Cerrar
+                </button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                    <i class="bi bi-check-circle"></i> Entendido
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <partial name="_ValidationScriptsPartial" />
+    
+    <script>
+        // ============================================================================
+        // MOSTRAR/OCULTAR ALERTA DE INFO BANCARIA
+        // ============================================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const cashRadio = document.getElementById('paymentCash');
+            const cardRadio = document.getElementById('paymentCard');
+            const bankInfoAlert = document.getElementById('bankInfoAlert');
+            const bankingModal = new bootstrap.Modal(document.getElementById('bankingModal'));
+            
+            // Función para actualizar visibilidad de la alerta
+            function updateBankInfoVisibility() {
+                if (cardRadio.checked) {
+                    bankInfoAlert.style.display = 'block';
+                    // Opcional: Auto-abrir el modal la primera vez
+                    // bankingModal.show();
+                } else {
+                    bankInfoAlert.style.display = 'none';
+                }
+            }
+            
+            // Event listeners para los radio buttons
+            cashRadio.addEventListener('change', updateBankInfoVisibility);
+            cardRadio.addEventListener('change', updateBankInfoVisibility);
+            
+            // Verificar estado inicial (por si vuelve con errores de validación)
+            updateBankInfoVisibility();
+        });
+        
+        // ============================================================================
+        // COPIAR NÚMERO DE CUENTA AL PORTAPAPELES
+        // ============================================================================
+        function copyAccountNumber() {
+            const accountNumber = document.getElementById('accountNumber').textContent;
+            
+            // Método moderno (Clipboard API)
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(accountNumber).then(function() {
+                    // Mostrar feedback visual
+                    const btn = event.target.closest('button');
+                    const originalHTML = btn.innerHTML;
+                    btn.innerHTML = '<i class="bi bi-check"></i>';
+                    btn.classList.add('btn-success');
+                    btn.classList.remove('btn-outline-secondary');
+                    
+                    setTimeout(function() {
+                        btn.innerHTML = originalHTML;
+                        btn.classList.remove('btn-success');
+                        btn.classList.add('btn-outline-secondary');
+                    }, 2000);
+                    
+                    // Opcional: Mostrar toast/alert
+                    alert('¡Número de cuenta copiado! ' + accountNumber);
+                });
+            } else {
+                // Fallback para navegadores antiguos
+                alert('Número de cuenta: ' + accountNumber);
+            }
+        }
+    </script>
 }
