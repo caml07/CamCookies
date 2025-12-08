@@ -1,8 +1,502 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Cam Cookies - Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<style>
+    /* ============================================================================
+       HERO SECTION - Banner Principal con Imagen de Fondo
+       ============================================================================ */
+    .hero-section {
+        background: linear-gradient(rgba(89, 44, 28, 0.7), rgba(89, 44, 28, 0.7)),
+                    url('@Url.Content("~/images/backgrounds/bg1.jpg")') center/cover no-repeat fixed;
+        min-height: 600px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-content h1 {
+        font-size: 4rem;
+        font-weight: 900;
+        text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+        margin-bottom: 1.5rem;
+        animation: fadeInDown 1s ease-out;
+    }
+
+    .hero-content p {
+        font-size: 1.5rem;
+        margin-bottom: 2rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        animation: fadeInUp 1s ease-out 0.3s both;
+    }
+
+    .hero-buttons {
+        animation: fadeInUp 1s ease-out 0.6s both;
+    }
+
+    .hero-buttons .btn {
+        margin: 0.5rem;
+        padding: 1rem 2.5rem;
+        font-size: 1.2rem;
+        font-weight: bold;
+        border-radius: 50px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s;
+    }
+
+    .btn-hero-primary {
+        background: #f29f05;
+        color: white;
+        border: none;
+    }
+
+    .btn-hero-primary:hover {
+        background: #f28705;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(242, 159, 5, 0.4);
+    }
+
+    .btn-hero-secondary {
+        background: transparent;
+        color: white;
+        border: 3px solid white;
+    }
+
+    .btn-hero-secondary:hover {
+        background: white;
+        color: #592c1c;
+        transform: translateY(-3px);
+    }
+
+    /* ============================================================================
+       SECCIÓN: QUIÉNES SOMOS
+       ============================================================================ */
+    .about-section {
+        padding: 5rem 0;
+        background: linear-gradient(135deg, #fef5e7 0%, #fff8e6 100%);
+    }
+
+    .section-title {
+        text-align: center;
+        font-size: 3rem;
+        font-weight: 900;
+        color: #592c1c;
+        margin-bottom: 1rem;
+        position: relative;
+    }
+
+    .section-title::after {
+        content: '';
+        display: block;
+        width: 100px;
+        height: 4px;
+        background: #f29f05;
+        margin: 1rem auto;
+        border-radius: 2px;
+    }
+
+    .about-text {
+        font-size: 1.3rem;
+        line-height: 1.8;
+        color: #8c4820;
+        text-align: center;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    /* ============================================================================
+       SECCIÓN: POR QUÉ ELEGIRNOS
+       ============================================================================ */
+    .features-section {
+        padding: 5rem 0;
+        background: white;
+    }
+
+    .feature-card {
+        text-align: center;
+        padding: 2rem;
+        border-radius: 15px;
+        transition: transform 0.3s;
+        height: 100%;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+
+    .feature-icon {
+        font-size: 4rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .feature-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #592c1c;
+        margin-bottom: 1rem;
+    }
+
+    .feature-description {
+        color: #8c4820;
+        font-size: 1rem;
+    }
+
+    /* ============================================================================
+       SECCIÓN: NUESTRAS FAVORITAS
+       ============================================================================ */
+    .cookies-section {
+        padding: 5rem 0;
+        background: linear-gradient(135deg, #fff8e6 0%, #fef5e7 100%);
+    }
+
+    .cookie-showcase {
+        background: white;
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        transition: transform 0.3s;
+        text-align: center;
+        height: 100%;
+    }
+
+    .cookie-showcase:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 40px rgba(242, 159, 5, 0.3);
+    }
+
+    .cookie-showcase img {
+        width: 200px;
+        height: 200px;
+        object-fit: contain;
+        margin-bottom: 1.5rem;
+        filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+    }
+
+    .cookie-name {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #592c1c;
+        margin-bottom: 0.5rem;
+    }
+
+    .cookie-price {
+        font-size: 1.5rem;
+        color: #f29f05;
+        font-weight: bold;
+    }
+
+    /* ============================================================================
+       SECCIÓN: UBICACIÓN (MAPA)
+       ============================================================================ */
+    .location-section {
+        padding: 5rem 0;
+        background: white;
+    }
+
+    .map-container {
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        height: 450px;
+    }
+
+    .map-container iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+
+    /* ============================================================================
+       SECCIÓN: CONTACTO
+       ============================================================================ */
+    .contact-section {
+        padding: 5rem 0;
+        background: linear-gradient(135deg, #f29f05 0%, #f28705 100%);
+        color: white;
+    }
+
+    .contact-card {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 3rem;
+        text-align: center;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .contact-card h3 {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 2rem;
+    }
+
+    .contact-btn {
+        display: inline-block;
+        padding: 1rem 3rem;
+        margin: 1rem;
+        background: white;
+        color: #592c1c;
+        border-radius: 50px;
+        font-weight: bold;
+        font-size: 1.2rem;
+        text-decoration: none;
+        transition: all 0.3s;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .contact-btn:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        color: #592c1c;
+    }
+
+    .contact-btn i {
+        margin-right: 0.5rem;
+    }
+
+    /* ============================================================================
+       SECCIÓN: CALL-TO-ACTION FINAL
+       ============================================================================ */
+    .cta-section {
+        padding: 5rem 0;
+        background: linear-gradient(rgba(89, 44, 28, 0.9), rgba(89, 44, 28, 0.9)),
+                    url('@Url.Content("~/images/backgrounds/bg2.jpg")') center/cover no-repeat fixed;
+        text-align: center;
+        color: white;
+    }
+
+    .cta-section h2 {
+        font-size: 3rem;
+        font-weight: 900;
+        margin-bottom: 2rem;
+    }
+
+    .cta-section .btn {
+        padding: 1.5rem 4rem;
+        font-size: 1.5rem;
+        font-weight: bold;
+        background: #f29f05;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        text-transform: uppercase;
+        transition: all 0.3s;
+    }
+
+    .cta-section .btn:hover {
+        background: #f28705;
+        transform: scale(1.1);
+        box-shadow: 0 10px 30px rgba(242, 159, 5, 0.5);
+    }
+
+    /* ============================================================================
+       ANIMACIONES
+       ============================================================================ */
+    @@keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @@keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* ============================================================================
+       RESPONSIVE
+       ============================================================================ */
+    @@media (max-width: 768px) {
+        .hero-content h1 {
+            font-size: 2.5rem;
+        }
+        .hero-content p {
+            font-size: 1.2rem;
+        }
+        .section-title {
+            font-size: 2rem;
+        }
+        .about-text {
+            font-size: 1.1rem;
+        }
+    }
+</style>
+
+<!-- ============================================================================
+     HERO SECTION - Banner Principal
+     ============================================================================ -->
+<section class="hero-section">
+    <div class="hero-content">
+        <h1>CAM COOKIES</h1>
+        <p>Las mejores galletas artesanales, hechas con amor</p>
+        <div class="hero-buttons">
+            <a asp-controller="Store" asp-action="Index" class="btn btn-hero-primary">
+                <i class="bi bi-bag-fill"></i> Ver Menú
+            </a>
+            <a href="#contact" class="btn btn-hero-secondary">
+                <i class="bi bi-chat-dots-fill"></i> Contáctanos
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================================
+     SECCIÓN: QUIÉNES SOMOS
+     ============================================================================ -->
+<section class="about-section">
+    <div class="container">
+        <h2 class="section-title">Quiénes Somos</h2>
+        <p class="about-text">
+            Cam Cookies es un rinconcito hecho con cariño, donde cada galleta nace de recetas caseras y momentos compartidos. 
+            Buscamos que cada sabor recuerde a hogar, a cercanía y a esos pequeños detalles que hacen el día más dulce.
+        </p>
+    </div>
+</section>
+
+<!-- ============================================================================
+     SECCIÓN: POR QUÉ ELEGIRNOS
+     ============================================================================ -->
+<section class="features-section">
+    <div class="container">
+        <h2 class="section-title">¿Por Qué Cam Cookies?</h2>
+        <div class="row g-4 mt-4">
+            <div class="col-md-3">
+                <div class="feature-card">
+                    <div class="feature-icon">🔥</div>
+                    <div class="feature-title">Siempre Frescas</div>
+                    <p class="feature-description">Horneadas el mismo día de tu pedido para garantizar frescura</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="feature-card">
+                    <div class="feature-icon">👨‍🍳</div>
+                    <div class="feature-title">100% Artesanales</div>
+                    <p class="feature-description">Cada galleta es hecha a mano con recetas caseras únicas</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="feature-card">
+                    <div class="feature-icon">🚚</div>
+                    <div class="feature-title">Entrega Rápida</div>
+                    <p class="feature-description">Entregamos en campus y a domicilio en tiempo récord</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <div class="feature-title">Gran Variedad</div>
+                    <p class="feature-description">Sabores clásicos y ediciones especiales de temporada</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================================
+     SECCIÓN: NUESTRAS FAVORITAS
+     ============================================================================ -->
+<section class="cookies-section">
+    <div class="container">
+        <h2 class="section-title">Nuestras Favoritas</h2>
+        <div class="row g-4 mt-4">
+            <div class="col-md-4">
+                <div class="cookie-showcase">
+                    <img src="~/images/cookies/oreo.png" alt="Oreo Cookie">
+                    <div class="cookie-name">Oreo</div>
+                    <div class="cookie-price">C$70.00</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="cookie-showcase">
+                    <img src="~/images/cookies/redv.png" alt="Red Velvet Cookie">
+                    <div class="cookie-name">Red Velvet</div>
+                    <div class="cookie-price">C$70.00</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="cookie-showcase">
+                    <img src="~/images/cookies/smore.png" alt="S'mores Cookie">
+                    <div class="cookie-name">S'mores</div>
+                    <div class="cookie-price">C$70.00</div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-5">
+            <a asp-controller="Store" asp-action="Index" class="btn btn-lg" style="background: #f29f05; color: white; border-radius: 50px; padding: 1rem 3rem; font-weight: bold;">
+                <i class="bi bi-arrow-right-circle-fill"></i> Ver Menú Completo
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================================
+     SECCIÓN: DÓNDE ESTAMOS
+     ============================================================================ -->
+<section class="location-section">
+    <div class="container">
+        <h2 class="section-title">Dónde Nos Encuentras</h2>
+        <p class="text-center mb-4" style="font-size: 1.2rem; color: #8c4820;">
+            Estamos ubicados en el corazón de la ciudad, listos para endulzar tu día. 
+            ¡Visítanos y vive la experiencia Cam Cookies!
+        </p>
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3900.93365908237!2d-86.2733383851868!3d12.118236991420656!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f73fe10c7e22849%3A0x42f24c6f342b19c6!2sUniversidad%20Centroamericana%20(UCA)!5e0!3m2!1ses!2sni!4v1678886591234!5m2!1ses!2sni" 
+                    width="600" 
+                    height="450" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================================
+     SECCIÓN: CONTACTO
+     ============================================================================ -->
+<section id="contact" class="contact-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="contact-card">
+                    <h3>¿Listo para tu Dosis de Sabor?</h3>
+                    <a href="https://wa.me/50512345678" target="_blank" class="contact-btn">
+                        <i class="bi bi-whatsapp"></i> Pedir por WhatsApp
+                    </a>
+                    <a href="https://www.instagram.com/cam.cookies" target="_blank" class="contact-btn">
+                        <i class="bi bi-instagram"></i> Síguenos en Instagram
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================================
+     SECCIÓN: CALL-TO-ACTION FINAL
+     ============================================================================ -->
+<section class="cta-section">
+    <div class="container">
+        <h2>¿Qué Esperas para Probarlas?</h2>
+        <a asp-controller="Store" asp-action="Index" class="btn">
+            <i class="bi bi-cart-check-fill"></i> ¡Ordenar Ahora!
+        </a>
+    </div>
+</section>
