@@ -21,11 +21,11 @@ builder.Services.AddDbContext<CmcDBContext>(options =>
 builder.Services.AddIdentity<User, Role>(options =>
   {
     // Configuración de contraseñas
-    options.Password.RequireDigit = true;
+    options.Password.RequireDigit = false;
     options.Password.RequireLowercase = true;
-    options.Password.RequireUppercase = true;
+    options.Password.RequireUppercase = false;
     options.Password.RequireNonAlphanumeric = true;
-    options.Password.RequiredLength = 8;
+    options.Password.RequiredLength = 6;
 
     // Configuración de usuario
     options.User.RequireUniqueEmail = true;

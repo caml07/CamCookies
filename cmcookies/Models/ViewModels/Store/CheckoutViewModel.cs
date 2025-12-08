@@ -8,6 +8,7 @@ namespace cmcookies.Models.ViewModels.Store
     [Display(Name = "Nombre Completo")]
     public string CustomerName { get; set; } = string.Empty;
 
+    [EmailAddress(ErrorMessage = "El correo no es válido.")]
     [Display(Name = "Correo Electrónico")]
     public string Email { get; set; } = string.Empty;
 

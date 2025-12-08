@@ -23,14 +23,9 @@ public class CookieFormViewModel
   [Required(ErrorMessage = "The price is required")]
   [Range(0.01, 10000, ErrorMessage = "The price must be between C$0.01 and C$10,000")]
   [Display(Name = "Price (C$)")]
-  public decimal
-    Price
-  {
-    get;
-    set;
-  } //precio de la galleta, con restrinccion entre 1 centavo a 10000 cordobas (no creo que una cookie llege a costar más de 200 C$ realisticamente, pero queda asi por si acaso, quien sabe vd??)
+  public decimal Price { get; set; } //precio de la galleta, con restrinccion entre 1 centavo a 10000 cordobas (no creo que una cookie llege a costar más de 200 C$ realisticamente, pero queda asi por si acaso, quien sabe vd??)
 
-  [Required(ErrorMessage = "The category is required")]
+  [Required(ErrorMessage = "Please select a category (Normal or Seasonal)")]
   [Display(Name = "Category")]
   public string Category { get; set; } // 'normal' o 'seasonal'
 
