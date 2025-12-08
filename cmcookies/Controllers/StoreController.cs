@@ -232,7 +232,8 @@ namespace cmcookies.Controllers
                 {
                     CustomerId = customer.CustomerId,
                     BillingId = billing.BillingId,
-                    OrderDetailId = detail.OrderDetailId
+                    OrderDetailId = detail.OrderDetailId,
+                    Amount = detail.Qty * detail.UnitPrice
                 };
                 _context.CustomerBillings.Add(customerBilling);
             }
