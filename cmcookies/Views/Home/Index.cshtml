@@ -7,8 +7,8 @@
        HERO SECTION - Banner Principal con Imagen de Fondo
        ============================================================================ */
     .hero-section {
-        background: linear-gradient(rgba(89, 44, 28, 0.7), rgba(89, 44, 28, 0.7)),
-                    url('@Url.Content("~/images/backgrounds/bg1.jpg")') center/cover no-repeat fixed;
+        background: linear-gradient(rgba(242, 159, 5, 0.3), rgba(140, 72, 32, 0.4)),
+        url('@Url.Content("~/images/backgrounds/bg4.jpg")') center/cover no-repeat fixed;
         min-height: 600px;
         display: flex;
         align-items: center;
@@ -265,8 +265,8 @@
        ============================================================================ */
     .cta-section {
         padding: 5rem 0;
-        background: linear-gradient(rgba(89, 44, 28, 0.9), rgba(89, 44, 28, 0.9)),
-                    url('@Url.Content("~/images/backgrounds/bg2.jpg")') center/cover no-repeat fixed;
+        background: linear-gradient(rgba(242, 159, 5, 0.4), rgba(140, 72, 32, 0.5)),
+        url('@Url.Content("~/images/backgrounds/bg1.jpg")') center/cover no-repeat fixed;
         text-align: center;
         color: white;
     }
@@ -379,28 +379,28 @@
         <div class="row g-4 mt-4">
             <div class="col-md-3">
                 <div class="feature-card">
-                    <div class="feature-icon">🔥</div>
+                    <div class="feature-icon"><i class="bi bi-fire" style="color: #f29f05;"></i></div>
                     <div class="feature-title">Siempre Frescas</div>
                     <p class="feature-description">Horneadas el mismo día de tu pedido para garantizar frescura</p>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="feature-card">
-                    <div class="feature-icon">👨‍🍳</div>
+                    <div class="feature-icon"><i class="bi bi-egg-fried" style="color: #f29f05;"></i></div>
                     <div class="feature-title">100% Artesanales</div>
                     <p class="feature-description">Cada galleta es hecha a mano con recetas caseras únicas</p>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="feature-card">
-                    <div class="feature-icon">🚚</div>
+                    <div class="feature-icon"><i class="bi bi-truck" style="color: #f29f05;"></i></div>
                     <div class="feature-title">Entrega Rápida</div>
                     <p class="feature-description">Entregamos en campus y a domicilio en tiempo récord</p>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="feature-card">
-                    <div class="feature-icon">🎨</div>
+                    <div class="feature-icon"><i class="bi bi-palette-fill" style="color: #f29f05;"></i></div>
                     <div class="feature-title">Gran Variedad</div>
                     <p class="feature-description">Sabores clásicos y ediciones especiales de temporada</p>
                 </div>
@@ -453,11 +453,12 @@
     <div class="container">
         <h2 class="section-title">Dónde Nos Encuentras</h2>
         <p class="text-center mb-4" style="font-size: 1.2rem; color: #8c4820;">
-            Estamos ubicados en el corazón de la ciudad, listos para endulzar tu día. 
-            ¡Visítanos y vive la experiencia Cam Cookies!
+            <i class="bi bi-geo-alt-fill" style="color: #f29f05;"></i> 
+            Keiser University - Latin American Campus<br>
+            San Marcos, Carazo, Nicaragua
         </p>
         <div class="map-container">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3900.93365908237!2d-86.2733383851868!3d12.118236991420656!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f73fe10c7e22849%3A0x42f24c6f342b19c6!2sUniversidad%20Centroamericana%20(UCA)!5e0!3m2!1ses!2sni!4v1678886591234!5m2!1ses!2sni" 
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3909.2886655464396!2d-86.20969492403088!3d11.909762638418555!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f718134e84c94ad%3A0x5f8c76c9d847b3d8!2sKeiser%20University%20Nicaragua!5e0!3m2!1sen!2sni!4v1702000000000!5m2!1sen!2sni" 
                     width="600" 
                     height="450" 
                     style="border:0;" 
@@ -476,13 +477,19 @@
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="contact-card">
-                    <h3>¿Listo para tu Dosis de Sabor?</h3>
-                    <a href="https://wa.me/50512345678" target="_blank" class="contact-btn">
-                        <i class="bi bi-whatsapp"></i> Pedir por WhatsApp
-                    </a>
-                    <a href="https://www.instagram.com/cam.cookies" target="_blank" class="contact-btn">
-                        <i class="bi bi-instagram"></i> Síguenos en Instagram
-                    </a>
+                    <h3>¡Hablemos!</h3>
+                    <p style="font-size: 1.3rem; margin-bottom: 2rem;">
+                        ¿Tienes dudas? ¿Quieres hacer un pedido especial?<br>
+                        Contáctanos por WhatsApp o síguenos en Instagram
+                    </p>
+                    <div>
+                        <a href="https://wa.me/50558899827" target="_blank" class="contact-btn">
+                            <i class="bi bi-whatsapp"></i> WhatsApp: 5889-9827
+                        </a>
+                        <a href="https://www.instagram.com/caml.cookies/" target="_blank" class="contact-btn">
+                            <i class="bi bi-instagram"></i> @@caml.cookies
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
