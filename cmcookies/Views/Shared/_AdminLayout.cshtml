@@ -103,6 +103,18 @@
                     <span>Manage Orders</span>
                 </a>
             </div>
+
+            <!-- Sección: Users (NUEVO) -->
+            <div class="admin-nav-section">
+                <div class="admin-nav-section-title">
+                    <i class="bi bi-people-fill"></i> Users
+                </div>
+                <a href="@Url.Action("Index", "Users")"
+                   class="admin-nav-item admin-nav-subitem @(Context.Request.Path.Value.Contains("/Users") ? "active" : "")">
+                    <i class="bi bi-person-lines-fill"></i>
+                    <span>Manage Users</span>
+                </a>
+            </div>
         </nav>
 
         <!-- User info en el footer del sidebar -->

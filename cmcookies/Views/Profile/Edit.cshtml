@@ -1,0 +1,172 @@
+@model cmcookies.Models.ViewModels.Profile.EditProfileViewModel
+
+@{
+    ViewData["Title"] = "Mi Perfil";
+    var changePasswordModel = ViewBag.ChangePasswordModel as
+        cmcookies.Models.ViewModels.Profile.ChangePasswordViewModel;
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="fw-bold text-dark">
+                    <i class="bi bi-person-circle"></i> Mi Perfil
+                </h2>
+                <a asp-controller="Home" asp-action="Index"
+                   class="btn btn-outline-secondary rounded-pill">
+                    <i class="bi bi-arrow-left"></i> Volver
+                </a>
+            </div>
+
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="bi bi-check-circle-fill"></i> @TempData["Success"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill"></i> @TempData["Error"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            <!-- CARD 1: DATOS PERSONALES -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0 fw-bold text-primary">
+                        <i class="bi bi-person-fill"></i> Datos Personales
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <form asp-action="EditProfile" method="post">
+                        @Html.AntiForgeryToken()
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label asp-for="FirstName" class="form-label fw-bold"></label>
+                                <input asp-for="FirstName" class="form-control" placeholder="Ej: Juan"/>
+                                <span asp-validation-for="FirstName" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="LastName" class="form-label fw-bold"></label>
+                                <input asp-for="LastName" class="form-control" placeholder="Ej: Pérez"/>
+                                <span asp-validation-for="LastName" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-12">
+                                <label asp-for="Email" class="form-label fw-bold"></label>
+                                <input asp-for="Email" class="form-control" readonly disabled
+                                       style="background-color: #f8f9fa; cursor: not-allowed;"/>
+                                <small class="text-muted">
+                                    <i class="bi bi-info-circle"></i>
+                                    El correo electrónico no se puede cambiar
+                                </small>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="PhoneNumber" class="form-label fw-bold"></label>
+                                <input asp-for="PhoneNumber" class="form-control" placeholder="Ej: 8888-8888"/>
+                                <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="PhoneNumber2" class="form-label fw-bold"></label>
+                                <input asp-for="PhoneNumber2" class="form-control" placeholder="Opcional"/>
+                                <span asp-validation-for="PhoneNumber2" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary w-100 py-2 fw-bold rounded-pill">
+                                    <i class="bi bi-check-circle"></i> Guardar Cambios
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- CARD 2: CAMBIAR CONTRASEÑA -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0 fw-bold text-danger">
+                        <i class="bi bi-shield-lock-fill"></i> Cambiar Contraseña
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <form asp-action="ChangePassword" method="post">
+                        @Html.AntiForgeryToken()
+
+                        @if (changePasswordModel != null && !ViewData.ModelState.IsValid)
+                        {
+                            <div class="alert alert-danger">
+                                <ul class="mb-0">
+                                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                    {
+                                        <li>@error.ErrorMessage</li>
+                                    }
+                                </ul>
+                            </div>
+                        }
+
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <label for="CurrentPassword" class="form-label fw-bold">Contraseña Actual</label>
+                                <input type="password" id="CurrentPassword" name="CurrentPassword"
+                                       value="@changePasswordModel?.CurrentPassword"
+                                       class="form-control" placeholder="Ingresa tu contraseña actual" required/>
+                                <small class="text-muted">
+                                    <i class="bi bi-info-circle"></i> Para confirmar tu identidad
+                                </small>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="NewPassword" class="form-label fw-bold">Nueva Contraseña</label>
+                                <input type="password" id="NewPassword" name="NewPassword"
+                                       value="@changePasswordModel?.NewPassword"
+                                       class="form-control" placeholder="Mínimo 6 caracteres" required/>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="ConfirmPassword" class="form-label fw-bold">Confirmar Nueva</label>
+                                <input type="password" id="ConfirmPassword" name="ConfirmPassword"
+                                       value="@changePasswordModel?.ConfirmPassword"
+                                       class="form-control" placeholder="Repite la contraseña" required/>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="alert alert-info py-2">
+                                    <small>
+                                        <strong>Requisitos:</strong>
+                                        <ul class="mb-0 mt-1">
+                                            <li>Mínimo 6 caracteres</li>
+                                            <li>Al menos una letra minúscula</li>
+                                        </ul>
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-danger w-100 py-2 fw-bold rounded-pill">
+                                    <i class="bi bi-shield-check"></i> Cambiar Contraseña
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}
