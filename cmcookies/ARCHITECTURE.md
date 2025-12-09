@@ -23,12 +23,14 @@
 **Ubicación:** `Models/Factories/CookieFactory.cs`
 
 **¿Por qué?**
+
 - Encapsula la lógica de creación de galletas
 - Consistencia en la inicialización de objetos
 - Facilita testing con mocks
 - Principio SOLID: Single Responsibility
 
 **Ejemplo:**
+
 ```csharp
 // ❌ MAL (crear directo)
 var cookie = new Cookie { 
@@ -47,6 +49,7 @@ var cookie = _cookieFactory.CreateNormalCookie("ORE001", "Oreo", "...", 70, 20);
 **Ubicación:** `Data/CmcDBContext.cs`
 
 **¿Por qué?**
+
 - Entity Framework Core actúa como repository
 - Abstrae el acceso a datos
 - LINQ queries type-safe
@@ -61,11 +64,13 @@ var cookie = _cookieFactory.CreateNormalCookie("ORE001", "Oreo", "...", 70, 20);
 **Ubicación:** `Models/`
 
 **Responsabilidad:**
+
 - Representan las tablas de la BD
 - Validaciones de datos
 - Relaciones entre entidades
 
 **Ejemplo:**
+
 ```csharp
 public class Cookie
 {
@@ -85,12 +90,14 @@ public class Cookie
 **Ubicación:** `Views/`
 
 **Responsabilidad:**
+
 - Presentación HTML
 - Razor syntax (C# + HTML)
 - Bootstrap para UI
 - JavaScript para interactividad
 
 **Ejemplo:**
+
 ```cshtml
 @model List<Cookie>
 
@@ -108,11 +115,13 @@ public class Cookie
 **Ubicación:** `Controllers/`
 
 **Responsabilidad:**
+
 - Recibe peticiones HTTP
 - Procesa lógica de negocio
 - Devuelve vistas o redirecciones
 
 **Ejemplo:**
+
 ```csharp
 public async Task<IActionResult> Index()
 {
@@ -133,6 +142,7 @@ public async Task<IActionResult> Index()
 **Configuración:** `Program.cs` + `Data/CmcDBContext.cs`
 
 **Ventajas:**
+
 - ORM (Object-Relational Mapping)
 - Migraciones automáticas
 - LINQ queries
@@ -140,6 +150,7 @@ public async Task<IActionResult> Index()
 - Lazy loading
 
 **Relaciones:**
+
 ```
 User (1) ──────── (1) Customer
 Customer (1) ──── (N) Orders
@@ -154,11 +165,13 @@ CookieMaterial (N) ── (1) Material
 **Ubicación:** `BatchService.cs`, `OrdersController.cs`
 
 **¿Cuándo usar?**
+
 - Operaciones que modifican múltiples tablas
 - Necesitas "todo o nada" (atomicidad)
 - Descuento de inventario
 
 **Ejemplo:**
+
 ```csharp
 using var transaction = await _context.Database.BeginTransactionAsync();
 try
@@ -273,11 +286,13 @@ Orders/Details (actualizado)
 **REGLA CRÍTICA:** Solo se descuenta inventario cuando un pedido pasa de `PENDING` a `ON_PREPARATION`.
 
 **¿Por qué?**
+
 - Evita reservas falsas (clientes que no pagan)
 - Admin confirma pago antes de preparar
 - Inventario refleja la realidad
 
 **Estados:**
+
 ```
 PENDING         → No se toca inventario (esperando confirmación)
 ON_PREPARATION  → SE DESCUENTA inventario (confirmado y preparando)
@@ -288,10 +303,12 @@ CANCELLED       → No se toca inventario (nunca se descontó)
 ### **Cálculo de Empaque**
 
 **Reglas:**
+
 - **1-2 galletas:** Small Bag, sin sticker
 - **3+ galletas:** Medium Bag, con sticker
 
 **Código:**
+
 ```csharp
 var totalCookies = order.OrderDetails.Sum(x => x.Qty);
 var bagNeeded = totalCookies >= 3 ? "Medium Bag" : "Small Bag";
@@ -303,6 +320,7 @@ var stickerNeeded = totalCookies >= 3;
 **Regla Fija:** Cada batch produce **20 galletas** (constante).
 
 **Proceso:**
+
 1. Validar que la galleta tenga receta (CookieMaterials)
 2. Verificar stock suficiente de cada material
 3. Descontar materiales del inventario
@@ -317,6 +335,7 @@ var stickerNeeded = totalCookies >= 3;
 ### **ASP.NET Identity**
 
 **Features:**
+
 - Hashing de contraseñas (SHA256 + Salt)
 - Roles (Admin, Customer)
 - Claims-based authorization
@@ -324,6 +343,7 @@ var stickerNeeded = totalCookies >= 3;
 - Password policy configurable
 
 **Configuración:**
+
 ```csharp
 options.Password.RequiredLength = 6;
 options.Password.RequireLowercase = true;
@@ -335,6 +355,7 @@ options.Password.RequireNonAlphanumeric = false;
 ### **Authorization**
 
 **Atributos:**
+
 ```csharp
 [Authorize]                     // Requiere login
 [Authorize(Roles = "Admin")]    // Requiere rol Admin
@@ -342,6 +363,7 @@ options.Password.RequireNonAlphanumeric = false;
 ```
 
 **Ejemplo:**
+
 ```csharp
 [Authorize(Roles = "Admin")]
 public class AdminController : Controller
@@ -353,6 +375,7 @@ public class AdminController : Controller
 ### **CSRF Protection**
 
 **Token anti-forgery:**
+
 ```cshtml
 <form method="post">
     @Html.AntiForgeryToken()
@@ -373,6 +396,7 @@ public async Task<IActionResult> Create(...)
 ### **Queries Optimizados**
 
 **Include/ThenInclude (Eager Loading):**
+
 ```csharp
 // ✅ BIEN: 1 query con JOINs
 var orders = await _context.Orders
@@ -392,6 +416,7 @@ foreach (var order in orders)
 ### **Async/Await**
 
 **Siempre usar métodos async en controllers:**
+
 ```csharp
 // ✅ BIEN: No bloquea el thread
 public async Task<IActionResult> Index()
@@ -411,12 +436,14 @@ public IActionResult Index()
 ### **Session para Carrito**
 
 **¿Por qué Session y no BD?**
+
 - Más rápido (memoria vs disco)
 - No spamea la BD con datos temporales
 - Se limpia automáticamente (30 min timeout)
 - Menos complejidad
 
 **Implementación:**
+
 ```csharp
 // Guardar
 HttpContext.Session.Set("Cart", cart);
@@ -444,6 +471,7 @@ Profit = TotalRevenue - TotalCosts
 ### **Top Sellers**
 
 **Query LINQ con JOIN + GROUP BY:**
+
 ```csharp
 from od in _context.OrderDetails
 join o in _context.Orders on od.OrderId equals o.OrderId
@@ -461,6 +489,7 @@ select new TopSellerViewModel
 ```
 
 **Equivalente en SQL:**
+
 ```sql
 SELECT c.CookieName, 
        SUM(od.Qty) as TotalSold,
@@ -481,19 +510,20 @@ LIMIT 5
 ### **Unit Testing Sugerido**
 
 **Áreas a testear:**
+
 1. **BatchService:**
-   - Crear batch con materiales suficientes
-   - Fallar cuando no hay materiales
-   - Calcular costo correctamente
+    - Crear batch con materiales suficientes
+    - Fallar cuando no hay materiales
+    - Calcular costo correctamente
 
 2. **CookieFactory:**
-   - Crear galletas normal/seasonal correctamente
-   - Inicializar campos default
+    - Crear galletas normal/seasonal correctamente
+    - Inicializar campos default
 
 3. **OrdersController:**
-   - Descuento de inventario correcto
-   - Validación de stock insuficiente
-   - Rollback en caso de error
+    - Descuento de inventario correcto
+    - Validación de stock insuficiente
+    - Rollback en caso de error
 
 **Framework:** xUnit + Moq + InMemory Database
 
@@ -502,6 +532,7 @@ LIMIT 5
 ## 🔮 MEJORAS FUTURAS
 
 ### **Corto Plazo:**
+
 - [ ] Implementar reversa de inventario (cancelaciones)
 - [ ] Auditoría de cambios (logs)
 - [ ] Reportes en PDF
@@ -509,6 +540,7 @@ LIMIT 5
 - [ ] Fotos de galletas en producción
 
 ### **Mediano Plazo:**
+
 - [ ] API REST (para app móvil)
 - [ ] Sistema de cupones/descuentos
 - [ ] Integración con pasarelas de pago
@@ -516,6 +548,7 @@ LIMIT 5
 - [ ] Multi-tenancy (múltiples negocios)
 
 ### **Largo Plazo:**
+
 - [ ] Machine Learning (predecir demanda)
 - [ ] App móvil nativa
 - [ ] Sistema de fidelización
@@ -526,14 +559,17 @@ LIMIT 5
 ## 📚 RECURSOS DE APRENDIZAJE
 
 ### **Patrones de Diseño:**
+
 - [Head First Design Patterns](https://www.oreilly.com/library/view/head-first-design/0596007124/)
 - [Refactoring Guru](https://refactoring.guru/design-patterns)
 
 ### **ASP.NET Core:**
+
 - [Microsoft Docs](https://docs.microsoft.com/aspnet/core)
 - [Entity Framework Core](https://docs.microsoft.com/ef/core)
 
 ### **SOLID Principles:**
+
 - [Uncle Bob's Articles](https://blog.cleancoder.com/)
 - [SOLID Principles in C#](https://www.pluralsight.com/courses/csharp-solid-principles)
 

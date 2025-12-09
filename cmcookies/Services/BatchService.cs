@@ -41,7 +41,7 @@ public class BatchService : IBatchService
       // 🔍 PASO 1: Buscar la galleta con su receta (CookieMaterials)
       var cookie = await _context.Cookies
         .Include(c => c.CookieMaterials) // Traemos la receta
-        .ThenInclude(cm => cm.Material)  // Y los materiales de cada ingrediente
+        .ThenInclude(cm => cm.Material) // Y los materiales de cada ingrediente
         .FirstOrDefaultAsync(c => c.CookieCode == cookieCode);
 
       // ❌ Si no existe, lanzamos error (no se puede hacer galletas fantasma)
@@ -67,7 +67,7 @@ public class BatchService : IBatchService
 
         // ➖ Descontamos del inventario (adiós ingredientes, los recordaremos)
         material.Stock -= requiredQty;
-        
+
         // 💵 Sumamos al costo total (material.UnitCost * cantidad usada)
         currentBatchCost += material.UnitCost * requiredQty;
       }
@@ -76,9 +76,9 @@ public class BatchService : IBatchService
       var batch = new Batch
       {
         CookieCode = cookieCode,
-        QtyMade = BatchSize,          // Siempre 20 (es constante, recuerdas?)
-        ProducedAt = DateTime.Now,    // Cuándo se hizo
-        TotalCost = currentBatchCost  // Cuánto costó producirlo
+        QtyMade = BatchSize, // Siempre 20 (es constante, recuerdas?)
+        ProducedAt = DateTime.Now, // Cuándo se hizo
+        TotalCost = currentBatchCost // Cuánto costó producirlo
       };
 
       _context.Batches.Add(batch); // Guardamos el batch en la tabla
@@ -89,7 +89,7 @@ public class BatchService : IBatchService
 
       // 💾 PASO 5: Guardar todo en la base de datos
       await _context.SaveChangesAsync();
-      
+
       // ✅ Si llegamos aquí, todo salió bien, hacemos commit de la transacción
       await transaction.CommitAsync();
 

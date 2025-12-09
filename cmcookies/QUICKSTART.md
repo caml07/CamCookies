@@ -7,6 +7,7 @@
 ## ⚡ INSTALACIÓN RÁPIDA
 
 ### 1️⃣ **Clonar y Restaurar**
+
 ```bash
 git clone https://github.com/caml07/cmcookies.git
 cd cmcookies
@@ -14,12 +15,15 @@ dotnet restore
 ```
 
 ### 2️⃣ **Base de Datos**
+
 ```sql
 CREATE DATABASE cmcookiedb CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
 ### 3️⃣ **Connection String**
+
 Abre `appsettings.json`:
+
 ```json
 {
   "ConnectionStrings": {
@@ -29,11 +33,13 @@ Abre `appsettings.json`:
 ```
 
 ### 4️⃣ **Migraciones**
+
 ```bash
 dotnet ef database update
 ```
 
 ### 5️⃣ **¡EJECUTAR!**
+
 ```bash
 dotnet run
 ```
@@ -44,22 +50,24 @@ Abre: **https://localhost:7232**
 
 ## 👤 USUARIOS POR DEFECTO
 
-| Rol | Email | Password |
-|-----|-------|----------|
-| Admin | `admin@camcookies.com` | `Admin@123` |
-| Cliente | `customer@test.com` | `Customer@123` |
+| Rol     | Email                  | Password       |
+|---------|------------------------|----------------|
+| Admin   | `admin@camcookies.com` | `Admin@123`    |
+| Cliente | `customer@test.com`    | `Customer@123` |
 
 ---
 
 ## 🎯 FLUJOS PRINCIPALES
 
 ### **COMO ADMIN:**
+
 1. Login con `admin@camcookies.com`
 2. Click **"Admin Dashboard"**
 3. **Batches** → Crear batch (produce 20 galletas)
 4. **Orders** → Gestionar pedidos
 
 ### **COMO CLIENTE:**
+
 1. Login o Register
 2. **Menú** → Seleccionar galletas
 3. **Carrito** (ícono 🛒) → Checkout
@@ -70,6 +78,7 @@ Abre: **https://localhost:7232**
 ## 🐛 PROBLEMAS COMUNES
 
 ### ❌ "No connection could be made"
+
 ```bash
 # Windows
 net start MySQL80
@@ -79,9 +88,11 @@ sudo service mysql start
 ```
 
 ### ❌ "Login failed for user"
+
 → Verifica tu contraseña en `appsettings.json`
 
 ### ❌ "Requires a primary key"
+
 ```bash
 dotnet ef database update
 ```
@@ -126,13 +137,13 @@ cmcookies/
 
 ## 🎨 PALETA DE COLORES
 
-| Color | Hex | Uso |
-|-------|-----|-----|
+| Color      | Hex       | Uso              |
+|------------|-----------|------------------|
 | 🔶 Naranja | `#f29f05` | Botones, acentos |
-| 🤎 Marrón | `#8c4820` | Textos, headers |
-| ☕ Oscuro | `#592c1c` | Footer, navbar |
-| 🌿 Verde | `#6A994E` | Success |
-| 🍂 Crema | `#fef5e7` | Backgrounds |
+| 🤎 Marrón  | `#8c4820` | Textos, headers  |
+| ☕ Oscuro   | `#592c1c` | Footer, navbar   |
+| 🌿 Verde   | `#6A994E` | Success          |
+| 🍂 Crema   | `#fef5e7` | Backgrounds      |
 
 ---
 

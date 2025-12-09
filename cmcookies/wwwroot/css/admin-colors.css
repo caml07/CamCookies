@@ -13,50 +13,50 @@
 
 /* Estado Pendiente (PENDING / PENDIENTE) */
 .status-pending {
-    background-color: #D4A017 !important; /* Dorado */
-    color: #000 !important;
-    font-weight: 700 !important;
-    padding: 0.5rem 1rem !important;
-    border-radius: 6px !important;
-    text-transform: uppercase !important;
-    font-size: 0.75rem !important;
-    letter-spacing: 0.5px !important;
+  background-color: #D4A017 !important; /* Dorado */
+  color: #000 !important;
+  font-weight: 700 !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 6px !important;
+  text-transform: uppercase !important;
+  font-size: 0.75rem !important;
+  letter-spacing: 0.5px !important;
 }
 
 /* Estado Entregado (DELIVERED / ENTREGADO) */
 .status-delivered {
-    background-color: #6A994E !important; /* Verde oliva */
-    color: #fff !important;
-    font-weight: 700 !important;
-    padding: 0.5rem 1rem !important;
-    border-radius: 6px !important;
-    text-transform: uppercase !important;
-    font-size: 0.75rem !important;
-    letter-spacing: 0.5px !important;
+  background-color: #6A994E !important; /* Verde oliva */
+  color: #fff !important;
+  font-weight: 700 !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 6px !important;
+  text-transform: uppercase !important;
+  font-size: 0.75rem !important;
+  letter-spacing: 0.5px !important;
 }
 
 /* Estado en Preparación (PREPARATION / PREPARANDO) */
 .status-preparation {
-    background-color: #8D6E63 !important; /* Marrón claro */
-    color: #fff !important;
-    font-weight: 700 !important;
-    padding: 0.5rem 1rem !important;
-    border-radius: 6px !important;
-    text-transform: uppercase !important;
-    font-size: 0.75rem !important;
-    letter-spacing: 0.5px !important;
+  background-color: #8D6E63 !important; /* Marrón claro */
+  color: #fff !important;
+  font-weight: 700 !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 6px !important;
+  text-transform: uppercase !important;
+  font-size: 0.75rem !important;
+  letter-spacing: 0.5px !important;
 }
 
 /* Estado Cancelado (CANCELLED) */
 .status-cancelled {
-    background-color: #B85042 !important; /* Rojo-marrón */
-    color: #fff !important;
-    font-weight: 700 !important;
-    padding: 0.5rem 1rem !important;
-    border-radius: 6px !important;
-    text-transform: uppercase !important;
-    font-size: 0.75rem !important;
-    letter-spacing: 0.5px !important;
+  background-color: #B85042 !important; /* Rojo-marrón */
+  color: #fff !important;
+  font-weight: 700 !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 6px !important;
+  text-transform: uppercase !important;
+  font-size: 0.75rem !important;
+  letter-spacing: 0.5px !important;
 }
 
 
@@ -69,54 +69,54 @@
 .badge-success,
 .badge.bg-success,
 .bg-success {
-    background-color: #6A994E !important;
-    color: #fff !important;
-    font-weight: 700 !important;
+  background-color: #6A994E !important;
+  color: #fff !important;
+  font-weight: 700 !important;
 }
 
 /* INFO - Naranja (para categoría "Normal") */
 .badge-info,
 .badge.bg-info,
 .bg-info {
-    background-color: #f29f05 !important; /* Naranja principal */
-    color: #592c1c !important; /* Texto marrón oscuro */
-    font-weight: 700 !important;
+  background-color: #f29f05 !important; /* Naranja principal */
+  color: #592c1c !important; /* Texto marrón oscuro */
+  font-weight: 700 !important;
 }
 
 /* WARNING - Dorado (para "Seasonal", stock medio) */
 .badge-warning,
 .badge.bg-warning,
 .bg-warning {
-    background-color: #D4A017 !important; /* Dorado */
-    color: #000 !important;
-    font-weight: 700 !important;
+  background-color: #D4A017 !important; /* Dorado */
+  color: #000 !important;
+  font-weight: 700 !important;
 }
 
 /* SECONDARY - Marrón (badges de cantidad en batches) */
 .badge-secondary,
 .badge.bg-secondary,
 .bg-secondary {
-    background-color: #8c4820 !important; /* Marrón */
-    color: #fff !important;
-    font-weight: 700 !important;
+  background-color: #8c4820 !important; /* Marrón */
+  color: #fff !important;
+  font-weight: 700 !important;
 }
 
 /* DANGER - Rojo marrón (stock crítico) */
 .badge-danger,
 .badge.bg-danger,
 .bg-danger {
-    background-color: #B85042 !important; /* Rojo-marrón */
-    color: #fff !important;
-    font-weight: 700 !important;
+  background-color: #B85042 !important; /* Rojo-marrón */
+  color: #fff !important;
+  font-weight: 700 !important;
 }
 
 /* PRIMARY - Marrón claro (usado en Orders para "PREPARANDO") */
 .badge-primary,
 .badge.bg-primary,
 .bg-primary {
-    background-color: #8D6E63 !important; /* Marrón claro */
-    color: #fff !important;
-    font-weight: 700 !important;
+  background-color: #8D6E63 !important; /* Marrón claro */
+  color: #fff !important;
+  font-weight: 700 !important;
 }
 
 /* ============================================================================
@@ -125,89 +125,89 @@
 
 /* Botón "Receta" y botones amarillos/warning */
 .btn-warning {
-    background-color: #f29f05 !important;
-    border-color: #f29f05 !important;
-    color: #592c1c !important;
-    font-weight: 700 !important;
+  background-color: #f29f05 !important;
+  border-color: #f29f05 !important;
+  color: #592c1c !important;
+  font-weight: 700 !important;
 }
 
 .btn-warning:hover {
-    background-color: #f28705 !important;
-    border-color: #f28705 !important;
-    color: #fff !important;
+  background-color: #f28705 !important;
+  border-color: #f28705 !important;
+  color: #fff !important;
 }
 
 /* Botón primario (naranja) */
 .btn-primary {
-    background-color: #f29f05 !important;
-    border-color: #f29f05 !important;
-    color: #fff !important;
+  background-color: #f29f05 !important;
+  border-color: #f29f05 !important;
+  color: #fff !important;
 }
 
 .btn-primary:hover {
-    background-color: #f28705 !important;
-    border-color: #f28705 !important;
+  background-color: #f28705 !important;
+  border-color: #f28705 !important;
 }
 
 /* Botones de acción positiva (verde) */
 .btn-success {
-    background-color: #6A994E !important;
-    border-color: #6A994E !important;
+  background-color: #6A994E !important;
+  border-color: #6A994E !important;
 }
 
 .btn-success:hover {
-    background-color: #5a8a3e !important;
-    border-color: #5a8a3e !important;
+  background-color: #5a8a3e !important;
+  border-color: #5a8a3e !important;
 }
 
 /* Botones de peligro (rojo marrón) */
 .btn-danger {
-    background-color: #B85042 !important;
-    border-color: #B85042 !important;
+  background-color: #B85042 !important;
+  border-color: #B85042 !important;
 }
 
 .btn-danger:hover {
-    background-color: #a84032 !important;
-    border-color: #a84032 !important;
+  background-color: #a84032 !important;
+  border-color: #a84032 !important;
 }
 
 /* Botones secundarios (marrón) */
 .btn-secondary {
-    background-color: #8c4820 !important;
-    border-color: #8c4820 !important;
+  background-color: #8c4820 !important;
+  border-color: #8c4820 !important;
 }
 
 .btn-secondary:hover {
-    background-color: #592c1c !important;
-    border-color: #592c1c !important;
+  background-color: #592c1c !important;
+  border-color: #592c1c !important;
 }
 
 /* Botones outline primary */
 .btn-outline-primary {
-    color: #f29f05 !important;
-    border-color: #f29f05 !important;
+  color: #f29f05 !important;
+  border-color: #f29f05 !important;
 }
 
 .btn-outline-primary:hover {
-    background-color: #f29f05 !important;
-    color: #fff !important;
+  background-color: #f29f05 !important;
+  color: #fff !important;
 }
 
 /* Botones outline secondary */
 .btn-outline-secondary {
-    color: #8c4820 !important;
-    border-color: #8c4820 !important;
+  color: #8c4820 !important;
+  border-color: #8c4820 !important;
 }
 
 .btn-outline-secondary:hover {
-    background-color: #8c4820 !important;
-    color: #fff !important;
+  background-color: #8c4820 !important;
+  color: #fff !important;
 }
 
 /* Botón small primary */
 .btn-sm.btn-primary {
-    background-color: #f29f05 !important;
-    border-color: #f29f05 !important;
+  background-color: #f29f05 !important;
+  border-color: #f29f05 !important;
 }
 
 /* ============================================================================
@@ -217,14 +217,14 @@
 /* Headers de tabla */
 .table thead th,
 .table-light th {
-    background-color: #f29f05 !important;
-    color: #592c1c !important;
-    font-weight: 700 !important;
+  background-color: #f29f05 !important;
+  color: #592c1c !important;
+  font-weight: 700 !important;
 }
 
 /* Hover en filas */
 .table-hover tbody tr:hover {
-    background-color: #fff8e6 !important;
+  background-color: #fff8e6 !important;
 }
 
 /* ============================================================================
@@ -234,26 +234,26 @@
 /* Links principales */
 a.text-primary,
 .text-primary {
-    color: #f29f05 !important;
+  color: #f29f05 !important;
 }
 
 a.text-primary:hover {
-    color: #f28705 !important;
+  color: #f28705 !important;
 }
 
 /* Textos de éxito */
 .text-success {
-    color: #6A994E !important;
+  color: #6A994E !important;
 }
 
 /* Textos de peligro */
 .text-danger {
-    color: #B85042 !important;
+  color: #B85042 !important;
 }
 
 /* Textos de advertencia */
 .text-warning {
-    color: #D4A017 !important;
+  color: #D4A017 !important;
 }
 
 /* ============================================================================
@@ -263,14 +263,14 @@ a.text-primary:hover {
 /* Inputs con foco */
 .form-control:focus,
 .form-select:focus {
-    border-color: #f29f05 !important;
-    box-shadow: 0 0 0 0.25rem rgba(242, 159, 5, 0.25) !important;
+  border-color: #f29f05 !important;
+  box-shadow: 0 0 0 0.25rem rgba(242, 159, 5, 0.25) !important;
 }
 
 /* Checkboxes y radios */
 .form-check-input:checked {
-    background-color: #f29f05 !important;
-    border-color: #f29f05 !important;
+  background-color: #f29f05 !important;
+  border-color: #f29f05 !important;
 }
 
 /* ============================================================================
@@ -278,27 +278,27 @@ a.text-primary:hover {
    ============================================================================ */
 
 .alert-success {
-    background-color: rgba(106, 153, 78, 0.15) !important;
-    border-color: #6A994E !important;
-    color: #3a5a2e !important;
+  background-color: rgba(106, 153, 78, 0.15) !important;
+  border-color: #6A994E !important;
+  color: #3a5a2e !important;
 }
 
 .alert-danger {
-    background-color: rgba(184, 80, 66, 0.15) !important;
-    border-color: #B85042 !important;
-    color: #8a3022 !important;
+  background-color: rgba(184, 80, 66, 0.15) !important;
+  border-color: #B85042 !important;
+  color: #8a3022 !important;
 }
 
 .alert-warning {
-    background-color: rgba(212, 160, 23, 0.15) !important;
-    border-color: #D4A017 !important;
-    color: #8a6010 !important;
+  background-color: rgba(212, 160, 23, 0.15) !important;
+  border-color: #D4A017 !important;
+  color: #8a6010 !important;
 }
 
 .alert-info {
-    background-color: rgba(141, 110, 99, 0.15) !important;
-    border-color: #8D6E63 !important;
-    color: #5a4640 !important;
+  background-color: rgba(141, 110, 99, 0.15) !important;
+  border-color: #8D6E63 !important;
+  color: #5a4640 !important;
 }
 
 /* ============================================================================

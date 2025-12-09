@@ -22,7 +22,8 @@
 
 ## 🍪 ¿QUÉ ES CAM COOKIES?
 
-**Cam Cookies** es una aplicación web ASP.NET Core MVC para gestionar un negocio de galletas artesanales. El sistema permite:
+**Cam Cookies** es una aplicación web ASP.NET Core MVC para gestionar un negocio de galletas artesanales. El sistema
+permite:
 
 - 👨‍💼 **Administradores:** Gestionar inventario, producción y pedidos
 - 🛒 **Clientes:** Explorar menú, hacer pedidos y rastrear entregas
@@ -36,17 +37,20 @@
 ## 🛠️ TECNOLOGÍAS UTILIZADAS
 
 ### Backend
+
 - **ASP.NET Core 9.0** - Framework web
 - **Entity Framework Core** - ORM para base de datos
 - **MySQL** - Base de datos relacional
 - **ASP.NET Identity** - Autenticación y autorización
 
 ### Frontend
+
 - **Bootstrap 5** - Framework CSS responsive
 - **Bootstrap Icons** - Iconografía
 - **JavaScript Vanilla** - Interactividad del cliente
 
 ### Arquitectura
+
 - **MVC Pattern** - Model-View-Controller
 - **Factory Pattern** - Creación de galletas (CookieFactory)
 - **Service Layer** - Lógica de negocio (BatchService)
@@ -178,12 +182,12 @@ if (!await userManager.Users.AnyAsync())
 
 1. Abre tu navegador en `https://localhost:7232`
 2. Verás la landing page con:
-   - Hero section con imagen de fondo
-   - Sección "Quiénes Somos"
-   - Features (Por qué elegirnos)
-   - Galletas destacadas
-   - Mapa de ubicación (Keiser University)
-   - Botones de contacto (WhatsApp e Instagram)
+    - Hero section con imagen de fondo
+    - Sección "Quiénes Somos"
+    - Features (Por qué elegirnos)
+    - Galletas destacadas
+    - Mapa de ubicación (Keiser University)
+    - Botones de contacto (WhatsApp e Instagram)
 
 ---
 
@@ -193,10 +197,10 @@ if (!await userManager.Users.AnyAsync())
 
 - Click en **"Register"** (navbar)
 - Llena el formulario:
-  - Nombre y Apellido
-  - Email
-  - Teléfono
-  - Contraseña (mínimo 6 caracteres con al menos una minúscula)
+    - Nombre y Apellido
+    - Email
+    - Teléfono
+    - Contraseña (mínimo 6 caracteres con al menos una minúscula)
 - Click **"Register"**
 
 #### **2. INICIAR SESIÓN**
@@ -209,10 +213,10 @@ if (!await userManager.Users.AnyAsync())
 
 - Click en **"Menú"** (navbar) o botón **"Ver Menú"**
 - Verás todas las galletas disponibles con:
-  - Imagen
-  - Nombre
-  - Precio
-  - Stock disponible
+    - Imagen
+    - Nombre
+    - Precio
+    - Stock disponible
 
 #### **4. AGREGAR AL CARRITO**
 
@@ -227,23 +231,23 @@ if (!await userManager.Users.AnyAsync())
 - Click en el **ícono del carrito 🛒** (navbar)
 - O click en **"Ir al Checkout"** (banner naranja)
 - Llena el formulario:
-  - **Teléfono:** Para contactarte
-  - **Método de Pago:** Efectivo o Tarjeta
-    - Si eliges **Tarjeta**, aparecerá un botón **"Ver Datos de Cuenta"**
-    - Se abrirá un modal con la info bancaria de BAC CORDOBA
-  - **Lugar de Entrega:** En campus o fuera del campus
-  - **Dirección específica:** Ej: "Frente al Academic Building"
+    - **Teléfono:** Para contactarte
+    - **Método de Pago:** Efectivo o Tarjeta
+        - Si eliges **Tarjeta**, aparecerá un botón **"Ver Datos de Cuenta"**
+        - Se abrirá un modal con la info bancaria de BAC CORDOBA
+    - **Lugar de Entrega:** En campus o fuera del campus
+    - **Dirección específica:** Ej: "Frente al Academic Building"
 - Click **"CONFIRMAR PEDIDO"**
 
 #### **6. VER MIS PEDIDOS**
 
 - Click en **"Mis Pedidos"** (navbar)
 - Verás todos tus pedidos con:
-  - Número de orden
-  - Estado (PENDIENTE, PREPARANDO, ENTREGADO)
-  - Total
-  - Fecha
-  - Items ordenados
+    - Número de orden
+    - Estado (PENDIENTE, PREPARANDO, ENTREGADO)
+    - Total
+    - Fecha
+    - Items ordenados
 
 ---
 
@@ -257,12 +261,14 @@ if (!await userManager.Users.AnyAsync())
 #### **2. DASHBOARD**
 
 Verás 4 estadísticas principales:
+
 - 💰 **Profit del Mes:** Ingresos - Costos de producción
 - 🍪 **Galletas Vendidas:** Total del mes
 - 📦 **Pedidos Activos:** Pending + On Preparation
 - 💵 **Ingresos del Mes:** Suma de todos los pedidos
 
 Más abajo:
+
 - **Top 3 Galletas Más Vendidas** (con cantidades)
 - **Tabla de Pedidos Activos** (últimos 10)
 
@@ -271,22 +277,25 @@ Más abajo:
 - Click en **"Cookies"** (sidebar)
 
 **CREAR:**
+
 - Click **"Add New Cookie"**
 - Llena el formulario:
-  - Nombre
-  - Descripción
-  - Precio (C$)
-  - Categoría (Normal/Seasonal)
-  - Stock inicial
-  - Imagen (arrastra o selecciona)
+    - Nombre
+    - Descripción
+    - Precio (C$)
+    - Categoría (Normal/Seasonal)
+    - Stock inicial
+    - Imagen (arrastra o selecciona)
 - Click **"Create"**
 
 **EDITAR:**
+
 - Click en **lápiz** (ícono editar)
 - Modifica lo que necesites
 - Click **"Save Changes"**
 
 **ELIMINAR:**
+
 - Click en **papelera** (ícono eliminar)
 - Confirma la eliminación
 
@@ -295,6 +304,7 @@ Más abajo:
 - Click en **"Materials"** (sidebar)
 
 Similar a Cookies:
+
 - Nombre del material
 - Unidad de medida (kg, lb, unidad, etc.)
 - Stock
@@ -307,9 +317,9 @@ Similar a Cookies:
 - Selecciona una galleta del dropdown
 - **IMPORTANTE:** Cada batch produce **20 galletas fijas**
 - Al crear:
-  - Se descuentan los materiales necesarios
-  - Se suma +20 al stock de la galleta
-  - Se registra el costo de producción
+    - Se descuentan los materiales necesarios
+    - Se suma +20 al stock de la galleta
+    - Se registra el costo de producción
 
 #### **6. GESTIÓN DE PEDIDOS**
 
@@ -317,20 +327,22 @@ Similar a Cookies:
 - Verás todos los pedidos con filtros por estado
 
 **CAMBIAR ESTADO:**
+
 - Click en el badge de estado
 - Se abrirá un dropdown
 - Selecciona nuevo estado:
-  - **PENDIENTE → PREPARANDO:** Se descuenta inventario
-  - **PREPARANDO → ENTREGADO:** No afecta inventario
-  - **PENDIENTE → CANCELADO:** No se descuenta nada
+    - **PENDIENTE → PREPARANDO:** Se descuenta inventario
+    - **PREPARANDO → ENTREGADO:** No afecta inventario
+    - **PENDIENTE → CANCELADO:** No se descuenta nada
 
 **FILTRAR:**
+
 - Click en los badges de la parte superior:
-  - TODOS
-  - PENDIENTE
-  - PREPARANDO
-  - ENTREGADO
-  - CANCELADO
+    - TODOS
+    - PENDIENTE
+    - PREPARANDO
+    - ENTREGADO
+    - CANCELADO
 
 ---
 
@@ -339,12 +351,14 @@ Similar a Cookies:
 El sistema crea automáticamente estos usuarios:
 
 ### **ADMINISTRADOR**
+
 ```
 Email: admin@camcookies.com
 Password: Admin@123
 ```
 
 ### **CLIENTE**
+
 ```
 Email: customer@test.com
 Password: Customer@123
@@ -423,12 +437,14 @@ cmcookies/
 ## ✨ CARACTERÍSTICAS PRINCIPALES
 
 ### **🎨 DISEÑO**
+
 - ✅ Paleta de colores otoño (#f29f05, #8c4820, #592c1c)
 - ✅ Responsive (móvil, tablet, desktop)
 - ✅ Navbar con carrito dinámico
 - ✅ Animaciones suaves (fade-in, hover effects)
 
 ### **🔐 SEGURIDAD**
+
 - ✅ ASP.NET Identity para autenticación
 - ✅ Roles (Admin, Customer)
 - ✅ Contraseñas hasheadas
@@ -436,6 +452,7 @@ cmcookies/
 - ✅ HTTPS obligatorio
 
 ### **🛒 E-COMMERCE**
+
 - ✅ Carrito de compras en sesión
 - ✅ Checkout completo
 - ✅ Métodos de pago (efectivo/tarjeta)
@@ -443,6 +460,7 @@ cmcookies/
 - ✅ Tracking de pedidos
 
 ### **📊 ADMIN FEATURES**
+
 - ✅ Dashboard con KPIs
 - ✅ CRUD completo (Cookies, Materials, Batches)
 - ✅ Gestión de inventario automática
@@ -450,6 +468,7 @@ cmcookies/
 - ✅ Filtros y búsquedas
 
 ### **🏭 LÓGICA DE NEGOCIO**
+
 - ✅ Factory Pattern para crear galletas
 - ✅ Batches de producción (20 unidades fijas)
 - ✅ Descuento automático de materiales
@@ -462,15 +481,15 @@ cmcookies/
 
 **Paleta Otoño (Autumn):**
 
-| Color | Hex | Uso |
-|-------|-----|-----|
+| Color                | Hex       | Uso                      |
+|----------------------|-----------|--------------------------|
 | 🔶 Naranja Principal | `#f29f05` | Botones, badges, acentos |
-| 🟠 Naranja Oscuro | `#f28705` | Hover states |
-| 🟤 Naranja Quemado | `#bf5b04` | Badges especiales |
-| 🤎 Marrón | `#8c4820` | Textos, headers |
-| ☕ Marrón Oscuro | `#592c1c` | Footer, navbar admin |
-| 🌿 Verde Oliva | `#6A994E` | Success, "Activa" |
-| 🍂 Crema | `#fef5e7` | Backgrounds |
+| 🟠 Naranja Oscuro    | `#f28705` | Hover states             |
+| 🟤 Naranja Quemado   | `#bf5b04` | Badges especiales        |
+| 🤎 Marrón            | `#8c4820` | Textos, headers          |
+| ☕ Marrón Oscuro      | `#592c1c` | Footer, navbar admin     |
+| 🌿 Verde Oliva       | `#6A994E` | Success, "Activa"        |
+| 🍂 Crema             | `#fef5e7` | Backgrounds              |
 
 ---
 
@@ -481,6 +500,7 @@ cmcookies/
 **Causa:** MySQL no está corriendo.
 
 **Solución:**
+
 ```bash
 # Windows
 net start MySQL80
@@ -504,6 +524,7 @@ sudo service mysql start
 **Causa:** Las migraciones no se aplicaron.
 
 **Solución:**
+
 ```bash
 dotnet ef database update
 ```
@@ -537,6 +558,7 @@ dotnet ef database update
 Este proyecto fue desarrollado como proyecto final para el curso de C# Programming I en Keiser University.
 
 **Tecnologías y Librerías:**
+
 - ASP.NET Core Team (Microsoft)
 - Entity Framework Core Team
 - Bootstrap Team
@@ -544,7 +566,8 @@ Este proyecto fue desarrollado como proyecto final para el curso de C# Programmi
 - MySQL Team
 
 **Inspiración:**
-Cam Cookies nació de la pasión por crear galletas artesanales que endulcen el día de las personas. Cada línea de código fue escrita con el mismo amor con el que se hornean nuestras galletas. 🍪❤️
+Cam Cookies nació de la pasión por crear galletas artesanales que endulcen el día de las personas. Cada línea de código
+fue escrita con el mismo amor con el que se hornean nuestras galletas. 🍪❤️
 
 ---
 
@@ -558,6 +581,7 @@ Este proyecto es de uso académico para Keiser University.
 ## 🎉 ¡GRACIAS POR USAR CAM COOKIES!
 
 Si este README te ayudó, no olvides:
+
 - ⭐ Darle una estrella al repo
 - 🍪 Ordenar unas galletas reales
 - 📱 Seguirnos en Instagram [@caml.cookies](https://instagram.com/caml.cookies)

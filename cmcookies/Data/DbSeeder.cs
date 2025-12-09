@@ -64,7 +64,7 @@ public static class DbSeeder
   // - Solo existirá 1 usuario: admin@camcookies.com / Admin@123
   // - Todo lo demás estará vacío (como una BD recién creada)
   // ============================================================================
-  
+
   /// <summary>
   /// Limpia COMPLETAMENTE la base de datos y deja solo 1 usuario admin.
   /// ADVERTENCIA: Esto BORRA TODOS los datos existentes (usuarios, galletas, pedidos, TODO).
@@ -212,7 +212,7 @@ public static class DbSeeder
   //
   // Esto significa: "Primera vez? Crea todo. Ya existe algo? No toques nada."
   // ============================================================================
-  
+
   /// <summary>
   /// Puebla la base de datos con datos iniciales COMPLETOS.
   /// Incluye: Admin + Customer + Galletas + Materiales + Recetas + Capital inicial.

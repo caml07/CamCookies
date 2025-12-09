@@ -28,15 +28,31 @@
             {
                 var total = order.OrderDetails.Sum(d => d.Qty * d.UnitPrice);
                 var itemCount = order.OrderDetails.Sum(d => d.Qty);
-                
+
                 // Lógica de colores según estado
-                string statusBadge = "bg-secondary";
-                string statusText = order.Status?.ToUpper() ?? "DESCONOCIDO";
-                
-                if (order.Status == "pending") { statusBadge = "bg-warning text-dark"; statusText = "⏳ PENDIENTE"; }
-                else if (order.Status == "on_preparation") { statusBadge = "bg-primary"; statusText = "🔥 EN EL HORNO"; }
-                else if (order.Status == "delivered") { statusBadge = "bg-success"; statusText = "✅ ENTREGADO"; }
-                else if (order.Status == "cancelled") { statusBadge = "bg-danger"; statusText = "❌ CANCELADO"; }
+                var statusBadge = "bg-secondary";
+                var statusText = order.Status?.ToUpper() ?? "DESCONOCIDO";
+
+                if (order.Status == "pending")
+                {
+                    statusBadge = "bg-warning text-dark";
+                    statusText = "⏳ PENDIENTE";
+                }
+                else if (order.Status == "on_preparation")
+                {
+                    statusBadge = "bg-primary";
+                    statusText = "🔥 EN EL HORNO";
+                }
+                else if (order.Status == "delivered")
+                {
+                    statusBadge = "bg-success";
+                    statusText = "✅ ENTREGADO";
+                }
+                else if (order.Status == "cancelled")
+                {
+                    statusBadge = "bg-danger";
+                    statusText = "❌ CANCELADO";
+                }
 
                 <div class="col-md-6 col-lg-4">
                     <div class="card border-0 shadow-sm h-100">
@@ -49,14 +65,15 @@
                             <p class="card-text text-muted small mb-3">
                                 <i class="bi bi-calendar3"></i> @order.CreatedAt?.ToString("dd/MM/yyyy HH:mm")
                             </p>
-                            
+
                             <hr class="border-secondary opacity-10">
-                            
+
                             <ul class="list-unstyled small mb-0">
                                 @foreach (var detail in order.OrderDetails.Take(3))
                                 {
                                     <li class="mb-1">
-                                        <span class="fw-bold">@detail.Qty x</span> @detail.CookieCodeNavigation.CookieName
+                                        <span
+                                            class="fw-bold">@detail.Qty x</span> @detail.CookieCodeNavigation.CookieName
                                     </li>
                                 }
                                 @if (order.OrderDetails.Count > 3)
@@ -65,7 +82,20 @@
                                 }
                             </ul>
                         </div>
-                        @* Futuro: Aquí podríamos poner un botón "Ver Detalles" *@
+
+                        @* Botón Cancelar (solo si está PENDING) *@
+                        @if (order.Status == "pending")
+                        {
+                            <div class="card-footer bg-white border-0 pt-0">
+                                <form asp-action="CancelOrder" asp-route-id="@order.OrderId" method="post"
+                                      onsubmit="return confirm('¿Estás seguro de cancelar este pedido?');">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="btn btn-outline-danger btn-sm w-100">
+                                        <i class="bi bi-x-circle"></i> Cancelar Pedido
+                                    </button>
+                                </form>
+                            </div>
+                        }
                     </div>
                 </div>
             }

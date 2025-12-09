@@ -197,6 +197,10 @@ public class AccountController : Controller
   [ValidateAntiForgeryToken]
   public async Task<IActionResult> Logout()
   {
+    // 🛒 IMPORTANTE: Limpiar el carrito de la sesión
+    // Si no hacemos esto, el carrito del usuario anterior se queda para el siguiente
+    HttpContext.Session.Remove("Cart");
+
     // Cerrar sesión (borra la cookie de autenticación)
     await _signInManager.SignOutAsync();
 

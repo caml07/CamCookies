@@ -30,7 +30,7 @@ namespace cmcookies.Controllers;
 // inventario sin pagar. Esperamos a que el admin confirme el pago.
 // ============================================================================
 
-[Authorize(Roles = "Admin")]  // 🚪 Solo admins pueden entrar aquí
+[Authorize(Roles = "Admin")] // 🚪 Solo admins pueden entrar aquí
 public class OrdersController : Controller
 {
   private readonly CmcDBContext _context;
@@ -106,7 +106,7 @@ public class OrdersController : Controller
   // complicar la lógica de "devolver" inventario. Esto es una simplificación.
   // En un sistema real, tendrías que implementar reversa de inventario.
   // ============================================================================
-  
+
   // POST: Orders/UpdateStatus
   // AQUÍ ESTÁ LA LÓGICA DE NEGOCIO PESADA
   [HttpPost]
@@ -120,7 +120,7 @@ public class OrdersController : Controller
     {
       // 🔍 Buscar el pedido con sus items
       var order = await _context.Orders
-        .Include(o => o.OrderDetails)  // Traemos los items del pedido
+        .Include(o => o.OrderDetails) // Traemos los items del pedido
         .FirstOrDefaultAsync(o => o.OrderId == id);
 
       if (order == null) return NotFound();
@@ -139,8 +139,8 @@ public class OrdersController : Controller
         foreach (var item in order.OrderDetails)
         {
           var cookie = await _context.Cookies.FindAsync(item.CookieCode);
-          if (cookie == null) 
-              throw new Exception($"Galleta {item.CookieCode} no encontrada.");
+          if (cookie == null)
+            throw new Exception($"Galleta {item.CookieCode} no encontrada.");
 
           // ❌ Si no hay suficiente stock, abortamos TODO
           if (cookie.Stock < item.Qty)
@@ -172,7 +172,7 @@ public class OrdersController : Controller
         if (bagMaterial != null)
         {
           bagMaterial.Stock -= 1; // 1 bolsa por pedido
-          order.Bag = bagNeeded;   // Guardamos qué bolsa se usó (para registro)
+          order.Bag = bagNeeded; // Guardamos qué bolsa se usó (para registro)
         }
 
         // ====================================================================
@@ -184,7 +184,7 @@ public class OrdersController : Controller
           if (stickerMaterial != null)
           {
             stickerMaterial.Stock -= 1;
-            order.Sticker = true;  // Marcamos que sí lleva sticker
+            order.Sticker = true; // Marcamos que sí lleva sticker
           }
         }
       }
@@ -208,7 +208,7 @@ public class OrdersController : Controller
 
       // 💾 GUARDAR TODO EN LA BASE DE DATOS
       await _context.SaveChangesAsync();
-      
+
       // ✅ Si llegamos aquí, todo salió bien, hacemos commit
       await transaction.CommitAsync();
 
