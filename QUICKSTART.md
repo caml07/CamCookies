@@ -8,7 +8,7 @@
 
 ### 1️⃣ **Clonar y Restaurar**
 ```bash
-git clone https://github.com/tuusuario/cmcookies.git
+git clone https://github.com/caml07/cmcookies.git
 cd cmcookies
 dotnet restore
 ```
