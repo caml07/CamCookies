@@ -74,7 +74,22 @@
                         }
                     </td>
                     <td>
-                        <strong>@cookie.CookieName</strong><br>
+                        <strong>@cookie.CookieName</strong>
+                        
+                        @* Indicador visual de pedidos activos *@
+                        @{
+                            var activeOrdersDict = ViewBag.CookiesWithActiveOrders as Dictionary<string, int>;
+                            if (activeOrdersDict != null && activeOrdersDict.ContainsKey(cookie.CookieCode))
+                            {
+                                var count = activeOrdersDict[cookie.CookieCode];
+                                <span class="badge bg-warning text-dark ms-2" 
+                                      title="Esta cookie tiene pedidos activos y no puede eliminarse">
+                                    <i class="bi bi-lock-fill"></i> @count pedido(s) activo(s)
+                                </span>
+                            }
+                        }
+                        
+                        <br>
                         <small class="text-muted">@cookie.Description</small>
                     </td>
                     <td>
@@ -126,10 +141,29 @@
                                class="btn btn-sm btn-outline-secondary" title="Editar">
                                 <i class="bi bi-pencil"></i>
                             </a>
-                            <a asp-action="Delete" asp-route-cookieCode="@cookie.CookieCode"
-                               class="btn btn-sm btn-outline-danger" title="Eliminar">
-                                <i class="bi bi-trash"></i>
-                            </a>
+                            
+                            @* Botón de eliminar - Deshabilitado si tiene pedidos activos *@
+                            @{
+                                var activeOrdersDict2 = ViewBag.CookiesWithActiveOrders as Dictionary<string, int>;
+                                var hasActiveOrders = activeOrdersDict2 != null && activeOrdersDict2.ContainsKey(cookie.CookieCode);
+                                
+                                if (hasActiveOrders)
+                                {
+                                    var count = activeOrdersDict2[cookie.CookieCode];
+                                    <button class="btn btn-sm btn-outline-danger" 
+                                            disabled 
+                                            title="No se puede eliminar: tiene @count pedido(s) activo(s). Espera a que se completen o deshabilita la cookie.">
+                                        <i class="bi bi-lock-fill"></i>
+                                    </button>
+                                }
+                                else
+                                {
+                                    <a asp-action="Delete" asp-route-cookieCode="@cookie.CookieCode"
+                                       class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                }
+                            }
                         </div>
                     </td>
                 </tr>

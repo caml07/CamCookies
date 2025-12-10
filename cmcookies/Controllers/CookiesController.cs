@@ -47,6 +47,7 @@ public class CookiesController : Controller
   /// <summary>
   /// GET: /Cookies
   /// Muestra lista de todas las cookies con su información.
+  /// Incluye indicador de si tienen pedidos activos (para protección de eliminación).
   /// </summary>
   public async Task<IActionResult> Index()
   {
@@ -54,6 +55,29 @@ public class CookiesController : Controller
     var cookies = await _context.Cookies
       .OrderBy(c => c.CookieName)
       .ToListAsync();
+
+    // Para cada cookie, verificar si tiene pedidos activos
+    // Un pedido activo es: pending o on_preparation
+    var cookiesWithActiveOrders = new Dictionary<string, int>();
+    
+    foreach (var cookie in cookies)
+    {
+      var activeOrdersCount = await _context.OrderDetails
+        .Include(od => od.Order)
+        .Where(od => od.CookieCode == cookie.CookieCode && 
+                    (od.Order.Status == "pending" || od.Order.Status == "on_preparation"))
+        .Select(od => od.Order.OrderId)
+        .Distinct()
+        .CountAsync();
+      
+      if (activeOrdersCount > 0)
+      {
+        cookiesWithActiveOrders[cookie.CookieCode] = activeOrdersCount;
+      }
+    }
+    
+    // Pasar el diccionario a la vista mediante ViewBag
+    ViewBag.CookiesWithActiveOrders = cookiesWithActiveOrders;
 
     return View(cookies);
   }
