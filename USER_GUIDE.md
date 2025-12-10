@@ -273,7 +273,7 @@
 
 **Horario:**
 - Lunes-Viernes: 8:00 AM - 6:00 PM
-- Sábados: 9:00 AM - 2:00 PM
+- Sábados: 10:00 AM - 2:00 PM
 
 ---
 
