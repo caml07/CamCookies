@@ -28,7 +28,15 @@
 @if (TempData["ErrorMessage"] != null)
 {
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <i class="bi bi-exclamation-circle"></i> @TempData["ErrorMessage"]
+        <i class="bi bi-exclamation-circle"></i> @Html.Raw(TempData["ErrorMessage"])
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+@if (TempData["WarningMessage"] != null)
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle"></i> @Html.Raw(TempData["WarningMessage"])
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
 }

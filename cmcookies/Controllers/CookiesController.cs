@@ -264,6 +264,16 @@ public class CookiesController : Controller
   /// <summary>
   /// POST: /Cookies/Delete/ABC
   /// Confirma y ejecuta la eliminación de la cookie.
+  /// 
+  /// BUSINESS RULE: No se puede eliminar una cookie si tiene pedidos activos.
+  /// Un pedido activo es aquel que está en estado:
+  /// - "pending" (aún no se prepara, pero el cliente lo solicitó)
+  /// - "on_preparation" (ya en proceso, inventario comprometido)
+  /// 
+  /// Esta validación evita:
+  /// 1. Referencias rotas en OrderDetails (FK a Cookie inexistente)
+  /// 2. Errores al procesar pedidos (al intentar descontar inventario)
+  /// 3. Pérdida de datos históricos de pedidos
   /// </summary>
   /// <param name="cookieCode">Código de la cookie a eliminar</param>
   [HttpPost]
@@ -277,6 +287,48 @@ public class CookiesController : Controller
 
       if (cookie == null) return NotFound();
 
+      // ===== VALIDACIÓN CRÍTICA: Verificar pedidos activos =====
+      // ¿Hay OrderDetails con esta Cookie en pedidos pending o on_preparation?
+      var hasActiveOrders = await _context.OrderDetails
+        .Include(od => od.Order)
+        .AnyAsync(od => od.CookieCode == cookieCode && 
+                       (od.Order.Status == "pending" || od.Order.Status == "on_preparation"));
+
+      if (hasActiveOrders)
+      {
+        // Contar cuántos pedidos activos hay
+        var activeOrdersCount = await _context.OrderDetails
+          .Include(od => od.Order)
+          .Where(od => od.CookieCode == cookieCode && 
+                      (od.Order.Status == "pending" || od.Order.Status == "on_preparation"))
+          .Select(od => od.Order.OrderId)
+          .Distinct()
+          .CountAsync();
+
+        TempData["ErrorMessage"] = 
+          $"❌ No se puede eliminar '{cookie.CookieName}' porque tiene {activeOrdersCount} " +
+          $"pedido(s) activo(s). <br/><br/>" +
+          $"<strong>Opciones:</strong><br/>" +
+          $"1️⃣ Espera a que los pedidos se completen o cancelen<br/>" +
+          $"2️⃣ Deshabilita la cookie (editar > Activo = OFF) para que no se puedan hacer nuevos pedidos";
+
+        return RedirectToAction(nameof(Index));
+      }
+
+      // ===== Si no hay pedidos activos, permitir eliminación =====
+
+      // Verificar si hay pedidos históricos (delivered o cancelled)
+      var hasHistoricalOrders = await _context.OrderDetails
+        .AnyAsync(od => od.CookieCode == cookieCode);
+
+      if (hasHistoricalOrders)
+      {
+        // Advertir pero permitir (los pedidos delivered/cancelled son históricos)
+        TempData["WarningMessage"] = 
+          $"⚠️ Esta cookie tiene pedidos históricos (entregados/cancelados). " +
+          $"Se eliminará pero el historial quedará con referencias a esta cookie.";
+      }
+
       // Eliminar imagen del disco si existe
       if (!string.IsNullOrEmpty(cookie.ImagePath)) DeleteImage(cookie.ImagePath);
 
@@ -284,7 +336,7 @@ public class CookiesController : Controller
       _context.Cookies.Remove(cookie);
       await _context.SaveChangesAsync();
 
-      TempData["SuccessMessage"] = $"Cookie '{cookie.CookieName}' eliminada exitosamente!";
+      TempData["SuccessMessage"] = $"Cookie '{cookie.CookieName}' eliminada exitosamente! ✅";
       return RedirectToAction(nameof(Index));
     }
     catch (Exception ex)

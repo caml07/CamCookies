@@ -1,0 +1,383 @@
+@model cmcookies.Models.ViewModels.Admin.UserEditViewModel
+
+@{
+    ViewData["Title"] = $"Editar Usuario: {Model.FirstName} {Model.LastName}";
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid">
+    
+    <!-- ============================================================ -->
+    <!-- HEADER -->
+    <!-- ============================================================ -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2 class="fw-bold">
+                        <i class="bi bi-person-fill-gear"></i> Editar Usuario
+                    </h2>
+                    <p class="text-muted mb-0">
+                        ID: <strong>#@Model.UserId</strong> | 
+                        Email: <strong>@Model.Email</strong>
+                    </p>
+                </div>
+                <a asp-action="Index" class="btn btn-outline-secondary">
+                    <i class="bi bi-arrow-left"></i> Volver a Lista
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mensajes de éxito/error -->
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle-fill"></i> @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+    
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle-fill"></i> @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <!-- ============================================================ -->
+    <!-- FORMULARIO PRINCIPAL -->
+    <!-- ============================================================ -->
+    <form asp-action="Edit" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="UserId" />
+        
+        <!-- Mostrar errores generales del ModelState -->
+        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+        <div class="row">
+            
+            <!-- ============================================================ -->
+            <!-- COLUMNA IZQUIERDA -->
+            <!-- ============================================================ -->
+            <div class="col-lg-8">
+                
+                <!-- CARD 1: DATOS PERSONALES -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white py-3">
+                        <h5 class="mb-0 fw-bold">
+                            <i class="bi bi-person-badge"></i> Datos Personales
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-3">
+                            
+                            <!-- Nombre -->
+                            <div class="col-md-6">
+                                <label asp-for="FirstName" class="form-label fw-bold"></label>
+                                <input asp-for="FirstName" class="form-control" placeholder="Ej: Juan" />
+                                <span asp-validation-for="FirstName" class="text-danger small"></span>
+                            </div>
+
+                            <!-- Apellido -->
+                            <div class="col-md-6">
+                                <label asp-for="LastName" class="form-label fw-bold"></label>
+                                <input asp-for="LastName" class="form-control" placeholder="Ej: Pérez" />
+                                <span asp-validation-for="LastName" class="text-danger small"></span>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="col-12">
+                                <label asp-for="Email" class="form-label fw-bold"></label>
+                                <input asp-for="Email" class="form-control" placeholder="usuario@ejemplo.com" />
+                                <span asp-validation-for="Email" class="text-danger small"></span>
+                                <small class="text-muted">
+                                    <i class="bi bi-info-circle"></i> 
+                                    El email también se usa como username para login
+                                </small>
+                            </div>
+
+                            <!-- Teléfono Principal -->
+                            <div class="col-md-6">
+                                <label asp-for="PhoneNumber" class="form-label fw-bold"></label>
+                                <input asp-for="PhoneNumber" class="form-control" placeholder="Ej: 8888-8888" />
+                                <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+                            </div>
+
+                            <!-- Teléfono Secundario -->
+                            <div class="col-md-6">
+                                <label asp-for="PhoneNumber2" class="form-label fw-bold"></label>
+                                <input asp-for="PhoneNumber2" class="form-control" placeholder="Opcional" />
+                                <span asp-validation-for="PhoneNumber2" class="text-danger small"></span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 2: CAMBIAR ROL -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white py-3">
+                        <h5 class="mb-0 fw-bold">
+                            <i class="bi bi-shield-fill"></i> Permisos y Rol
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-3">
+                            
+                            <!-- Dropdown de Roles -->
+                            <div class="col-12">
+                                <label asp-for="Role" class="form-label fw-bold"></label>
+                                <select asp-for="Role" class="form-select" asp-items="@(new SelectList(ViewBag.AvailableRoles))">
+                                    <option value="">-- Seleccionar Rol --</option>
+                                </select>
+                                <span asp-validation-for="Role" class="text-danger small"></span>
+                                
+                                <!-- Explicación de roles -->
+                                <div class="mt-3">
+                                    <div class="alert alert-info py-2 mb-0">
+                                        <small>
+                                            <strong>Roles disponibles:</strong>
+                                            <ul class="mb-0 mt-2">
+                                                <li><strong>Admin:</strong> Acceso completo al panel de administración</li>
+                                                <li><strong>Customer:</strong> Puede hacer pedidos y ver su historial</li>
+                                            </ul>
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 3: CAMBIAR CONTRASEÑA -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white py-3">
+                        <h5 class="mb-0 fw-bold">
+                            <i class="bi bi-key-fill"></i> Cambiar Contraseña
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="alert alert-warning" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill"></i>
+                            <strong>Nota:</strong> Como admin, no necesitas saber la contraseña actual del usuario.
+                            Deja estos campos vacíos si NO quieres cambiar la contraseña.
+                        </div>
+
+                        <div class="row g-3">
+                            
+                            <!-- Nueva Contraseña -->
+                            <div class="col-md-6">
+                                <label asp-for="NewPassword" class="form-label fw-bold"></label>
+                                <input asp-for="NewPassword" class="form-control" 
+                                       placeholder="Dejar vacío = no cambiar" />
+                                <span asp-validation-for="NewPassword" class="text-danger small"></span>
+                            </div>
+
+                            <!-- Confirmar Nueva Contraseña -->
+                            <div class="col-md-6">
+                                <label asp-for="ConfirmPassword" class="form-label fw-bold"></label>
+                                <input asp-for="ConfirmPassword" class="form-control" 
+                                       placeholder="Repetir contraseña" />
+                                <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                            </div>
+
+                            <!-- Requisitos -->
+                            <div class="col-12">
+                                <small class="text-muted">
+                                    <i class="bi bi-info-circle"></i>
+                                    Mínimo 6 caracteres, al menos una letra minúscula
+                                </small>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- COLUMNA DERECHA (SIDEBAR) -->
+            <!-- ============================================================ -->
+            <div class="col-lg-4">
+                
+                <!-- CARD 4: ESTADO DE LA CUENTA -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white py-3">
+                        <h5 class="mb-0 fw-bold">
+                            <i class="bi bi-toggle-on"></i> Estado
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
+                        
+                        <!-- Checkbox Activo/Inactivo -->
+                        <div class="form-check form-switch mb-3">
+                            <input asp-for="IsActive" class="form-check-input" 
+                                   type="checkbox" role="switch" 
+                                   id="isActiveSwitch" style="cursor: pointer;" />
+                            <label class="form-check-label fw-bold" for="isActiveSwitch">
+                                Cuenta Activa
+                            </label>
+                        </div>
+
+                        <div class="alert alert-secondary py-2">
+                            <small>
+                                <strong>Cuenta Activa:</strong> El usuario puede iniciar sesión<br/>
+                                <strong>Cuenta Inactiva:</strong> El usuario NO puede iniciar sesión
+                            </small>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- CARD 5: METADATOS -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white py-3">
+                        <h5 class="mb-0 fw-bold">
+                            <i class="bi bi-info-circle"></i> Información
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
+                        
+                        <!-- Fecha de Creación -->
+                        @if (Model.CreatedAt.HasValue)
+                        {
+                            <div class="mb-3">
+                                <small class="text-muted d-block">Cuenta creada:</small>
+                                <strong>@Model.CreatedAt.Value.ToString("dd/MM/yyyy HH:mm")</strong>
+                            </div>
+                        }
+
+                        <!-- Último Login -->
+                        @if (Model.LastLogin.HasValue)
+                        {
+                            <div class="mb-3">
+                                <small class="text-muted d-block">Último acceso:</small>
+                                <strong>@Model.LastLogin.Value.ToString("dd/MM/yyyy HH:mm")</strong>
+                            </div>
+                        }
+
+                        <hr />
+
+                        <!-- ID del Usuario -->
+                        <div>
+                            <small class="text-muted d-block">User ID:</small>
+                            <strong>#@Model.UserId</strong>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- CARD 6: ACCIONES -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-header bg-white py-3">
+                        <h5 class="mb-0 fw-bold">
+                            <i class="bi bi-lightning-fill"></i> Acciones
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
+                        
+                        <!-- Botón Guardar Cambios -->
+                        <button type="submit" class="btn btn-primary w-100 mb-2 py-2 fw-bold">
+                            <i class="bi bi-check-circle"></i> Guardar Cambios
+                        </button>
+
+                        <!-- Botón Cancelar -->
+                        <a asp-action="Index" class="btn btn-outline-secondary w-100 mb-3">
+                            <i class="bi bi-x-circle"></i> Cancelar
+                        </a>
+
+                        <hr />
+
+                        <!-- Botón Eliminar Usuario (PELIGROSO) -->
+                        <button type="button" class="btn btn-outline-danger w-100" 
+                                onclick="confirmDelete(@Model.UserId, '@Model.FirstName @Model.LastName')">
+                            <i class="bi bi-trash"></i> Eliminar Usuario
+                        </button>
+                        
+                        <small class="text-muted d-block mt-2">
+                            <i class="bi bi-exclamation-triangle"></i>
+                            Esta acción NO se puede deshacer
+                        </small>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </form>
+
+</div>
+
+<!-- Form oculto para eliminar -->
+<form id="deleteForm" asp-action="Delete" method="post" style="display: none;">
+    @Html.AntiForgeryToken()
+    <input type="hidden" id="deleteUserId" name="id" />
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    
+    <script>
+        // ============================================================
+        // CONFIRMAR ELIMINACIÓN DE USUARIO
+        // ============================================================
+        function confirmDelete(userId, userName) {
+            const confirmation = confirm(
+                `⚠️ ADVERTENCIA: Estás a punto de ELIMINAR PERMANENTEMENTE al usuario:\n\n` +
+                `"${userName}"\n\n` +
+                `Esta acción eliminará:\n` +
+                `✗ Su cuenta de usuario\n` +
+                `✗ Sus datos personales\n` +
+                `✗ Su historial de pedidos\n` +
+                `✗ Toda su información asociada\n\n` +
+                `ESTA ACCIÓN NO SE PUEDE DESHACER.\n\n` +
+                `¿Estás COMPLETAMENTE SEGURO de eliminar este usuario?`
+            );
+            
+            if (confirmation) {
+                // Segundo confirm de seguridad
+                const doubleCheck = confirm(
+                    `⚠️ ÚLTIMA CONFIRMACIÓN:\n\n` +
+                    `Vas a eliminar permanentemente a "${userName}".\n\n` +
+                    `Escribe "CONFIRMAR" mentalmente y presiona OK para proceder.`
+                );
+                
+                if (doubleCheck) {
+                    document.getElementById('deleteUserId').value = userId;
+                    document.getElementById('deleteForm').submit();
+                }
+            }
+        }
+
+        // ============================================================
+        // VISUAL FEEDBACK DEL SWITCH DE ESTADO
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const switchElement = document.getElementById('isActiveSwitch');
+            
+            if (switchElement) {
+                // Mostrar estado actual al cargar
+                updateSwitchVisual(switchElement);
+                
+                // Actualizar visual cuando cambie
+                switchElement.addEventListener('change', function() {
+                    updateSwitchVisual(this);
+                });
+            }
+        });
+
+        function updateSwitchVisual(switchElement) {
+            const label = switchElement.nextElementSibling;
+            
+            if (switchElement.checked) {
+                label.innerHTML = '<i class="bi bi-check-circle-fill text-success"></i> Cuenta Activa';
+            } else {
+                label.innerHTML = '<i class="bi bi-x-circle-fill text-danger"></i> Cuenta Inactiva';
+            }
+        }
+    </script>
+}
