@@ -224,23 +224,24 @@ public class UsersController : Controller
 
     if (!string.IsNullOrEmpty(model.NewPassword))
     {
+      // 🎯 MÉTODO CORRECTO: Usar Password Reset Token
       // El admin NO necesita saber la contraseña actual
-      // Usamos RemovePasswordAsync + AddPasswordAsync
+      // RemovePasswordAsync() causa error "password_hash cannot be null" en MySQL
+      // Solución: Generar token de reset y usarlo para cambiar la contraseña
 
-      // Paso 1: Quitar la contraseña actual
-      var removePasswordResult = await _userManager.RemovePasswordAsync(user);
+      // Paso 1: Generar token de reset de contraseña
+      var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-      if (removePasswordResult.Succeeded)
+      // Paso 2: Usar el token para resetear la contraseña
+      var resetPasswordResult = await _userManager.ResetPasswordAsync(user, resetToken, model.NewPassword);
+
+      if (!resetPasswordResult.Succeeded)
       {
-        // Paso 2: Añadir la nueva contraseña
-        var addPasswordResult = await _userManager.AddPasswordAsync(user, model.NewPassword);
-
-        if (!addPasswordResult.Succeeded)
-        {
-          foreach (var error in addPasswordResult.Errors) ModelState.AddModelError(string.Empty, error.Description);
-          ViewBag.AvailableRoles = new List<string> { "Admin", "Customer" };
-          return View(model);
-        }
+        foreach (var error in resetPasswordResult.Errors) 
+          ModelState.AddModelError(string.Empty, error.Description);
+        
+        ViewBag.AvailableRoles = new List<string> { "Admin", "Customer" };
+        return View(model);
       }
     }
 
